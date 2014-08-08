@@ -1,6 +1,8 @@
 # Responsys::Api
 
-TODO: Write a gem description
+* Add proper Readme
+* Add proper tests
+* Start building out API functionality
 
 ## Installation
 

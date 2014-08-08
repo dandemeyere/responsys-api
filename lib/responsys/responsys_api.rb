@@ -18,11 +18,11 @@ class ResponsysApi
     establish_session_id(response)
     establish_jsession_id(response)
     set_session_credentials
-    response
   end
 
-  def api_method(method_name, message)
-    client.run_with_credentials(method_name, message, jsession_id, header)
+  def api_method(action, message = nil)
+    response = client.run_with_credentials(action, message, jsession_id, header)
+    ResponsysApi::Helper.format_response(response, action)
   end
 
   private

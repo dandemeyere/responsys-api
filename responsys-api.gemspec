@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Dan DeMeyere", "Florian Lorrain", "Morgan Griggs", "Mike Rocco"]
   spec.email         = ["dan@thredup.com", "florain.lorrain@thredup.com", "morgan@thredup.com", "michael.rocco@thredup.com"]
   spec.description   = 'A gem to integrate with the Responsys SOAP API'
-  spec.summary       = 'TODO: Write a proper summary'
+  spec.summary       = 'Write a proper summary'
   spec.homepage      = "https://github.com/dandemeyere/responsys-api"
   spec.license       = "MIT"
 

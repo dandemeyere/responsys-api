@@ -1,18 +1,20 @@
 require 'savon'
 
 class ResponsysApi
-  attr_accessor :client, :session_id, :jsession_id, :header
+  attr_accessor :credentials, :client, :session_id, :jsession_id, :header
 
-  def initialize(username, password, wsdl)
-    @username = username
-    @password = password
-    @wsdl = wsdl
-    @client = SavonApi.new(wsdl)
+  def initialize
+    settings = ResponsysApi.configuration.settings
+    @credentials = {
+      "tns:username" => settings[:username],
+      "tns:password" => settings[:password]
+    }
+    @client = SavonApi.new(settings[:wsdl])
     login
   end
 
   def login
-    response = client.run("login", login_credentials)
+    response = client.run("login", credentials)
     establish_session_id(response)
     establish_jsession_id(response)
     set_session_credentials

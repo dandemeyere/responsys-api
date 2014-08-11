@@ -1,7 +1,6 @@
 module ResponsysApi
   class Configuration
     attr_accessor :settings
-    # Put all these constants into a configurable setting hash
 
     def initialize
       @settings = {
@@ -16,10 +15,12 @@ module ResponsysApi
     attr_accessor :configuration
   end
 
+  # Initiate the configuration
   def self.configuration
     @configuration ||= Configuration.new
   end
 
+  # Display the configuration of the client
   def self.configure
     yield(configuration)
   end

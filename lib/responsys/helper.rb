@@ -1,4 +1,4 @@
-module ResponsysApi
+module Responsys
   module Helper
     # Format the response of a Savon SOAP request
     # Params:

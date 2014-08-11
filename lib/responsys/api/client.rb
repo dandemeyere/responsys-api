@@ -4,14 +4,14 @@ require 'responsys/helper'
 require 'responsys/api/all'
 require 'responsys/api/object/all'
 
-module ResponsysApi
+module Responsys
   module Api
     class Client
-      include ResponsysApi::Api::All
+      include Responsys::Api::All
       attr_accessor :credentials, :client, :session_id, :jsession_id, :header
       
       def initialize
-        settings = ResponsysApi.configuration.settings
+        settings = Responsys.configuration.settings
         @credentials = {
           "username" => settings[:username],
           "password" => settings[:password]
@@ -25,7 +25,7 @@ module ResponsysApi
 
       def api_method(action, message = nil)
         response = run_with_credentials(action, message, jsession_id, header)
-        ResponsysApi::Helper.format_response(response, action)
+        Responsys::Helper.format_response(response, action)
       end
 
       def available_operations

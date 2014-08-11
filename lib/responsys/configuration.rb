@@ -1,4 +1,4 @@
-class ResponsysApi
+module ResponsysApi
   class Configuration
     attr_accessor :settings
     # Put all these constants into a configurable setting hash

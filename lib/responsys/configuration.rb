@@ -1,4 +1,4 @@
-module ResponsysApi
+module Responsys
   class Configuration
     attr_accessor :settings
 

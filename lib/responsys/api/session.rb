@@ -1,4 +1,4 @@
-module ResponsysApi
+module Responsys
   module Api
     module Session
       def login

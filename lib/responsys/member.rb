@@ -1,14 +1,18 @@
+require 'responsys/api/all'
+require 'responsys/api/object/all'
+
 module Responsys
   class Member
-    attr_accessor :email, :client
+    include Responsys::Api
+    include Responsys::Api::Object
+    attr_accessor :email
 
     # Creates a Member object.
     # Params:
     # +email+:: email of the member
-    # +client+:: +Responsys::Client::Api+ object that has been instanciated and logged in.
-    def initialize(email, client)
-      self.email = email
-      self.client = client
+    def initialize(email)
+      @email = email
+      @client = Client.instance
     end
 
     # Update the information of the Member.
@@ -16,22 +20,22 @@ module Responsys
     # +list+:: +Responsys::Api::Object::Interactobject+ which representents the list to update.
     # +data+:: +Hash+ composed of all the data to update as {field1:value1, field2:value2}
     def update(list, data)
-      record = Responsys::Api::Object::RecordData.new(data.keys, data.values)
-      client.merge_list_members(list, record)
+      record = RecordData.new(data.keys, data.values)
+      @client.merge_list_members(list, record)
     end
 
     # Subscribe the Member to the list. This is an update of the field 'EMAIL_PERMISSION_STATUS_' to OptIn char 'I'.
     # Params:
     # +list+:: +Responsys::Api::Object::Interactobject+ which representents the list.
     def subscribe(list)
-      update(list, {"EMAIL_ADDRESS_" => self.email, "EMAIL_PERMISSION_STATUS_" => "I"})
+      update(list, {"EMAIL_ADDRESS_" => @email, "EMAIL_PERMISSION_STATUS_" => "I"})
     end
 
     # Give the subscribe status of the Member for the list
     # Params:
     # +list+:: +Responsys::Api::Object::Interactobject+ which representents the list.
     def subscribed?(list)
-      response = client.retrieve_list_members(list, "EMAIL_ADDRESS", ["EMAIL_PERMISSION_STATUS_"], [self.email])
+      response = @client.retrieve_list_members(list, "EMAIL_ADDRESS", ["EMAIL_PERMISSION_STATUS_"], [@email])
       response[:record_data][:records][:field_values] == "I"
     end
 
@@ -39,7 +43,7 @@ module Responsys
     # Params:
     # +list+:: +Responsys::Api::Object::Interactobject+ which representents the list.
     def unsubscribe(list)
-      update(list, {"EMAIL_ADDRESS_" => self.email, "EMAIL_PERMISSION_STATUS_" => "O"})
+      update(list, {"EMAIL_ADDRESS_" => @email, "EMAIL_PERMISSION_STATUS_" => "O"})
     end
   end
 end

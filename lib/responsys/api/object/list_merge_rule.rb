@@ -6,17 +6,17 @@ module Responsys
 
         def initialize(
           insertOnNoMatch=true, 
-          updateOnMatch="REPLACE_ALL", 
-          matchColumnName1="EMAIL_ADDRESS_", 
-          matchColumnName2="", 
-          matchColumnName3="", 
-          matchOperator="AND", 
-          optinValue="I", 
-          optoutValue="O", 
-          htmlValue="H", 
-          textValue="T", 
-          rejectRecordIfChannelEmpty="", 
-          defaultPermissionStatus="")
+          updateOnMatch='REPLACE_ALL', 
+          matchColumnName1='EMAIL_ADDRESS_', 
+          matchColumnName2='', 
+          matchColumnName3='', 
+          matchOperator='AND', 
+          optinValue='I', 
+          optoutValue='O', 
+          htmlValue='H', 
+          textValue='T', 
+          rejectRecordIfChannelEmpty='', 
+          defaultPermissionStatus='')
 
         self.insertOnNoMatch = insertOnNoMatch
         self.updateOnMatch = updateOnMatch
@@ -34,18 +34,18 @@ module Responsys
 
       def to_hash
         {
-          "insertOnNoMatch" => insertOnNoMatch,
-          "updateOnMatch" => updateOnMatch,
-          "matchColumnName1" => matchColumnName1,
-          "matchColumnName2" => matchColumnName2,
-          "matchColumnName3" => matchColumnName3,
-          "matchOperator" => matchOperator,
-          "optinValue" => optinValue,
-          "optoutValue" => optoutValue,
-          "htmlValue" => htmlValue,
-          "textValue" => textValue,
-          "rejectRecordIfChannelEmpty" => rejectRecordIfChannelEmpty,
-          "defaultPermissionStatus" => defaultPermissionStatus
+          'insertOnNoMatch' => insertOnNoMatch,
+          'updateOnMatch' => updateOnMatch,
+          'matchColumnName1' => matchColumnName1,
+          'matchColumnName2' => matchColumnName2,
+          'matchColumnName3' => matchColumnName3,
+          'matchOperator' => matchOperator,
+          'optinValue' => optinValue,
+          'optoutValue' => optoutValue,
+          'htmlValue' => htmlValue,
+          'textValue' => textValue,
+          'rejectRecordIfChannelEmpty' => rejectRecordIfChannelEmpty,
+          'defaultPermissionStatus' => defaultPermissionStatus
         }
       end
     end

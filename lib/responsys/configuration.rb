@@ -6,7 +6,7 @@ module Responsys
       @settings = {
         username: nil,
         password: nil,
-        wsdl: ""
+        wsdl: ''
       }
     end
   end

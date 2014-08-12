@@ -28,22 +28,22 @@ module Responsys
     # Params:
     # +list+:: +Responsys::Api::Object::Interactobject+ which representents the list.
     def subscribe(list)
-      update(list, {"EMAIL_ADDRESS_" => @email, "EMAIL_PERMISSION_STATUS_" => "I"})
+      update(list, {'EMAIL_ADDRESS_' => @email, 'EMAIL_PERMISSION_STATUS_' => 'I'})
     end
 
     # Give the subscribe status of the Member for the list
     # Params:
     # +list+:: +Responsys::Api::Object::Interactobject+ which representents the list.
     def subscribed?(list)
-      response = @client.retrieve_list_members(list, "EMAIL_ADDRESS", ["EMAIL_PERMISSION_STATUS_"], [@email])
-      response[:record_data][:records][:field_values] == "I"
+      response = @client.retrieve_list_members(list, 'EMAIL_ADDRESS', ['EMAIL_PERMISSION_STATUS_'], [@email])
+      response[:record_data][:records][:field_values] == 'I'
     end
 
     # Unsubscribe the Member to the list. This is an update of the field 'EMAIL_PERMISSION_STATUS_' to OptOut char 'O'.
     # Params:
     # +list+:: +Responsys::Api::Object::Interactobject+ which representents the list.
     def unsubscribe(list)
-      update(list, {"EMAIL_ADDRESS_" => @email, "EMAIL_PERMISSION_STATUS_" => "O"})
+      update(list, {'EMAIL_ADDRESS_' => @email, 'EMAIL_PERMISSION_STATUS_' => 'O'})
     end
   end
 end

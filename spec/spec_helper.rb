@@ -1,4 +1,4 @@
 require 'bundler/setup'
 Bundler.setup
 
-require './lib/responsys_api.rb'
+require 'responsys_api.rb'

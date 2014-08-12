@@ -9,27 +9,27 @@ describe Responsys::Api::Client do
     Responsys.configuration.settings[:username] = 'fake_username'
     Responsys.configuration.settings[:password] = 'fake_password'
 
-    @credentials = {"username"=>"fake_username", "password"=>"fake_password"}
+    @credentials = {'username'=>'fake_username', 'password'=>'fake_password'}
   end
 
-  context "Authentication" do
+  context 'Authentication' do
 
-    it "should set the credentials" do
+    it 'should set the credentials' do
       allow_any_instance_of(Responsys::Api::Client).to receive(:login).and_return(nil)
 
       responsys = Responsys::Api::Client.instance
 
-      expect(responsys.credentials).to eq({"username"=>"fake_username", "password"=>"fake_password"})
+      expect(responsys.credentials).to eq({'username'=>'fake_username', 'password'=>'fake_password'})
     end
 
-    it "should set the session ids" do
+    it 'should set the session ids' do
       response = double('response')
       savon_client = double('savon client')
-      cookies = [ "fake_jsession_id" ]
+      cookies = [ 'fake_jsession_id' ]
       body = {
         :login_response => { 
           :result => {
-            :session_id => "fake_session_id"
+            :session_id => 'fake_session_id'
           } 
         }
       }
@@ -44,7 +44,7 @@ describe Responsys::Api::Client do
 
       instance = Responsys::Api::Client.instance #Get it
 
-      expect(instance.header).to eq({ "SessionHeader" => { "sessionId" => "fake_session_id" } }) #Test the ids are right
+      expect(instance.header).to eq({ 'SessionHeader' => { 'sessionId' => 'fake_session_id' } }) #Test the ids are right
       expect(instance.jsession_id).to eq('fake_jsession_id')
     end
   end

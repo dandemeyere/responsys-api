@@ -19,3 +19,4 @@ tmp
 lib/.DS_Store
 lib/responsys/.DS_Store
 .rvmrc
+.idea/

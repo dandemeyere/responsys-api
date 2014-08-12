@@ -6,10 +6,10 @@ module Responsys
       include Responsys::Api::Object
       def retrieve_list_members(interactObject, queryColumn, fieldList, idsToRetrieve)
         message = {
-          "list" => interactObject.to_hash,
-          "queryColumn" => queryColumn,
-          "fieldList" => fieldList,
-          "idsToRetrieve" => idsToRetrieve
+          'list' => interactObject.to_hash,
+          'queryColumn' => queryColumn,
+          'fieldList' => fieldList,
+          'idsToRetrieve' => idsToRetrieve
         }
 
         api_method(:retrieve_list_members, message)
@@ -17,9 +17,9 @@ module Responsys
 
       def merge_list_members(interactObject, recordData, mergeRule=ListMergeRule.new)
         message = {
-          "list" => interactObject.to_hash,
-          "recordData" => recordData.to_hash,
-          "mergeRule" => mergeRule.to_hash
+          'list' => interactObject.to_hash,
+          'recordData' => recordData.to_hash,
+          'mergeRule' => mergeRule.to_hash
         }
 
         api_method(:merge_list_members, message)

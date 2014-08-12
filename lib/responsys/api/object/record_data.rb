@@ -10,7 +10,7 @@ module Responsys
         end
 
         def to_hash
-          {"fieldNames" => fieldNames, "records" => {"fieldValues" => fieldValues } }
+          {'fieldNames' => fieldNames, 'records' => {'fieldValues' => fieldValues } }
         end
       end
     end

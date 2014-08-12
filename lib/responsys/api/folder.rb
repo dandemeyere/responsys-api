@@ -6,11 +6,11 @@ module Responsys
       end
 
       def create_folder(name)
-        api_method(:create_folder, {"folderName" => name})
+        api_method(:create_folder, {'folderName' => name})
       end
 
       def delete_folder(name)
-        api_method(:delete_folder, {"folderName" => name})
+        api_method(:delete_folder, {'folderName' => name})
       end
 
       def folder_exists?(name)

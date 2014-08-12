@@ -24,6 +24,14 @@ describe Responsys::Member do
 
     end
 
+    it 'should check the user has subscribed' do
+      response_expected = {:record_data=>{:field_names=>'EMAIL_PERMISSION_STATUS_', :records=>{:field_values=>'I'}}}
+      
+      allow(@connection).to receive(:retrieve_list_members).with(@list, 'EMAIL_ADDRESS', ['EMAIL_PERMISSION_STATUS_'], [@member.email]).and_return(response_expected)
+
+      expect(@member.subscribed?(@list)).to eq(true)
+    end
+
   end
 
   context 'Existing member' do
@@ -37,18 +45,6 @@ describe Responsys::Member do
     end
 
     it 'should check its existance to the list' do
-
-    end
-
-    it 'should check the user has subscribed' do
-      response_expected = {:record_data=>{:field_names=>'EMAIL_PERMISSION_STATUS_', :records=>{:field_values=>'I'}}}
-      
-      allow(@connection).to receive(:retrieve_list_members).with(@list, 'EMAIL_ADDRESS', ['EMAIL_PERMISSION_STATUS_'], [@member.email]).and_return(response_expected)
-
-      expect(@member.subscribed?(@list)).to eq(true)
-    end
-
-    it 'should unsubscribe an existing user' do
 
     end
   end

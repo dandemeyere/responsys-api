@@ -1,8 +1,8 @@
 require 'spec_helper.rb'
 require 'responsys/api/client'
+require 'singleton'
 
 describe Responsys::Api::Client do
-  let(:connection) { double 'connection'}
 
   before(:all) do
     Responsys.configuration.settings[:wsdl] = 'fake_wsdl'
@@ -13,17 +13,18 @@ describe Responsys::Api::Client do
   end
 
   context "Authentication" do
+
     it "should set the credentials" do
       allow_any_instance_of(Responsys::Api::Client).to receive(:login).and_return(nil)
 
-      responsys = Responsys::Api::Client.new
+      responsys = Responsys::Api::Client.instance
 
       expect(responsys.credentials).to eq({"username"=>"fake_username", "password"=>"fake_password"})
     end
 
     it "should set the session ids" do
       response = double('response')
-
+      savon_client = double('savon client')
       cookies = [ "fake_jsession_id" ]
       body = {
         :login_response => { 
@@ -35,14 +36,16 @@ describe Responsys::Api::Client do
       allow(response).to receive(:body).and_return(body)
       allow(response).to receive(:http).and_return(double('cookies', :cookies => cookies))
 
-      allow(Savon).to receive(:client).with({:wsdl => 'fake_wsdl', :element_form_default => :qualified}).and_return(connection) #Avoid the verification of the wsdl
-      allow(connection).to receive(:run).with('login', @credentials).and_return(response) #Verification of credentials
-      allow(connection).to receive(:call).with(:login, {:message => @credentials}).and_return(response) #Actual login call
+      allow(Savon).to receive(:client).with({:wsdl => 'fake_wsdl', :element_form_default => :qualified}).and_return(savon_client) #Avoid the verification of the wsdl
+      allow_any_instance_of(Responsys::Api::Client).to receive(:run).with('login', @credentials).and_return(response) #Verification of credentials
+      allow(savon_client).to receive(:call).with(:login, {:message => @credentials}).and_return(response) #Actual login call
 
-      responsys = Responsys::Api::Client.new
+      Singleton.__init__(Responsys::Api::Client) #Prepare the singleton. This calls the login.
 
-      expect(responsys.header).to eq({ "SessionHeader" => { "tns:sessionId" => "fake_session_id" } })
-      expect(responsys.jsession_id).to eq('fake_jsession_id')
+      instance = Responsys::Api::Client.instance #Get it
+
+      expect(instance.header).to eq({ "SessionHeader" => { "sessionId" => "fake_session_id" } }) #Test the ids are right
+      expect(instance.jsession_id).to eq('fake_jsession_id')
     end
   end
 end

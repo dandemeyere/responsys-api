@@ -10,7 +10,7 @@ module Responsys
         end
 
         def to_hash
-          {'folderName' => folderName, 'objectName' => objectName}
+          { :folderName => folderName, :objectName => objectName }
         end
       end
     end

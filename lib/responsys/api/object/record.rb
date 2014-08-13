@@ -9,7 +9,7 @@ module Responsys
         end
 
         def to_hash
-          {'fieldValues' => fieldValues}
+          { :fieldValues => fieldValues }
         end
       end
     end

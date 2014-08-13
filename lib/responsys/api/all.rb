@@ -1,6 +1,6 @@
-require 'responsys/api/folder'
-require 'responsys/api/list'
-require 'responsys/api/session'
+require "responsys/api/folder"
+require "responsys/api/list"
+require "responsys/api/session"
 
 module Responsys
   module Api

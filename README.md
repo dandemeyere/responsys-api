@@ -16,7 +16,7 @@ Or install it yourself as:
 
 ```ruby
 # Configure ResponsysApi in your initializers (config/initializers/responsys_api.rb):
-ResponsysApi.configure do |config|
+Responsys.configure do |config|
   config.settings = {
     username: 'your_responsys_username',
     password: 'your_responsys_password',

@@ -4,33 +4,19 @@ module Responsys
       class ListMergeRule
         attr_accessor :insertOnNoMatch, :updateOnMatch, :matchColumnName1, :matchColumnName2, :matchColumnName3, :matchOperator, :optinValue, :optoutValue, :htmlValue, :textValue, :rejectRecordIfChannelEmpty, :defaultPermissionStatus
 
-        def initialize(
-          insertOnNoMatch = false,
-          updateOnMatch = "REPLACE_ALL",
-          matchColumnName1 = "EMAIL_ADDRESS_",
-          matchColumnName2 = "",
-          matchColumnName3 = "",
-          matchOperator = "AND",
-          optinValue = "I",
-          optoutValue = "O",
-          htmlValue = "H",
-          textValue = "T",
-          rejectRecordIfChannelEmpty = "",
-          defaultPermissionStatus = ""
-        )
-
-          self.insertOnNoMatch = insertOnNoMatch
-          self.updateOnMatch = updateOnMatch
-          self.matchColumnName1 = matchColumnName1
-          self.matchColumnName2 = matchColumnName2
-          self.matchColumnName3 = matchColumnName3
-          self.matchOperator = matchOperator
-          self.optinValue = optinValue
-          self.optoutValue = optoutValue
-          self.htmlValue = htmlValue
-          self.textValue = textValue
-          self.rejectRecordIfChannelEmpty = rejectRecordIfChannelEmpty
-          self.defaultPermissionStatus = defaultPermissionStatus
+        def initialize(options = {})
+          self.insertOnNoMatch = options[:insertOnNoMatch].nil? ? false : options[:insertOnNoMatch]
+          self.updateOnMatch = options[:updateOnMatch] || "REPLACE_ALL"
+          self.matchColumnName1 = options[:matchColumnName1] || "EMAIL_ADDRESS_"
+          self.matchColumnName2 = options[:matchColumnName2] || ""
+          self.matchColumnName3 = options[:matchColumnName3] || ""
+          self.matchOperator = options[:matchOperator] || "AND"
+          self.optinValue = options[:optinValue] || "I"
+          self.optoutValue = options[:optoutValue] || "O"
+          self.htmlValue = options[:htmlValue] || "H"
+          self.textValue = options[:textValue] || "T"
+          self.rejectRecordIfChannelEmpty = options[:rejectRecordIfChannelEmpty] || ""
+          self.defaultPermissionStatus = options[:defaultPermissionStatus] || ""
         end
 
         def to_hash

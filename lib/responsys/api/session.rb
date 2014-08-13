@@ -2,7 +2,7 @@ module Responsys
   module Api
     module Session
       def login
-        response = run('login', credentials)
+        response = run("login", credentials)
         establish_session_id(response)
         establish_jsession_id(response)
         set_session_credentials
@@ -23,7 +23,7 @@ module Responsys
       end
 
       def set_session_credentials
-        @header = { 'SessionHeader' => { 'sessionId' => session_id } }
+        @header = { :SessionHeader => { :sessionId => session_id } }
       end
     end
   end

@@ -1,9 +1,9 @@
-require 'responsys/configuration'
-require 'savon'
-require 'responsys/helper'
-require 'responsys/api/all'
-require 'responsys/api/object/all'
-require 'singleton'
+require "responsys/configuration"
+require "savon"
+require "responsys/helper"
+require "responsys/api/all"
+require "responsys/api/object/all"
+require "singleton"
 
 module Responsys
   module Api
@@ -11,14 +11,14 @@ module Responsys
       include Singleton
       include Responsys::Api::All
       attr_accessor :credentials, :client, :session_id, :jsession_id, :header
-    
+
       def initialize
         settings = Responsys.configuration.settings
         @credentials = {
-          'username' => settings[:username],
-          'password' => settings[:password]
+          :username => settings[:username],
+          :password => settings[:password]
         }
-        
+
         #@client = Savon.client(log_level: :debug, log: true, pretty_print_xml: true, wsdl: settings[:wsdl], element_form_default: :qualified)
         # should use this, the call above is only to help debug
         @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified)
@@ -36,6 +36,7 @@ module Responsys
       end
 
       private
+
       def run(method, message)
         @client.call(method.to_sym, message: message)
       end

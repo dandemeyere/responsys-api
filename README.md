@@ -27,9 +27,6 @@ end
 ```
 ### Example
 ```ruby
-## Scenario : subscribe a user to a newsletter
-## Details : the user exists in the list of your users in Responsys @ "the_folder_containing_the_list/my_customers_list". He just decided to subscribe so let's update his status !
-
 #!/usr/bin/env ruby
 
 ## Scenario : subscribe a user to a newsletter

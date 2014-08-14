@@ -13,6 +13,14 @@ module Responsys
       @client = Client.instance
     end
 
+    def save(list,data=nil)
+      if data.nil?
+        data = { :EMAIL_ADDRESS_ => @email, :EMAIL_PERMISSION_STATUS_ => "I" }
+      end
+      record = RecordData.new(data.keys, data.values)
+      @client.merge_list_members(list, record, ListMergeRule.new(:insertOnNoMatch=> true))
+    end
+
     def update(list, data)
       record = RecordData.new(data)
       @client.merge_list_members(list, record)

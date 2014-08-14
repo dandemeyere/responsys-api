@@ -16,7 +16,7 @@ module Responsys
           self.html_value = options[:htmlValue] || "H"
           self.text_value = options[:textValue] || "T"
           self.reject_record_if_channel_empty = options[:rejectRecordIfChannelEmpty] || ""
-          self.default_permission_status = options[:defaultPermissionStatus] || ""
+          self.default_permission_status = options[:defaultPermissionStatus] || "OPTOUT"
         end
 
         def to_api

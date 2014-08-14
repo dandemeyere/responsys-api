@@ -50,9 +50,13 @@ end
 # A list is an "InteractObject" according to the official API documentation
 list = Responsys::Api::Object::InteractObject.new("the_folder_containing_the_list", "my_customers_list")
 
-# The Member (or "user" for the example) record to update
+# Initialize a Member (or "user" for the example)
 member = Responsys::Member.new('user@email.com')
 
+# Adding a member to a list ()
+member.save(list, subscribe = false)
+
+# Manually handling subscription status
 # Subscribe the user if he hasn't subscribed yet
 unless member.subscribed?(list)
   member.subscribe(list)
@@ -81,7 +85,13 @@ Responsys::Api::Client.instance.logout
 ## To Do
 * Add thorough tests with properly mocked out API responses
 * Build out API functionality
-  * Member profiles
+  * Member profile extension
+    * Creating new key/value
+    * Updating value by key
+    * Deleting key/value by key
+  * Member supplement tables
+    * Creating new tables
+    * CRUD operations for records within tables
   * Transactional email firing
   * List management
   * Folder management

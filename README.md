@@ -2,6 +2,10 @@
 
 A gem to help you communicate to the Responsys Interact SOAP API.
 
+## Documentation
+
+Have a look at the [wiki](https://github.com/dandemeyere/responsys-api/wiki) to understand how it works as well as special tips specially prepared for you ! If you have any questions please create an [issue](https://github.com/dandemeyere/responsys-api/issues).
+
 ## Installation
 
 Add this line to your application"s Gemfile:
@@ -21,7 +25,7 @@ Responsys.configure do |config|
   config.settings = {
     :username => "your_responsys_username",
     :password => "your_responsys_password",
-    :wsdl => "https://ws2.responsys.net/webservices/wsdl/ResponsysWS_Level1.wsdl"
+    :wsdl => "https://wsXXXX.responsys.net/webservices/wsdl/ResponsysWS_Level1.wsdl"
   }
 end
 ```
@@ -39,12 +43,12 @@ Responsys.configure do |config|
   config.settings = {
     :username => "your_responsys_username",
     :password => "your_responsys_password",
-    :wsdl => "https://ws2.responsys.net/webservices/wsdl/ResponsysWS_Level1.wsdl"
+    :wsdl => "https://wsXXXX.responsys.net/webservices/wsdl/ResponsysWS_Level1.wsdl"
   }
 end
 
 # A list is an "InteractObject" according to the official API documentation
-list = Responsys::Api::Object::InteractObject.new("demo_folder2", "my_customers")
+list = Responsys::Api::Object::InteractObject.new("the_folder_containing_the_list", "my_customers_list")
 
 # The Member (or "user" for the example) record to update
 member = Responsys::Member.new('user@email.com')

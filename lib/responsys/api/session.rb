@@ -23,7 +23,7 @@ module Responsys
       end
 
       def set_session_credentials
-        @header = { :SessionHeader => { :sessionId => session_id } }
+        @header = { SessionHeader: { sessionId: session_id } }
       end
     end
   end

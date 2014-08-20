@@ -6,7 +6,8 @@ module Responsys
       @settings = {
         username: nil,
         password: nil,
-        wsdl: ''
+        wsdl: "",
+        debug: false
       }
     end
   end
@@ -15,12 +16,10 @@ module Responsys
     attr_accessor :configuration
   end
 
-  # Initiate the configuration
   def self.configuration
     @configuration ||= Configuration.new
   end
 
-  # Display the configuration of the client
   def self.configure
     yield(configuration)
   end

@@ -4,9 +4,9 @@ module Responsys
       class RecipientData
         attr_accessor :recipient, :optionalData
 
-        def initialize(recipient, optionalData = nil)
+        def initialize(recipient, optionalData = default_optional_data)
           @recipient = recipient
-          @optionalData = optionalData.nil? ? default_optional_data : optionalData
+          @optionalData = optionalData
         end
 
         def to_hash

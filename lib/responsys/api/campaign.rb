@@ -11,7 +11,7 @@ module Responsys
           recipientData: recipients 
         }
         outcome = api_method(:trigger_campaign_message, message)
-        check_errors(outcome, recipients)
+        check_failures(outcome, recipients)
       end
 
       def hash_recipients(recipients)
@@ -24,9 +24,13 @@ module Responsys
         end
         recipients
       end
-      
-      def check_errors(outcome, recipients)
-        outcome.each_index { |i| puts recipients[i] unless outcome[i][:success] }
+
+      def check_failures(outcome, recipients)
+        if outcome.respond_to?(:each_index)
+          outcome.each_index { |i| puts "failed:\n" + recipients[i][:recipient].to_s unless outcome[i][:success] }
+        else
+          puts "failed:\n" + recipients[:recipient].to_s unless outcome[:success]
+        end
       end
     end
   end

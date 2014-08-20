@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>YnceLODfqtw8PZNx7KofAGcyVT</sessionId></sessionHeader></env:Header><env:Body><tns:deleteTable><tns:table><tns:folderName>another_test_folder</tns:folderName><tns:objectName>table_with_pk_1408568062</tns:objectName></tns:table></tns:deleteTable></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - JSESSIONID=2305B2D668EB23F2BC55A43DC17EC7BF.ws04-ri2
+      Soapaction:
+      - ! '"deleteTable"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '541'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '250'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Wed, 20 Aug 2014 20:54:24 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerapigee.responsys.net_9002=3607791370.10787.0000; path=/
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><deleteTableResponse
+        xmlns="urn:ws.rsys.com"><result>true</result></deleteTableResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Wed, 20 Aug 2014 20:54:25 GMT
+recorded_with: VCR 2.5.0

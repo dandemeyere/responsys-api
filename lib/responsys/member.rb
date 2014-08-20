@@ -14,7 +14,7 @@ module Responsys
     end
 
     def add_to_list(list, subscribe = false)
-      data = { :EMAIL_ADDRESS_ => @email, :EMAIL_PERMISSION_STATUS_ => subscribe ? "I" : "O" }
+      data = { EMAIL_ADDRESS_:  @email, EMAIL_PERMISSION_STATUS_: subscribe ? "I" : "O" }
       record = RecordData.new(data.keys, data.values)
       @client.merge_list_members(list, record, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: "NO_UPDATE"))
     end

@@ -22,7 +22,6 @@ module Responsys
             value: ""
           }]
         end
-
       end
     end
   end

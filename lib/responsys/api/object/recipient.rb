@@ -5,7 +5,6 @@ module Responsys
         include Responsys::Api::Object
         attr_accessor :listName, :recipientId, :customerId, :emailAddress, :mobileNumber, :emailFormat
 
-
         def initialize(options = {})
           @listName = options[:listName] || InteractObject.new("", "")
           @recipientId = options[:recipientId] || ""
@@ -25,7 +24,6 @@ module Responsys
             emailFormat: @emailFormat 
           }
         end
-
       end
     end
   end

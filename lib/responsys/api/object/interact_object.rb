@@ -2,15 +2,15 @@ module Responsys
   module Api
     module Object
       class InteractObject
-        attr_accessor :folderName, :objectName
+        attr_accessor :folder_name, :object_name
 
-        def initialize(folderName, objectName)
-          self.folderName = folderName
-          self.objectName = objectName
+        def initialize(folder_name, object_name)
+          self.folder_name = folder_name
+          self.object_name = object_name
         end
 
-        def to_hash
-          { :folderName => folderName, :objectName => objectName }
+        def to_api
+          { folderName: folder_name, objectName: object_name }
         end
       end
     end

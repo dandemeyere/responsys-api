@@ -10,25 +10,39 @@ module Responsys
     class Client
       include Singleton
       include Responsys::Api::All
+
       attr_accessor :credentials, :client, :session_id, :jsession_id, :header
 
       def initialize
         settings = Responsys.configuration.settings
         @credentials = {
-          :username => settings[:username],
-          :password => settings[:password]
+          username: settings[:username],
+          password: settings[:password]
         }
 
-        #@client = Savon.client(log_level: :debug, log: true, pretty_print_xml: true, wsdl: settings[:wsdl], element_form_default: :qualified)
-        # should use this, the call above is only to help debug
-        @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified)
+        if settings[:debug]
+          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, log_level: :debug, log: true, pretty_print_xml: true)
+        else
+          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified)
+        end
 
         login
       end
 
-      def api_method(action, message = nil)
-        response = run_with_credentials(action, message, jsession_id, header)
-        Responsys::Helper.format_response(response, action)
+      def api_method(action, message = nil, response_type = :hash)
+        begin
+          response = run_with_credentials(action, message, jsession_id, header)
+
+          case response_type
+            when :result
+              Responsys::Helper.format_response_result(response, action)
+            when :hash
+              Responsys::Helper.format_response_hash(response, action)
+          end
+
+        rescue Exception => e
+          Responsys::Helper.format_response_with_errors(e)
+        end
       end
 
       def available_operations

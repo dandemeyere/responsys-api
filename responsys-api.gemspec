@@ -17,9 +17,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rubyntlm", "~> 0.4.0"
-  spec.add_dependency "savon", "~> 2.6.0"
+  spec.add_dependency "rubyntlm", "~> 0.4"
+  spec.add_dependency "savon", "~> 2.6"
+  spec.add_dependency "i18n", "~> 0.6"
   spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec", "3.0.0"
+  spec.add_development_dependency "rake", "~> 10.3"
+  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "vcr", "~> 2.5"
+  spec.add_development_dependency "webmock", "~> 1.9"
 end

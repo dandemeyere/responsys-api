@@ -3,25 +3,25 @@ module Responsys
     module Object
       class Recipient
         include Responsys::Api::Object
-        attr_accessor :listName, :recipientId, :customerId, :emailAddress, :mobileNumber, :emailFormat
+        attr_accessor :list_name, :recipient_id, :customer_id, :email_address, :mobile_number, :email_format
 
         def initialize(options = {})
-          @listName = options[:listName] || InteractObject.new("", "")
-          @recipientId = options[:recipientId] || ""
-          @customerId = options[:customerId] || ""
-          @emailAddress = options[:emailAddress] || ""
-          @mobileNumber = options[:mobileNumber] || ""
-          @emailFormat = options[:emailFormat] || ""
+          self.list_name = options[:listName] || InteractObject.new("", "")
+          self.recipient_id = options[:recipientId] || ""
+          self.customer_id = options[:customerId] || ""
+          self.email_address = options[:emailAddress] || ""
+          self.mobile_number = options[:mobileNumber] || ""
+          self.email_format = options[:emailFormat] || EmailFormat.new
         end
 
-        def to_hash
+        def to_api
           { 
-            listName: @listName.to_hash,
-            recipientId: @recipientId.to_i,
-            customerId: @customerId.to_s,
-            emailAddress: @emailAddress.to_s,
-            mobileNumber: @mobileNumber.to_s,
-            emailFormat: @emailFormat 
+            listName: list_name.to_api,
+            recipientId: recipient_id.to_i,
+            customerId: customer_id.to_s,
+            emailAddress: email_address.to_s,
+            mobileNumber: mobile_number.to_s,
+            emailFormat: email_format.to_api
           }
         end
       end

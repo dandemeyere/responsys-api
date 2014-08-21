@@ -5,24 +5,12 @@ module Responsys
     module Campaign
 
       def trigger_message(campaign, recipients)
-        recipients = hash_recipients(recipients)
+        raise "Recipients must be an array" unless recipients.is_a? Array
         message = {
           campaign: campaign.to_hash,
-          recipientData: recipients 
+          recipientData: recipients.map(&:to_hash) 
         }
-        outcome = api_method(:trigger_campaign_message, message)
-        check_failures(outcome, recipients)
-      end
-
-      def hash_recipients(recipients)
-        if recipients.respond_to?(:each)
-          hashedRecipients = []
-          recipients.each { |recipient| hashedRecipients<<recipient.to_hash }
-          recipients = hashedRecipients
-        else
-          recipients = recipients.to_hash
-        end
-        recipients
+        api_method(:trigger_campaign_message, message)
       end
 
       def check_failures(outcome, recipients)

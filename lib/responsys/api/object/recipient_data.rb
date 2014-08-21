@@ -2,17 +2,17 @@ module Responsys
   module Api
     module Object
       class RecipientData
-        attr_accessor :recipient, :optionalData
+        attr_accessor :recipient, :optional_data
 
-        def initialize(recipient, optionalData = default_optional_data)
+        def initialize(recipient, optional_data = default_optional_data)
           @recipient = recipient
-          @optionalData = optionalData
+          @optional_data = optional_data
         end
 
-        def to_hash
+        def to_api
           {
-            recipient: @recipient.to_hash,
-            optionalData: @optionalData
+            recipient: @recipient.to_api,
+            optionalData: @optional_data
           }
         end
 

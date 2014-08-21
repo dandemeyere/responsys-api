@@ -7,7 +7,7 @@ module Responsys
       def retrieve_list_members(interact_object, query_column, field_list, ids_to_retrieve)
         message = {
           list: interact_object.to_api,
-          queryColumn: query_column,
+          queryColumn: query_column.to_api,
           fieldList: field_list,
           idsToRetrieve: ids_to_retrieve
         }

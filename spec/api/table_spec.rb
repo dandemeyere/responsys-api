@@ -2,7 +2,7 @@ require "spec_helper.rb"
 
 describe Responsys::Api::Table do
 
-  before(:all) do
+  before(:example) do
     @profile_extension = Responsys::Api::Object::InteractObject.new("another_test_folder", "test_profile_extension")
     @query_column_riid = Responsys::Api::Object::QueryColumn.new("RIID")
     @query_column_email = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")

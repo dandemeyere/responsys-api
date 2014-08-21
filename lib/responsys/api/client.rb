@@ -34,10 +34,10 @@ module Responsys
           response = run_with_credentials(action, message, jsession_id, header)
 
           case response_type
-            when :result
-              Responsys::Helper.format_response_result(response, action)
-            when :hash
-              Responsys::Helper.format_response_hash(response, action)
+          when :result
+            Responsys::Helper.format_response_result(response, action)
+          when :hash
+            Responsys::Helper.format_response_hash(response, action)
           end
 
         rescue Exception => e

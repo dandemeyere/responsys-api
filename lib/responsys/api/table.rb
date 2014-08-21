@@ -2,11 +2,11 @@ module Responsys
   module Api
     module Table
       def create_table(interact_object, fields)
-        api_method(:create_table, { table: interact_object.to_api, fields: fields.collect{ |field| field.to_api } })
+        api_method(:create_table, { table: interact_object.to_api, fields: fields.map(&:to_api) })
       end
 
       def create_table_with_pk(interact_object, fields, primary_keys)
-        api_method(:create_table_with_pk, { table: interact_object.to_api, fields: fields.collect{ |field| field.to_api }, primaryKeys: primary_keys })
+        api_method(:create_table_with_pk, { table: interact_object.to_api, fields: fields.map(&:to_api), primaryKeys: primary_keys })
       end
 
       def delete_table(interact_object)

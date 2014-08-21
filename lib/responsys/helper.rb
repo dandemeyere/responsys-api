@@ -5,17 +5,17 @@ module Responsys
     end
 
     def self.format_response_hash(response, action)
-      to_return = { status: "ok" }
+      formatted_response = { status: "ok" }
 
-      if response.body.has_key? "#{action}_response".to_sym
-        if response.body["#{action}_response".to_sym][:result].is_a? Hash
-          to_return[:data] = self.handle_response_types(response.body["#{action}_response".to_sym])
-        else
-          to_return[:result] = response.body["#{action}_response".to_sym][:result]
-        end
+      return formatted_response unless response.body.has_key? "#{action}_response".to_sym
+
+      if response.body["#{action}_response".to_sym][:result].is_a? Hash
+        formatted_response[:data] = handle_response_types(response.body["#{action}_response".to_sym])
+      else
+        formatted_response[:result] = response.body["#{action}_response".to_sym][:result]
       end
 
-      to_return
+      formatted_response
     end
 
     def self.handle_response_types(response_body)
@@ -30,7 +30,7 @@ module Responsys
             values = {}
 
             record[:field_values].each_with_index do | value, index |
-              values[field_names[index]] = value
+              values[field_names[index].to_sym] = value
             end
 
             data << values
@@ -41,10 +41,10 @@ module Responsys
 
           if response_body[:result][:record_data][:records][:field_values].is_a? Array
             response_body[:result][:record_data][:records][:field_values].each_with_index do | value, index |
-              values[field_names[index]] = value
+              values[field_names[index].to_sym] = value
             end
           else
-            values[field_names] = response_body[:result][:record_data][:records][:field_values]
+            values[field_names.to_sym] = response_body[:result][:record_data][:records][:field_values]
           end
 
           data << values
@@ -58,17 +58,17 @@ module Responsys
     end
 
     def self.format_response_with_errors(error)
-      to_return = { status: "failure" }
+      error_response = { status: "failure" }
 
       if error.to_hash[:fault].has_key?(:detail) and !error.to_hash[:fault][:detail].nil?
         key = error.to_hash[:fault][:detail].keys[0]
-        to_return[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:detail][key][:exception_code], message: error.to_hash[:fault][:detail][key][:exception_message] }
-        to_return[:error][:trace] = error.to_hash[:fault][:detail][:source] if error.to_hash[:fault][:detail].has_key?(:source)
+        error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:detail][key][:exception_code], message: error.to_hash[:fault][:detail][key][:exception_message] }
+        error_response[:error][:trace] = error.to_hash[:fault][:detail][:source] if error.to_hash[:fault][:detail].has_key?(:source)
       else
-        to_return[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:faultcode], message: error.to_hash[:fault][:faultstring] }
+        error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:faultcode], message: error.to_hash[:fault][:faultstring] }
       end
 
-      to_return
+      error_response
     end
 
     def self.format_response_with_message(i18n_key)

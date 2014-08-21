@@ -2,15 +2,15 @@ module Responsys
   module Api
     module Object
       class RecordData
-        attr_accessor :fieldNames, :fieldValues
+        attr_accessor :field_names, :field_values
 
-        def initialize(fieldNames, fieldValues)
-          self.fieldNames = fieldNames
-          self.fieldValues = fieldValues
+        def initialize(field_names, field_values)
+          self.field_names = field_names
+          self.field_values = field_values
         end
 
-        def to_hash
-          { :fieldNames => fieldNames, :records => { :fieldValues => fieldValues } }
+        def to_api
+          { fieldNames: field_names, records: { fieldValues: field_values } }
         end
       end
     end

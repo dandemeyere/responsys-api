@@ -4,6 +4,38 @@ require "singleton"
 
 describe Responsys::Api::Client do
 
+  context "expired session" do
+    before(:example) do
+      allow_any_instance_of(Responsys::Api::Client).to receive(:login).and_return(nil)
+
+      Responsys::Api::Client.instance.instance_variable_set(:@session_id, "fake_session_id")
+      Responsys::Api::Client.instance.instance_variable_set(:@jsession_id, HTTPI::Cookie.new("jsessionid=fakejsessionid; Path=/; HttpOnly"))
+      Responsys::Api::Client.instance.instance_variable_set(:@header, { SessionHeader: { sessionId: "fake_session_id" } })
+    end
+
+    it "should ask for a new session" do
+      VCR.use_cassette("api/client/expired_session") do
+        expect_any_instance_of(Responsys::Api::Client).to receive(:login).exactly(1).times.and_call_original
+        result = Responsys::Api::Client.instance.api_method(:list_folders)
+
+        expect(result[:status]).to eq("ok")
+      end
+    end
+
+    it "should rerun the request with a new session id" do
+      VCR.use_cassette("api/client/expired_session") do
+        expect_any_instance_of(Responsys::Api::Client).to receive(:login).exactly(1).times.and_call_original
+
+        expect(Responsys::Api::Client.instance.header[:SessionHeader][:sessionId]).to eq("fake_session_id")
+
+        Responsys::Api::Client.instance.api_method(:list_folders)
+
+        expect(Responsys::Api::Client.instance.header[:SessionHeader][:sessionId]).to eq("5GXdGHHKOLqsf4ukCpwQYz3B0b")
+      end
+    end
+
+  end
+
   context "Authentication" do
     let(:savon_client) { double("savon client") }
 

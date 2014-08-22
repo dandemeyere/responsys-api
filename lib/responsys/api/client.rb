@@ -41,7 +41,14 @@ module Responsys
           end
 
         rescue Exception => e
-          Responsys::Helper.format_response_with_errors(e)
+          error_response = Responsys::Helper.format_response_with_errors(e)
+
+          if error_response[:error][:code] == "INVALID_SESSION_ID"
+            login
+            api_method(action, message, response_type)
+          else
+            error_response
+          end
         end
       end
 

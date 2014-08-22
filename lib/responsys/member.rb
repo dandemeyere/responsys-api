@@ -32,11 +32,8 @@ module Responsys
     end
 
     def retrieve_profile_extension(profile_extension, fields)
-      if @user_riid.nil?
-        Responsys::Helper.format_response_with_message("member.riid_missing")
-      else
-        @client.retrieve_profile_extension_records(profile_extension, QueryColumn.new("RIID"), fields, [@user_riid])
-      end
+      return Responsys::Helper.format_response_with_message("member.riid_missing") if @user_riid.nil?
+      @client.retrieve_profile_extension_records(profile_extension, QueryColumn.new("RIID"), fields, [@user_riid])
     end
   end
 end

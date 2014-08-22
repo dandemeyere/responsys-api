@@ -3,12 +3,13 @@ require "responsys/api/object/all"
 module Responsys
   module Api
     module Campaign
-
+      include Responsys::Exceptions
       def trigger_message(campaign, recipients)
-        raise "Recipients must be an array" unless recipients.is_a? Array
+        raise ParameterException, I18n.t("api.campaign.incorrect") unless recipients.is_a? Array
+        
         message = {
-          campaign: campaign.to_hash,
-          recipientData: recipients.map(&:to_hash) 
+          campaign: campaign.to_api,
+          recipientData: recipients.map(&:to_api) 
         }
         api_method(:trigger_campaign_message, message)
       end

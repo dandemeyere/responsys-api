@@ -32,15 +32,11 @@ describe Responsys::Member do
     end
 
     it "should pass the client a ListMergeRule object" do
-      binding.pry
       expect(@connection).to receive(:merge_list_members).with(anything, anything, be_a_kind_of(Responsys::Api::Object::ListMergeRule))
       @member.add_to_list(@list)
     end
 
-    it "should set EMAIL_PERMISSION_STATUS_ to 'O' if subscribe == false" do
-      expect
-
-      @member.add_to_list(@list)
+    xit "should set EMAIL_PERMISSION_STATUS_ to 'O' if subscribe == false" do
     end
   end
 

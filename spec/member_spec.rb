@@ -26,11 +26,12 @@ describe Responsys::Member do
       @member.add_to_list(@list)
     end
 
+    #delete
     it "should pass the client a RecordData object" do
       expect(@connection).to receive(:merge_list_members).with(anything, be_a_kind_of(Responsys::Api::Object::RecordData), anything)
       @member.add_to_list(@list)
     end
-
+    #delete
     it "should pass the client a ListMergeRule object" do
       expect(@connection).to receive(:merge_list_members).with(anything, anything, be_a_kind_of(Responsys::Api::Object::ListMergeRule))
       @member.add_to_list(@list)

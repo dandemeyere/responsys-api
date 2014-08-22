@@ -8,14 +8,14 @@ module Responsys
 
         def initialize(email_format = "NO_FORMAT")
           if AVAILABLE_EMAIL_FORMAT.include? email_format
-            self.email_format_string = email_format
-          #else
-          #  raise ParameterException, I18n.t("api.object.email_format.incorrect")
+            @email_format_string = email_format
+          else
+            raise ParameterException, I18n.t("api.object.email_format.incorrect")
           end
         end
 
         def to_api
-          email_format_string
+          @email_format_string
         end
       end
     end

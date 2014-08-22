@@ -8,14 +8,14 @@ module Responsys
 
         def initialize(query_column)
           if AVAILABLE_QUERY_COLUMN.include? query_column
-            self.query_column_string = query_column
+            @query_column_string = query_column
           else
             raise ParameterException, I18n.t("api.object.query_column.incorrect")
           end
         end
 
         def to_api
-          query_column_string
+          @query_column_string
         end
       end
     end

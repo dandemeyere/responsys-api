@@ -8,14 +8,14 @@ module Responsys
 
         def initialize(field_type)
           if FIELD_TYPES.include? field_type
-            self.field_type_string = field_type
+            @field_type_string = field_type
           else
             raise ParameterException, I18n.t("api.object.field_type.incorrect")
           end
         end
 
         def to_api
-          field_type_string
+          @field_type_string
         end
       end
     end

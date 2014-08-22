@@ -4,7 +4,7 @@ module Responsys
       class RecipientData
         attr_accessor :recipient, :optional_data
 
-        def initialize(recipient, optional_data = default_optional_data)
+        def initialize(recipient, optional_data = Responsys::Api::Object::OptionalData.new)
           @recipient = recipient
           @optional_data = optional_data
         end
@@ -12,15 +12,8 @@ module Responsys
         def to_api
           {
             recipient: @recipient.to_api,
-            optionalData: @optional_data
+            optionalData: @optional_data.to_api
           }
-        end
-
-        def default_optional_data
-          [{
-            name: "",
-            value: ""
-          }]
         end
       end
     end

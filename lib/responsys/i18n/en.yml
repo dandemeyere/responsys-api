@@ -7,6 +7,10 @@ en:
         incorrect: The query column you provided is incorrect
       record_data:
         incorrect_type: The data you provided is not an array
+      optional_data:
+        incorrect_type: The name and value need to be Strings
+      email_format:
+        incorrect: The email format is not supported
     campaign:
       incorrect: Recipients paramater must be an array
   member:

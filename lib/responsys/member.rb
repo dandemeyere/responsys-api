@@ -5,7 +5,7 @@ module Responsys
   class Member
     include Responsys::Api
     include Responsys::Api::Object
-    attr_accessor :email
+    attr_accessor :email, :user_riid
 
     def initialize(email, riid = nil)
       @email = email
@@ -15,7 +15,7 @@ module Responsys
 
     def add_to_list(list, subscribe = false)
       data = { EMAIL_ADDRESS_:  @email, EMAIL_PERMISSION_STATUS_: subscribe ? "I" : "O" }
-      record = RecordData.new(data.keys, data.values)
+      record = RecordData.new([data])
       @client.merge_list_members(list, record, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: "NO_UPDATE"))
     end
 

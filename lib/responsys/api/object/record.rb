@@ -5,11 +5,11 @@ module Responsys
         attr_accessor :field_values
 
         def initialize(field_values)
-          self.field_values = field_values
+          @field_values = field_values
         end
 
         def to_api
-          { fieldValues: field_values }
+          { fieldValues: @field_values }
         end
       end
     end

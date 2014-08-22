@@ -92,7 +92,7 @@ describe Responsys::Api::Table do
 
     it "should add (merge into) a profile extension member" do
       VCR.use_cassette("api/profile_extension/merge_profile_extension_records") do
-        record_data = Responsys::Api::Object::RecordData.new(%w(EMAIL_ADDRESS_ MONTHLY_PURCH), %W(#{@user_email} 3000))
+        record_data = Responsys::Api::Object::RecordData.new([{EMAIL_ADDRESS_: @user_email, MONTHLY_PURCH: 3000}])
         response = Responsys::Api::Client.instance.merge_into_profile_extension(@profile_extension, record_data, "EMAIL_ADDRESS", true)
 
         expect(response[:status]).to eq("ok")

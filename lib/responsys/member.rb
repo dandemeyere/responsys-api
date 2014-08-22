@@ -14,7 +14,7 @@ module Responsys
     end
 
     def update(list, data)
-      record = RecordData.new(data.keys, data.values)
+      record = RecordData.new(data)
       @client.merge_list_members(list, record)
     end
 

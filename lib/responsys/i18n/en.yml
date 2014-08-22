@@ -5,5 +5,7 @@ en:
         incorrect: The field type string you provided is incorrect
       query_column:
         incorrect: The query column you provided is incorrect
+      record_data:
+        incorrect_type: The data you provided is not an array
   member:
     riid_missing: Variable riid is not provided to the member

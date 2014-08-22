@@ -38,4 +38,16 @@ describe Responsys::Api::List do
       end
     end
   end
+
+  context "Merge list members" do
+    it "should" do
+      VCR.use_cassette("api/list/retrieve") do
+        data = [{ field1: "value11", field2: "value12" }, { field1: "value21", field2: "value22", field3: "value23" }]
+
+        response = Responsys::Api::Client.instance.merge_list_members(@list, Responsys::Api::Object::RecordData.new(data), merge_rule = Responsys::Api::Object::ListMergeRule.new)
+
+        expect(response[:status]).to eq("ok")
+      end
+    end
+  end
 end

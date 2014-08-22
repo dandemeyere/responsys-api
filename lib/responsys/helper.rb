@@ -18,38 +18,36 @@ module Responsys
       formatted_response
     end
 
+    def self.format_record_data(record_data)
+      field_names = record_data[:field_names]
+      records = record_data[:records]
+
+      data = []
+      if records.is_a? Array
+        records.each do |record|
+          data << format_field_values(record, field_names)
+        end
+      else
+        values = format_field_values(records, field_names)
+        data << values
+      end
+
+      data
+    end
+
+    def self.format_field_values(record, field_names)
+      values = {}
+      record[:field_values].each_with_index do |value, index|
+        values[field_names[index].to_sym] = value
+      end
+      values
+    end
+
     def self.handle_response_types(response_body)
       data = []
 
       if response_body[:result].has_key? :record_data
-        field_names = response_body[:result][:record_data][:field_names]
-
-        if response_body[:result][:record_data][:records].is_a? Array
-
-          response_body[:result][:record_data][:records].each do |record|
-            values = {}
-
-            record[:field_values].each_with_index do | value, index |
-              values[field_names[index].to_sym] = value
-            end
-
-            data << values
-          end
-
-        else
-          values = {}
-
-          if response_body[:result][:record_data][:records][:field_values].is_a? Array
-            response_body[:result][:record_data][:records][:field_values].each_with_index do | value, index |
-              values[field_names[index].to_sym] = value
-            end
-          else
-            values[field_names.to_sym] = response_body[:result][:record_data][:records][:field_values]
-          end
-
-          data << values
-        end
-
+        data = format_record_data(response_body[:result][:record_data])
       else
         data << response_body
       end

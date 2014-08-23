@@ -28,8 +28,7 @@ module Responsys
           data << format_field_values(record, field_names)
         end
       else
-        values = format_field_values(records, field_names)
-        data << values
+        data << format_field_values(records, field_names)
       end
 
       data
@@ -37,9 +36,15 @@ module Responsys
 
     def self.format_field_values(record, field_names)
       values = {}
-      record[:field_values].each_with_index do |value, index|
-        values[field_names[index].to_sym] = value
+
+      if record.is_a? Array
+        record[:field_values].each_with_index do |value, index|
+          values[field_names[index].to_sym] = value
+        end
+      else
+        values[field_names.to_sym] = record[:field_values]
       end
+
       values
     end
 

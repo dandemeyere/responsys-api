@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>NtMtC6xjc9DVKwzOJlgvS20337</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>another_test_folder</tns:folderName><tns:objectName>test_list</tns:objectName></tns:list><tns:queryColumn>EMAIL_ADDRESS</tns:queryColumn><tns:fieldList>EMAIL_ADDRESS_</tns:fieldList><tns:fieldList>MOBILE_NUMBER_</tns:fieldList><tns:idsToRetrieve>user@email.com</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000
+      Soapaction:
+      - ! '"retrieveListMembers"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '732'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '505'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Date:
+      - Sat, 23 Aug 2014 01:00:53 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - JSESSIONID=D82FB437E2C7CEF845D5A1DDA8533F00.ws01-ri2; Path=/webservices/;
+        HttpOnly
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><soapenv:Fault><faultcode>soapenv:Server</faultcode><faultstring>UnexpectedErrorFault</faultstring><detail><UnexpectedErrorFault
+        xmlns="urn:fault.ws.rsys.com"><exceptionCode>INVALID_SESSION_ID</exceptionCode><exceptionMessage>Session
+        not available in the system. Please login.</exceptionMessage></UnexpectedErrorFault></detail></soapenv:Fault></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 23 Aug 2014 01:00:54 GMT
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><tns:login><tns:username>your_responsys_username</tns:username><tns:password>your_responsys_password</tns:password></tns:login></env:Body></env:Envelope>
+    headers:
+      Soapaction:
+      - ! '"login"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '376'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '283'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sat, 23 Aug 2014 01:00:53 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
+      - JSESSIONID=BD98FD4A1FC5E21AC200B6263FF33098.ws02-ri2; Path=/webservices/;
+        HttpOnly
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><loginResponse
+        xmlns="urn:ws.rsys.com"><result><sessionId>GkEaLA8VJOZoVYmvZQgWNI5nr3</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 23 Aug 2014 01:00:54 GMT
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>GkEaLA8VJOZoVYmvZQgWNI5nr3</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>another_test_folder</tns:folderName><tns:objectName>test_list</tns:objectName></tns:list><tns:queryColumn>EMAIL_ADDRESS</tns:queryColumn><tns:fieldList>EMAIL_ADDRESS_</tns:fieldList><tns:fieldList>MOBILE_NUMBER_</tns:fieldList><tns:idsToRetrieve>user@email.com</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - JSESSIONID=BD98FD4A1FC5E21AC200B6263FF33098.ws02-ri2
+      Soapaction:
+      - ! '"retrieveListMembers"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '732'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '463'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sat, 23 Aug 2014 01:00:54 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><retrieveListMembersResponse
+        xmlns="urn:ws.rsys.com"><result><recordData><fieldNames>EMAIL_ADDRESS_</fieldNames><fieldNames>MOBILE_NUMBER_</fieldNames><records><fieldValues>user@email.com</fieldValues><fieldValues>0000000001</fieldValues></records></recordData></result></retrieveListMembersResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 23 Aug 2014 01:00:55 GMT
+recorded_with: VCR 2.5.0

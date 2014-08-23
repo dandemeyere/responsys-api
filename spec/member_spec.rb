@@ -19,15 +19,16 @@ describe Responsys::Member do
 
       @member = Responsys::Member.new("user@email.com")
       @list = Responsys::Api::Object::InteractObject.new("list_folder","list_object_name")
+      @query_column = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")
     end
 
     xit "should check that the data provided is correct" do
     end
 
     it "should check the user has subscribed" do
-      response_expected = { :record_data => { :field_names => "EMAIL_PERMISSION_STATUS_", :records => { :field_values=>"I" } } }
+      response_expected = { status: "ok", data: [{ EMAIL_PERMISSION_STATUS_: "I" }] }
 
-      allow(@connection).to receive(:retrieve_list_members).with(@list, "EMAIL_ADDRESS", %w(EMAIL_PERMISSION_STATUS_), %W(#{@member.email})).and_return(response_expected)
+      allow(@connection).to receive(:retrieve_list_members).with(@list, kind_of(Responsys::Api::Object::QueryColumn), %w(EMAIL_PERMISSION_STATUS_), %W(#{@member.email})).and_return(response_expected)
 
       expect(@member.subscribed?(@list)).to eq(true)
     end

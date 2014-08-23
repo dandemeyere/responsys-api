@@ -19,16 +19,16 @@ module Responsys
     end
 
     def subscribe(list)
-      update(list, { :EMAIL_ADDRESS_ => @email, :EMAIL_PERMISSION_STATUS_ => "I" })
+      update(list, [{ EMAIL_ADDRESS_: @email, EMAIL_PERMISSION_STATUS_: "I" }])
     end
 
     def subscribed?(list)
-      response = @client.retrieve_list_members(list, "EMAIL_ADDRESS", %w(EMAIL_PERMISSION_STATUS_), %W(#{@email}))
-      response[:record_data][:records][:field_values] == "I"
+      response = @client.retrieve_list_members(list, QueryColumn.new("EMAIL_ADDRESS"), %w(EMAIL_PERMISSION_STATUS_), [@email])
+      response[:data][0][:EMAIL_PERMISSION_STATUS_] == "I"
     end
 
     def unsubscribe(list)
-      update(list, { :EMAIL_ADDRESS_ => @email, :EMAIL_PERMISSION_STATUS_ => "O" })
+      update(list, [{ EMAIL_ADDRESS_: @email, EMAIL_PERMISSION_STATUS_: "O" }])
     end
 
     def retrieve_profile_extension(profile_extension, fields)

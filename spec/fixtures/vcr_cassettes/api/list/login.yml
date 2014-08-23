@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - text/xml; charset=UTF-8
       Date:
-      - Thu, 21 Aug 2014 02:04:42 GMT
+      - Sat, 23 Aug 2014 01:51:42 GMT
       Server:
       - Apache
       Set-Cookie:
@@ -894,7 +894,7 @@ http_interactions:
         name=\"ResponsysWS\">\n            <soap:address location=\"https://wsxxxx.responsys.net/webservices/services/ResponsysWSService\"/>\n
         \       </port>\n    </service>\n</definitions>\n"
     http_version: 
-  recorded_at: Thu, 21 Aug 2014 02:04:45 GMT
+  recorded_at: Sat, 23 Aug 2014 01:51:43 GMT
 - request:
     method: post
     uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
@@ -924,19 +924,19 @@ http_interactions:
       Content-Type:
       - text/xml; charset=UTF-8
       Date:
-      - Thu, 21 Aug 2014 02:04:44 GMT
+      - Sat, 23 Aug 2014 01:51:42 GMT
       Server:
       - Apache
       Set-Cookie:
       - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
-      - JSESSIONID=374D660AAEC6CC985702D642FE1765D7.ws04-ri2; Path=/webservices/;
+      - JSESSIONID=803BBDC5A70E3DAD5FF095B55A30810A.ws01-ri2; Path=/webservices/;
         HttpOnly
     body:
       encoding: US-ASCII
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><loginResponse
-        xmlns="urn:ws.rsys.com"><result><sessionId>AyFdLXD426P0e6glF5GW7bxsKv</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
+        xmlns="urn:ws.rsys.com"><result><sessionId>IDQbeAkqagv2fOpFBjfcwQRy59</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Thu, 21 Aug 2014 02:04:45 GMT
+  recorded_at: Sat, 23 Aug 2014 01:51:43 GMT
 - request:
     method: post
     uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
@@ -966,17 +966,17 @@ http_interactions:
       Content-Type:
       - text/xml; charset=UTF-8
       Date:
-      - Thu, 21 Aug 2014 02:04:46 GMT
+      - Sat, 23 Aug 2014 01:51:42 GMT
       Server:
       - Apache
       Set-Cookie:
       - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
-      - JSESSIONID=A44B3D91C016D9D8E59453E26274837A.ws04-ri2; Path=/webservices/;
+      - JSESSIONID=931410626D4BEF3F111F2D2A1125865A.ws02-ri2; Path=/webservices/;
         HttpOnly
     body:
       encoding: US-ASCII
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><loginResponse
-        xmlns="urn:ws.rsys.com"><result><sessionId>BjvOzPmvyaHuODned5hOyAe9Eu</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
+        xmlns="urn:ws.rsys.com"><result><sessionId>0b1e6peYfTN4BkbUALOifGG1I5</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Thu, 21 Aug 2014 02:04:47 GMT
+  recorded_at: Sat, 23 Aug 2014 01:51:43 GMT
 recorded_with: VCR 2.5.0

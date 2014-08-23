@@ -1,0 +1,134 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>NtMtC6xjc9DVKwzOJlgvS20337</sessionId></sessionHeader></env:Header><env:Body><tns:mergeListMembers><tns:list><tns:folderName>another_test_folder</tns:folderName><tns:objectName>test_list</tns:objectName></tns:list><tns:recordData><tns:fieldNames>Email_Address_</tns:fieldNames><tns:fieldNames>Mobile_Number_</tns:fieldNames><tns:fieldNames>Customer_ID_</tns:fieldNames><tns:records><tns:fieldValues>wsxxxx</tns:fieldValues><tns:fieldValues>0000000001</tns:fieldValues><tns:fieldValues></tns:fieldValues></tns:records><tns:records><tns:fieldValues></tns:fieldValues><tns:fieldValues>0000000000</tns:fieldValues><tns:fieldValues></tns:fieldValues></tns:records></tns:recordData><tns:mergeRule><tns:insertOnNoMatch>false</tns:insertOnNoMatch><tns:updateOnMatch>REPLACE_ALL</tns:updateOnMatch><tns:matchColumnName1>Mobile_Number_</tns:matchColumnName1><tns:matchColumnName2></tns:matchColumnName2><tns:matchColumnName3></tns:matchColumnName3><tns:matchOperator>AND</tns:matchOperator><tns:optinValue>I</tns:optinValue><tns:optoutValue>O</tns:optoutValue><tns:htmlValue>H</tns:htmlValue><tns:textValue>T</tns:textValue><tns:rejectRecordIfChannelEmpty></tns:rejectRecordIfChannelEmpty><tns:defaultPermissionStatus></tns:defaultPermissionStatus></tns:mergeRule></tns:mergeListMembers></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000
+      Soapaction:
+      - ! '"mergeListMembers"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1583'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '505'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Date:
+      - Sat, 23 Aug 2014 00:54:41 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - JSESSIONID=79874FB8B5104592CA8911BE54EBDCCA.ws04-ri2; Path=/webservices/;
+        HttpOnly
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><soapenv:Fault><faultcode>soapenv:Server</faultcode><faultstring>UnexpectedErrorFault</faultstring><detail><UnexpectedErrorFault
+        xmlns="urn:fault.ws.rsys.com"><exceptionCode>INVALID_SESSION_ID</exceptionCode><exceptionMessage>Session
+        not available in the system. Please login.</exceptionMessage></UnexpectedErrorFault></detail></soapenv:Fault></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 23 Aug 2014 00:54:42 GMT
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><tns:login><tns:username>your_responsys_username</tns:username><tns:password>your_responsys_password</tns:password></tns:login></env:Body></env:Envelope>
+    headers:
+      Soapaction:
+      - ! '"login"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '376'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '283'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sat, 23 Aug 2014 00:54:41 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
+      - JSESSIONID=4F692426F72DA7A19196FF6DBD5613A4.ws01-ri2; Path=/webservices/;
+        HttpOnly
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><loginResponse
+        xmlns="urn:ws.rsys.com"><result><sessionId>wbDyodR4YE8X10TuP3p7v9FzxL</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 23 Aug 2014 00:54:42 GMT
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>wbDyodR4YE8X10TuP3p7v9FzxL</sessionId></sessionHeader></env:Header><env:Body><tns:mergeListMembers><tns:list><tns:folderName>another_test_folder</tns:folderName><tns:objectName>test_list</tns:objectName></tns:list><tns:recordData><tns:fieldNames>Email_Address_</tns:fieldNames><tns:fieldNames>Mobile_Number_</tns:fieldNames><tns:fieldNames>Customer_ID_</tns:fieldNames><tns:records><tns:fieldValues>wsxxxx</tns:fieldValues><tns:fieldValues>0000000001</tns:fieldValues><tns:fieldValues></tns:fieldValues></tns:records><tns:records><tns:fieldValues></tns:fieldValues><tns:fieldValues>0000000000</tns:fieldValues><tns:fieldValues></tns:fieldValues></tns:records></tns:recordData><tns:mergeRule><tns:insertOnNoMatch>false</tns:insertOnNoMatch><tns:updateOnMatch>REPLACE_ALL</tns:updateOnMatch><tns:matchColumnName1>Mobile_Number_</tns:matchColumnName1><tns:matchColumnName2></tns:matchColumnName2><tns:matchColumnName3></tns:matchColumnName3><tns:matchOperator>AND</tns:matchOperator><tns:optinValue>I</tns:optinValue><tns:optoutValue>O</tns:optoutValue><tns:htmlValue>H</tns:htmlValue><tns:textValue>T</tns:textValue><tns:rejectRecordIfChannelEmpty></tns:rejectRecordIfChannelEmpty><tns:defaultPermissionStatus></tns:defaultPermissionStatus></tns:mergeRule></tns:mergeListMembers></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - JSESSIONID=4F692426F72DA7A19196FF6DBD5613A4.ws01-ri2
+      Soapaction:
+      - ! '"mergeListMembers"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1583'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '452'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Sat, 23 Aug 2014 00:54:42 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><mergeListMembersResponse
+        xmlns="urn:ws.rsys.com"><result><insertCount>0</insertCount><updateCount>2</updateCount><rejectedCount>0</rejectedCount><totalCount>2</totalCount><errorMessage
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" /></result></mergeListMembersResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 23 Aug 2014 00:54:43 GMT
+recorded_with: VCR 2.5.0

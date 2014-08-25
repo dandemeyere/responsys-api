@@ -11,6 +11,8 @@ en:
         incorrect_type: The name and value need to be Strings
       email_format:
         incorrect: The email format is not supported
+      record:
+        incorrect: The field_values must be an array
     campaign:
       incorrect: Recipients paramater must be an array
   member:

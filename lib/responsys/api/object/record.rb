@@ -2,9 +2,11 @@ module Responsys
   module Api
     module Object
       class Record
+        include Responsys::Exceptions
         attr_accessor :field_values
 
         def initialize(field_values)
+          raise ParameterException, I18n.t("api.object.record.incorrect") unless field_values.is_a? Array
           @field_values = field_values
         end
 

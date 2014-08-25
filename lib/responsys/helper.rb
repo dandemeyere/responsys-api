@@ -37,12 +37,12 @@ module Responsys
     def self.format_field_values(record, field_names)
       values = {}
 
-      if record.is_a? Array
+      if record.is_a? Hash and record[:field_values].is_a? Array
         record[:field_values].each_with_index do |value, index|
           values[field_names[index].to_sym] = value
         end
-      else
-        values[field_names.to_sym] = record[:field_values]
+      elsif record.is_a? Hash
+          values[field_names.to_sym] = record[:field_values]
       end
 
       values

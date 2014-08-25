@@ -9,10 +9,12 @@ module Responsys
 
       return formatted_response unless response.body.has_key? "#{action}_response".to_sym
 
-      if response.body["#{action}_response".to_sym][:result].is_a? Hash
+      if response.body["#{action}_response".to_sym].has_key?(:result) and response.body["#{action}_response".to_sym][:result].is_a? Hash
         formatted_response[:data] = handle_response_types(response.body["#{action}_response".to_sym])
-      else
+      elsif response.body["#{action}_response".to_sym].has_key?(:result)
         formatted_response[:result] = response.body["#{action}_response".to_sym][:result]
+      elsif response.body["#{action}_response".to_sym].is_a? Hash and !response.body["#{action}_response".to_sym].empty?
+        formatted_response[:result] = response.body["#{action}_response".to_sym].values[0]
       end
 
       formatted_response

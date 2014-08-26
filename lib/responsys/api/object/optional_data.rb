@@ -6,7 +6,7 @@ module Responsys
         attr_accessor :name, :value
 
         def initialize(name = "", value = "")
-          raise ParameterException, I18n.t("api.object.optional_data.incorrect_type") unless (name.is_a? String) && (value.is_a? String)
+          raise ParameterException, I18n.t("api.object.optional_data.incorrect_optional_data_type") unless (name.is_a? String) && (value.is_a? String)
           @name = name
           @value = value
         end

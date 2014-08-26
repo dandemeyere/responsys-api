@@ -2,18 +2,19 @@ en:
   api:
     object:
       field_type:
-        incorrect: The field type string you provided is incorrect
+        incorrect_field_type: The field type string you provided is incorrect
       query_column:
-        incorrect: The query column you provided is incorrect
+        incorrect_query_column: The query column you provided is incorrect
       record_data:
-        incorrect_type: The data you provided is not an array
+        incorrect_record_data_type: The data you provided is not an array
       optional_data:
-        incorrect_type: The name and value need to be Strings
+        incorrect_optional_data_type: The name and value need to be Strings
       email_format:
-        incorrect: The email format is not supported
+        incorrect_email_format: The email format is not supported
       record:
-        incorrect: The field_values must be an array
+        incorrect_field_values_type: The field_values must be an array
     campaign:
-      incorrect: Recipients paramater must be an array
+      incorrect_recipients_type: Recipients parameter must be an array
   member:
     riid_missing: Variable riid is not provided to the member
+    record_not_found: The member has not been found in the list

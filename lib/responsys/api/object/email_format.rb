@@ -10,7 +10,7 @@ module Responsys
           if AVAILABLE_EMAIL_FORMAT.include? email_format
             @email_format_string = email_format
           else
-            raise ParameterException, I18n.t("api.object.email_format.incorrect")
+            raise ParameterException, I18n.t("api.object.email_format.incorrect_email_format")
           end
         end
 

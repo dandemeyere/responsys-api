@@ -10,7 +10,7 @@ module Responsys
           if AVAILABLE_QUERY_COLUMN.include? query_column
             @query_column_string = query_column
           else
-            raise ParameterException, I18n.t("api.object.query_column.incorrect")
+            raise ParameterException, I18n.t("api.object.query_column.incorrect_query_column")
           end
         end
 

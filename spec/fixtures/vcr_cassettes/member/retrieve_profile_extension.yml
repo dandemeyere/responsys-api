@@ -7,10 +7,100 @@ http_interactions:
       encoding: US-ASCII
       string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>1kZpEo5CtYSfPC2GNUMIdUo9FT</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveProfileExtensionRecords><tns:profileExtension><tns:folderName>demo_folder2</tns:folderName><tns:objectName>customers_extension</tns:objectName></tns:profileExtension><tns:queryColumn>RIID</tns:queryColumn><tns:fieldList>RIID_</tns:fieldList><tns:fieldList>EMAIL_ADDRESS</tns:fieldList><tns:idsToRetrieve>398403</tns:idsToRetrieve></tns:retrieveProfileExtensionRecords></env:Body></env:Envelope>
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>BeYHarfjfbuifhY9S8miH0HYjq</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>demo_folder2</tns:folderName><tns:objectName>customers_extension</tns:objectName></tns:list><tns:queryColumn>EMAIL_ADDRESS</tns:queryColumn><tns:fieldList>EMAIL_PERMISSION_STATUS_</tns:fieldList><tns:idsToRetrieve>user@email.com</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
     headers:
       Cookie:
-      - JSESSIONID=6E781C177741888FFC0CAB5AC70EB8A9.ws04-ri2
+      - JSESSIONID=BA807BE17D360883F578CE6C423223D2.ws02-ri2
+      Soapaction:
+      - ! '"retrieveListMembers"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '700'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '452'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Date:
+      - Tue, 26 Aug 2014 19:38:44 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerapigee.responsys.net_9002=3607791370.10787.0000; path=/
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><soapenv:Fault><faultcode>soapenv:Server</faultcode><faultstring>ListFault</faultstring><detail><ListFault
+        xmlns="urn:fault.ws.rsys.com"><exceptionCode>LIST_NOT_FOUND</exceptionCode><exceptionMessage>customers_extension
+        List Not Found</exceptionMessage></ListFault></detail></soapenv:Fault></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Tue, 26 Aug 2014 19:38:44 GMT
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>BeYHarfjfbuifhY9S8miH0HYjq</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>demo_folder2</tns:folderName><tns:objectName>customers_extension</tns:objectName></tns:list><tns:queryColumn>RIID</tns:queryColumn><tns:fieldList>EMAIL_PERMISSION_STATUS_</tns:fieldList><tns:idsToRetrieve>398403</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - JSESSIONID=BA807BE17D360883F578CE6C423223D2.ws02-ri2
+      Soapaction:
+      - ! '"retrieveListMembers"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '682'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '452'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Date:
+      - Tue, 26 Aug 2014 19:38:44 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerapigee.responsys.net_9002=3607791370.10787.0000; path=/
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><soapenv:Fault><faultcode>soapenv:Server</faultcode><faultstring>ListFault</faultstring><detail><ListFault
+        xmlns="urn:fault.ws.rsys.com"><exceptionCode>LIST_NOT_FOUND</exceptionCode><exceptionMessage>customers_extension
+        List Not Found</exceptionMessage></ListFault></detail></soapenv:Fault></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Tue, 26 Aug 2014 19:38:44 GMT
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>BeYHarfjfbuifhY9S8miH0HYjq</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveProfileExtensionRecords><tns:profileExtension><tns:folderName>demo_folder2</tns:folderName><tns:objectName>customers_extension</tns:objectName></tns:profileExtension><tns:queryColumn>RIID</tns:queryColumn><tns:fieldList>RIID_</tns:fieldList><tns:fieldList>EMAIL_ADDRESS</tns:fieldList><tns:idsToRetrieve>398403</tns:idsToRetrieve></tns:retrieveProfileExtensionRecords></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - JSESSIONID=BA807BE17D360883F578CE6C423223D2.ws02-ri2
       Soapaction:
       - ! '"retrieveProfileExtensionRecords"'
       Content-Type:
@@ -31,7 +121,7 @@ http_interactions:
       Content-Type:
       - text/xml; charset=UTF-8
       Date:
-      - Wed, 20 Aug 2014 20:54:38 GMT
+      - Tue, 26 Aug 2014 19:38:44 GMT
       Server:
       - Apache
       Set-Cookie:
@@ -41,5 +131,5 @@ http_interactions:
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><retrieveProfileExtensionRecordsResponse
         xmlns="urn:ws.rsys.com"><result><recordData><fieldNames>RIID_</fieldNames><fieldNames>EMAIL_ADDRESS</fieldNames><records><fieldValues>398403</fieldValues><fieldValues>user@email.com</fieldValues></records></recordData></result></retrieveProfileExtensionRecordsResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Wed, 20 Aug 2014 20:54:39 GMT
+  recorded_at: Tue, 26 Aug 2014 19:38:44 GMT
 recorded_with: VCR 2.5.0

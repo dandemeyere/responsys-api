@@ -22,7 +22,10 @@ describe Responsys::Member do
       @query_column = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")
     end
 
-    xit "should check that the data provided is correct" do
+    it "should check the user is present in the list" do
+      expect(@member).to receive(:present?).with(@list)
+
+      @member.subscribe(@list)
     end
 
     it "should check the user has subscribed" do
@@ -37,16 +40,56 @@ describe Responsys::Member do
 
   context "Existing member" do
 
-    before(:each) do
-      @connection = double "connection"
+    before(:all) do
+      @list = Responsys::Api::Object::InteractObject.new("another_test_folder","test_list")
 
-      allow(Responsys::Api::Client).to receive(:instance).and_return(@connection)
-
-      @member = Responsys::Member.new("user@email.com")
-      @list = Responsys::Api::Object::InteractObject.new("list_folder","list_object_name")
+      @email = "user@email.com"
+      @riid = 398426
     end
 
-    xit "should check its existance to the list" do
+    it "should be ok, the email is present" do
+      VCR.use_cassette("member/present1") do
+        member_without_riid = Responsys::Member.new(@email)
+        bool = member_without_riid.present?(@list)
+
+        expect(bool).to eq(true)
+      end
+    end
+
+    it "should be ok, the email and riid is present" do
+      VCR.use_cassette("member/present2") do
+        member_with_riid = Responsys::Member.new(@email, @riid)
+        bool = member_with_riid.present?(@list)
+
+        expect(bool).to eq(true)
+      end
+    end
+
+    it "should fail, the email is not present" do
+      VCR.use_cassette("member/present3") do
+        member_with_fake_email = Responsys::Member.new("thisemailis@notpresent.com")
+        bool = member_with_fake_email.present?(@list)
+
+        expect(bool).to eq(false)
+      end
+    end
+
+    it "should fail, the email is present but not the riid" do
+      VCR.use_cassette("member/present4") do
+        member_with_fake_riid = Responsys::Member.new(@email, "000001")
+        bool = member_with_fake_riid.present?(@list)
+
+        expect(bool).to eq(false)
+      end
+    end
+
+    it "should return the record_not_found code message" do
+      VCR.use_cassette("member/present4") do
+        member_with_fake_riid = Responsys::Member.new(@email, "000001")
+        response = member_with_fake_riid.subscribed?(@list)
+
+        expect(response[:error][:code]).to eq("record_not_found")
+      end
     end
 
   end

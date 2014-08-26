@@ -10,7 +10,7 @@ module Responsys
           if FIELD_TYPES.include? field_type
             @field_type_string = field_type
           else
-            raise ParameterException, I18n.t("api.object.field_type.incorrect")
+            raise ParameterException, I18n.t("api.object.field_type.incorrect_field_type")
           end
         end
 

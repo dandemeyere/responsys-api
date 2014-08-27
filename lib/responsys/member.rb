@@ -44,18 +44,14 @@ module Responsys
       @client.merge_list_members(list, record)
     end
 
+    def lookup_via_primary_key(list, key, value)
+      @client.retrieve_list_members(list, QueryColumn.new(key), %w(EMAIL_PERMISSION_STATUS_), [value])
+    end
+
     def present?(list)
-      response = @client.retrieve_list_members(list, QueryColumn.new("EMAIL_ADDRESS"), %w(EMAIL_PERMISSION_STATUS_), [@email])
-
-      return false if response[:status] == "failure" && response[:error][:code] == "RECORD_NOT_FOUND"
-
-      unless @user_riid.nil?
-        response = @client.retrieve_list_members(list, QueryColumn.new("RIID"), %w(EMAIL_PERMISSION_STATUS_), [@user_riid])
-
-        return false if response[:status] == "failure" && response[:error][:code] == "RECORD_NOT_FOUND"
-      end
-
-      true
+      response = lookup_via_primary_key(list, "EMAIL_ADDRESS", @email)
+      response = lookup_via_primary_key(list, "RIID", @user_riid) if response[:status] == "ok" && !@user_riid.nil?
+      !(response[:status] == "failure" && response[:error][:code] == "RECORD_NOT_FOUND")
     end
 
     def subscribed?(list)

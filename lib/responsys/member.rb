@@ -14,8 +14,6 @@ module Responsys
     end
 
     def add_to_list(list, subscribe = false)
-      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present?(list)
-
       data = { EMAIL_ADDRESS_:  @email, EMAIL_PERMISSION_STATUS_: subscribe ? "I" : "O" }
       record = RecordData.new([data])
 

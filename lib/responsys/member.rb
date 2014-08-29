@@ -22,7 +22,7 @@ module Responsys
 
     def retrieve_profile_extension(profile_extension, fields)
       return Responsys::Helper.format_response_with_message("member.riid_missing") if @user_riid.nil?
-      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present?(profile_extension)
+      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_profile?(profile_extension)
 
       @client.retrieve_profile_extension_records(profile_extension, QueryColumn.new("RIID"), fields, [@user_riid])
     end
@@ -36,27 +36,45 @@ module Responsys
     end
 
     def update(list, data)
-      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present?(list)
+      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_list?(list)
 
       record = RecordData.new(data)
       @client.merge_list_members(list, record)
     end
 
-    def lookup_via_primary_key(list, key, value)
-      @client.retrieve_list_members(list, QueryColumn.new(key), %w(EMAIL_PERMISSION_STATUS_), [value])
+    def present_in_profile?(list)
+      return Responsys::Helper.format_response_with_message("member.riid_missing") if @user_riid.nil?
+
+      response = lookup_profile_via_key(list, "RIID", @user_riid)
+
+      !(response[:status] == "failure" && response[:error][:code] == "RECORD_NOT_FOUND")
     end
 
-    def present?(list)
-      response = lookup_via_primary_key(list, "EMAIL_ADDRESS", @email)
-      response = lookup_via_primary_key(list, "RIID", @user_riid) if response[:status] == "ok" && !@user_riid.nil?
+    def present_in_list?(list)
+      if !@user_riid.nil?
+        response = lookup_list_via_key(list, "RIID", @user_riid)
+      else
+        response = lookup_list_via_key(list, "EMAIL_ADDRESS", @email)
+      end
+
       !(response[:status] == "failure" && response[:error][:code] == "RECORD_NOT_FOUND")
     end
 
     def subscribed?(list)
-      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present?(list)
+      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_list?(list)
 
       response = @client.retrieve_list_members(list, QueryColumn.new("EMAIL_ADDRESS"), %w(EMAIL_PERMISSION_STATUS_), [@email])
       response[:data][0][:EMAIL_PERMISSION_STATUS_] == "I"
+    end
+
+    private
+
+    def lookup_profile_via_key(profile_extension, key, value)
+      @client.retrieve_profile_extension_records(profile_extension, QueryColumn.new(key), %w(RIID_), [value])
+    end
+
+    def lookup_list_via_key(list, key, value)
+      @client.retrieve_list_members(list, QueryColumn.new(key), %w(EMAIL_PERMISSION_STATUS_), [value])
     end
   end
 end

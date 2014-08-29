@@ -21,11 +21,11 @@ http_interactions:
       Content-Type:
       - text/xml; charset=UTF-8
       Date:
-      - Wed, 27 Aug 2014 19:22:23 GMT
+      - Fri, 29 Aug 2014 22:31:03 GMT
       Server:
       - Apache
       Set-Cookie:
-      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
+      - BIGipServerDC2-APIGEE-I5-9051-SSL=3617446922.23331.0000; path=/
     body:
       encoding: US-ASCII
       string: ! "<?xml version='1.0' encoding='UTF-8'?>\n<definitions targetNamespace=\"urn:ws.rsys.com\"
@@ -894,7 +894,7 @@ http_interactions:
         name=\"ResponsysWS\">\n            <soap:address location=\"https://wsxxxx.responsys.net/webservices/services/ResponsysWSService\"/>\n
         \       </port>\n    </service>\n</definitions>\n"
     http_version: 
-  recorded_at: Wed, 27 Aug 2014 19:22:24 GMT
+  recorded_at: Fri, 29 Aug 2014 22:31:02 GMT
 - request:
     method: post
     uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
@@ -909,7 +909,7 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Content-Length:
-      - '376'
+      - '377'
       Accept:
       - ! '*/*'
       User-Agent:
@@ -924,19 +924,19 @@ http_interactions:
       Content-Type:
       - text/xml; charset=UTF-8
       Date:
-      - Wed, 27 Aug 2014 19:22:24 GMT
+      - Fri, 29 Aug 2014 22:31:03 GMT
       Server:
       - Apache
       Set-Cookie:
-      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
-      - JSESSIONID=CF832AC68043D9AB93A725FDB575C144.ws02-ri2; Path=/webservices/;
+      - BIGipServerDC2-APIGEE-I5-9051-SSL=3617446922.23331.0000; path=/
+      - JSESSIONID=EF4D2D3574EA896D10416D6FF9DE184E.ws01-ri5; Path=/webservices/;
         HttpOnly
     body:
       encoding: US-ASCII
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><loginResponse
-        xmlns="urn:ws.rsys.com"><result><sessionId>t2XxWdz7OrlJe3TZPtIL4jorYD</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
+        xmlns="urn:ws.rsys.com"><result><sessionId>bBvxPCXScxL40VhQx6JFG6ziO9</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Wed, 27 Aug 2014 19:22:24 GMT
+  recorded_at: Fri, 29 Aug 2014 22:31:03 GMT
 - request:
     method: post
     uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
@@ -944,10 +944,10 @@ http_interactions:
       encoding: US-ASCII
       string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>t2XxWdz7OrlJe3TZPtIL4jorYD</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>another_test_folder</tns:folderName><tns:objectName>test_list</tns:objectName></tns:list><tns:queryColumn>EMAIL_ADDRESS</tns:queryColumn><tns:fieldList>EMAIL_PERMISSION_STATUS_</tns:fieldList><tns:idsToRetrieve>user@email.com</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>bBvxPCXScxL40VhQx6JFG6ziO9</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>another_test_folder</tns:folderName><tns:objectName>test_list</tns:objectName></tns:list><tns:queryColumn>EMAIL_ADDRESS</tns:queryColumn><tns:fieldList>EMAIL_PERMISSION_STATUS_</tns:fieldList><tns:idsToRetrieve>user@email.com</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
     headers:
       Cookie:
-      - JSESSIONID=CF832AC68043D9AB93A725FDB575C144.ws02-ri2
+      - JSESSIONID=EF4D2D3574EA896D10416D6FF9DE184E.ws01-ri5
       Soapaction:
       - ! '"retrieveListMembers"'
       Content-Type:
@@ -968,15 +968,15 @@ http_interactions:
       Content-Type:
       - text/xml; charset=UTF-8
       Date:
-      - Wed, 27 Aug 2014 19:22:24 GMT
+      - Fri, 29 Aug 2014 22:31:03 GMT
       Server:
       - Apache
       Set-Cookie:
-      - BIGipServerapigee.responsys.net_9002=3591014154.10787.0000; path=/
+      - BIGipServerDC2-APIGEE-I5-9051-SSL=3617446922.23331.0000; path=/
     body:
       encoding: US-ASCII
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><retrieveListMembersResponse
         xmlns="urn:ws.rsys.com"><result><recordData><fieldNames>EMAIL_PERMISSION_STATUS_</fieldNames><records><fieldValues>I</fieldValues></records></recordData></result></retrieveListMembersResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Wed, 27 Aug 2014 19:22:25 GMT
+  recorded_at: Fri, 29 Aug 2014 22:31:03 GMT
 recorded_with: VCR 2.5.0

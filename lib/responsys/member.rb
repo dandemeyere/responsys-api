@@ -13,11 +13,23 @@ module Responsys
       @client = Client.instance
     end
 
-    def add_to_list(list, subscribe = false)
+    def add_to_list(list, subscribe = false, details = {}, update_record = false)
       data = { EMAIL_ADDRESS_:  @email, EMAIL_PERMISSION_STATUS_: subscribe ? "I" : "O" }
+
+      safe_details = {}
+      details.each do |k,v|
+        next if reserved_fields.include? r_key(k)
+        if [Time, Date, DateTime].include?(v.class)
+          safe_details[r_key(k)] = details[k].strftime('%Y-%m-%dT%H:%M:%S%z')
+        else
+          safe_details[r_key(k)] = details[k]
+        end
+      end
+
+      data = data.merge( safe_details )
       record = RecordData.new([data])
 
-      @client.merge_list_members_riid(list, record, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: "NO_UPDATE"))
+      @client.merge_list_members_riid(list, record, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: ( update_record ? 'REPLACE_ALL' : 'NO_UPDATE' )))
     end
 
     def retrieve_profile_extension(profile_extension, fields)
@@ -68,6 +80,26 @@ module Responsys
     end
 
     private
+
+    def r_key(k)
+      k.to_s.upcase.to_sym
+    end
+
+    def reserved_fields
+      # There are also the MOBILE and POSTAL fields.  We should allow those to be set via this method
+      [
+        :RIID_,
+        :CREATED_SOURCE_IP_,
+        :CUSTOMER_ID_,
+        :EMAIL_ADDRESS_,
+        :EMAIL_DOMAIN_,
+        :EMAIL_ISP_,
+        :EMAIL_FORMAT_,
+        :EMAIL_PERMISSION_STATUS_,
+        :EMAIL_DELIVERABILITY_STATUS_,
+        :EMAIL_PERMISSION_REASON_,
+      ]
+    end
 
     def lookup_profile_via_key(profile_extension, key, value)
       @client.retrieve_profile_extension_records(profile_extension, QueryColumn.new(key), %w(RIID_), [value])

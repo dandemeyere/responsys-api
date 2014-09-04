@@ -8,7 +8,7 @@ en:
       record_data:
         incorrect_record_data_type: The data you provided is not an array
       optional_data:
-        incorrect_optional_data_type: The name and value need to be Strings
+        incorrect_optional_data_type: The options you provided is not an array
       email_format:
         incorrect_email_format: The email format is not supported
       record:

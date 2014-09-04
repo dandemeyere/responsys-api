@@ -37,7 +37,7 @@ describe Responsys::Api::Object::RecipientData do
     end
 
     it "should have an optionalData attribute of type Array" do
-      expect(@recipient_data.to_api[:optionalData]).to be_a(Hash)
+      expect(@recipient_data.to_api[:optionalData]).to be_a(Array)
     end
   end
 end

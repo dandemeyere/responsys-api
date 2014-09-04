@@ -3,19 +3,19 @@ module Responsys
     module Object
       class OptionalData
         include Responsys::Exceptions
-        attr_accessor :options
+        attr_accessor :name, :value
 
-        def initialize(options={})
-          raise ParameterException, I18n.t("api.object.optional_data.incorrect_optional_data_type") unless (options.is_a? Hash)
-          @options = options
+        def initialize(name = "", value = "")
+          raise ParameterException, I18n.t("api.object.optional_data.incorrect_optional_data_type") unless (name.is_a? String) && (value.is_a? String)
+          @name = name
+          @value = value
         end
 
         def to_api
-          options_array = []
-          options.each do |key, value|
-            options_array << { Name: key, Value: value}
-          end
-          options_array
+          {
+            Name: @name,
+            Value: @value
+          }
         end
       end
     end

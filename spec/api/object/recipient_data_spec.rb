@@ -16,7 +16,7 @@ describe Responsys::Api::Object::RecipientData do
     end
 
     it "should have an optional_data attribute of type Array" do
-      expect(@recipient_data.optional_data).to be_a(Responsys::Api::Object::OptionalData)
+      expect(@recipient_data.optional_data).to include(Responsys::Api::Object::OptionalData)
     end
   end
 

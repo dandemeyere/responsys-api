@@ -4,12 +4,12 @@ module Responsys
   module Api
     module Campaign
       include Responsys::Exceptions
-      
+
       def trigger_message(campaign, recipients)
         raise ParameterException, I18n.t("api.campaign.incorrect_recipients_type") unless recipients.is_a? Array
         message = {
           campaign: campaign.to_api,
-          recipientData: recipients.map(&:to_api) 
+          recipientData: recipients.map(&:to_api)
         }
         api_method(:trigger_campaign_message, message)
       end

@@ -18,13 +18,11 @@ module Responsys
 
       safe_details = {}
       details.each do |k,v|
-        key = k.to_s.upcase.to_sym
-        next if key == :EMAIL_ADDRESS_
-        next if key == :CUSTOMER_ID_
+        next if reserved_fields.include? r_key(k)
         if [Time, Date, DateTime].include?(v.class)
-          safe_details[key] = details[k].strftime('%Y-%m-%dT%H:%M:%S%z')
+          safe_details[r_key(k)] = details[k].strftime('%Y-%m-%dT%H:%M:%S%z')
         else
-          safe_details[key] = details[k]
+          safe_details[r_key(k)] = details[k]
         end
       end
 
@@ -82,6 +80,26 @@ module Responsys
     end
 
     private
+
+    def r_key(k)
+      k.to_s.upcase.to_sym
+    end
+
+    def reserved_fields
+      # There are also the MOBILE and POSTAL fields.  We should allow those to be set via this method
+      [
+        :RIID_
+        :CREATED_SOURCE_IP_
+        :CUSTOMER_ID_
+        :EMAIL_ADDRESS_
+        :EMAIL_DOMAIN_
+        :EMAIL_ISP_
+        :EMAIL_FORMAT_
+        :EMAIL_PERMISSION_STATUS_
+        :EMAIL_DELIVERABILITY_STATUS_
+        :EMAIL_PERMISSION_REASON_
+      ]
+    end
 
     def lookup_profile_via_key(profile_extension, key, value)
       @client.retrieve_profile_extension_records(profile_extension, QueryColumn.new(key), %w(RIID_), [value])

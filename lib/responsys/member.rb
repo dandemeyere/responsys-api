@@ -13,11 +13,25 @@ module Responsys
       @client = Client.instance
     end
 
-    def add_to_list(list, subscribe = false)
+    def add_to_list(list, subscribe = false, details = {}, update_record = false)
       data = { EMAIL_ADDRESS_:  @email, EMAIL_PERMISSION_STATUS_: subscribe ? "I" : "O" }
+
+      safe_details = {}
+      details.each do |k,v|
+        key = k.to_s.upcase.to_sym
+        next if key == :EMAIL_ADDRESS_
+        next if key == :CUSTOMER_ID_
+        if [Time, Date, DateTime].include?(v.class)
+          safe_details[key] = details[k].strftime('%Y-%m-%dT%H:%M:%S%z')
+        else
+          safe_details[key] = details[k]
+        end
+      end
+
+      data = data.merge( safe_details )
       record = RecordData.new([data])
 
-      @client.merge_list_members_riid(list, record, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: "NO_UPDATE"))
+      @client.merge_list_members_riid(list, record, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: ( update_record ? 'REPLACE_ALL' : 'NO_UPDATE' )))
     end
 
     def retrieve_profile_extension(profile_extension, fields)

@@ -88,16 +88,16 @@ module Responsys
     def reserved_fields
       # There are also the MOBILE and POSTAL fields.  We should allow those to be set via this method
       [
-        :RIID_
-        :CREATED_SOURCE_IP_
-        :CUSTOMER_ID_
-        :EMAIL_ADDRESS_
-        :EMAIL_DOMAIN_
-        :EMAIL_ISP_
-        :EMAIL_FORMAT_
-        :EMAIL_PERMISSION_STATUS_
-        :EMAIL_DELIVERABILITY_STATUS_
-        :EMAIL_PERMISSION_REASON_
+        :RIID_,
+        :CREATED_SOURCE_IP_,
+        :CUSTOMER_ID_,
+        :EMAIL_ADDRESS_,
+        :EMAIL_DOMAIN_,
+        :EMAIL_ISP_,
+        :EMAIL_FORMAT_,
+        :EMAIL_PERMISSION_STATUS_,
+        :EMAIL_DELIVERABILITY_STATUS_,
+        :EMAIL_PERMISSION_REASON_,
       ]
     end
 

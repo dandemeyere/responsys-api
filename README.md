@@ -1,6 +1,6 @@
 # ResponsysApi
 
-A gem to help you communicate to the Responsys Interact SOAP API.
+A gem to help you communicate to the Responsys Interact SOAP API. Currently supporting version 6.20.
 
 ## Documentation
 
@@ -81,6 +81,20 @@ The API client used by the gem logs in as soon as a the first method is called. 
 
 ```ruby
 Responsys::Api::Client.instance.logout
+```
+
+###Notes
+
+####Invalid email format
+If you try to call the API on a user that has an invalid email format, the API and the GEM will then reply with this message :
+```
+{
+	:status=>"ok", 
+	:result=>{
+		:recipient_id=>"-1", 
+		:error_message=>"Record 0 = BAD EMAIL FORMAT"
+	}
+}
 ```
 
 ## Contributing

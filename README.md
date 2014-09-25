@@ -1,23 +1,23 @@
 # ResponsysApi
 
-A gem to help you communicate to the Responsys Interact SOAP API. Currently supporting version 6.20.
+A gem to help you communicate to the Responsys Interact SOAP API. Currently working of Responsys Interact version 6.20.
 
 ## Documentation
 
-Have a look at the [wiki](https://github.com/dandemeyere/responsys-api/wiki) to understand how it works as well as special tips specially prepared for you ! If you have any questions or if you want to report a bug please create an [issue](https://github.com/dandemeyere/responsys-api/issues).
+Have a look at our [wiki](https://github.com/dandemeyere/responsys-api/wiki) to understand the functionality this gem offers, how  to use it, and some tips to help you avoid the same mistakes we ran into! If you have any questions or if you want to report a bug please create an [issue](https://github.com/dandemeyere/responsys-api/issues).
 
 ## Installation
 
 Add this line to your application"s Gemfile:
 
-    gem "responsys-api", "~> 0.0.4"
+    gem "responsys-api", "~> 0.0.5"
 
 Or install it locally with:
 
     $ gem install responsys-api
 
 ## Usage
-### Configuration 
+### Configuration
 
 ```ruby
 # Configure ResponsysApi in your initializers (config/initializers/responsys_api.rb):
@@ -57,15 +57,15 @@ list = Responsys::Api::Object::InteractObject.new("the_folder_containing_the_lis
 # The Member (or "user" for the example) record to update
 member = Responsys::Member.new('user@email.com')
 
-# Add the user to the list if he is not present.
-unless member.present_in_list?(list) 
-  puts "New user. Let's add it"
+# Add the user to the list if he/she is not already present.
+unless member.present_in_list?(list)
+  puts "New user add to list functionality."
   member.add_to_list(list)
 else
   puts "The user is in the list"
 end
 
-# Subscribe the user if he hasn't subscribed yet
+# Subscribe the user if he/she hasn't already subscribed.
 unless member.subscribed?(list)
   puts "Subscribing the user to the list"
   member.subscribe(list)
@@ -74,10 +74,10 @@ else
 end
 
 # Check the member has a subscribed status
-puts member.subscribed?(list) ? "#{member.email} has subscribed to #{list.object_name}" : "An error happened"
+puts member.subscribed?(list) ? "#{member.email} has subscribed to #{list.object_name}" : "An error ocurred"
 ```
 ### Session
-The API client used by the gem logs in as soon as a the first method is called. The same session is used as it is valid. If you want to close the API session you can manually call the log out action :
+The gem's API client authenticates as soon as the first method is called. The same session is used as it is still valid. If you want to close the API session, you can do so manually with the log out action:
 
 ```ruby
 Responsys::Api::Client.instance.logout
@@ -86,12 +86,12 @@ Responsys::Api::Client.instance.logout
 ###Notes
 
 ####Invalid email format
-If you try to call the API on a user that has an invalid email format, the API and the GEM will then reply with this message :
-```
+If you try to call the API on a user that has an invalid email address, the API and Gem will reply with this message:
+```ruby
 {
-	:status=>"ok", 
+	:status=>"ok",
 	:result=>{
-		:recipient_id=>"-1", 
+		:recipient_id=>"-1",
 		:error_message=>"Record 0 = BAD EMAIL FORMAT"
 	}
 }
@@ -106,10 +106,7 @@ If you try to call the API on a user that has an invalid email format, the API a
 5. Create new Pull Request
 
 ## To Do
-* Add thorough tests with properly mocked out API responses
-* Build out API functionality
-  * Member profile extension
-    * CRUD operations (create new key/value, update value by key, delete key/value by key)
-  * Tables
-    * CRUD operations (create new key/value, update value by key, delete key/value by key)
-  * Batch member profile updates
+* Supplemental Tables
+  * CRUD operations (create new key/value, update value by key, delete key/value by key)
+* Batch member profile updates
+* CED SFTP File Syncing

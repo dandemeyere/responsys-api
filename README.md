@@ -10,7 +10,7 @@ Have a look at our [wiki](https://github.com/dandemeyere/responsys-api/wiki) to 
 
 Add this line to your application"s Gemfile:
 
-    gem "responsys-api", "~> 0.0.5"
+    gem "responsys-api", "~> 0.0.6"
 
 Or install it locally with:
 

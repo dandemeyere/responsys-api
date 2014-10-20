@@ -20,10 +20,12 @@ module Responsys
           password: settings[:password]
         }
 
+        ssl_version = settings[:ssl_version] || :TLSv1
+
         if settings[:debug]
-          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, log_level: :debug, log: true, pretty_print_xml: true)
+          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version, log_level: :debug, log: true, pretty_print_xml: true)
         else
-          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified)
+          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version)
         end
 
         login

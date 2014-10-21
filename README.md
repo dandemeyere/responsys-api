@@ -27,6 +27,7 @@ Responsys.configure do |config|
     password: "your_responsys_password",
     wsdl: "https://wsXXXX.responsys.net/webservices/wsdl/ResponsysWS_Level1.wsdl",
     debug: false
+    ssl_version: :TLSv1
   }
 end
 ```

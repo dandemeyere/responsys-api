@@ -1,8 +1,6 @@
 require "i18n"
 
-I18n.load_path << File.expand_path("../responsys/i18n/en.yml", __FILE__)
-I18n.locale = :en
-I18n.enforce_available_locales = false
+I18n.load_path.concat Dir.glob( File.dirname(__FILE__) + "/responsys/i18n/*.yml" )
 
 require "responsys/exceptions/all"
 require "responsys/helper"

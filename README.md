@@ -1,4 +1,4 @@
-# ResponsysApi
+# ResponsysApi ![Master branch build status](https://travis-ci.org/dandemeyere/responsys-api.svg?branch=master)
 
 A gem to help you communicate to the Responsys Interact SOAP API. Currently working of Responsys Interact version 6.20.
 
@@ -10,7 +10,7 @@ Have a look at our [wiki](https://github.com/dandemeyere/responsys-api/wiki) to 
 
 Add this line to your application"s Gemfile:
 
-    gem "responsys-api", "~> 0.0.6"
+    gem "responsys-api", "~> 0.0.8"
 
 Or install it locally with:
 

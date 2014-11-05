@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "responsys-api"
-  spec.version       = "0.0.7"
+  spec.version       = "0.0.8"
   spec.authors       = ["Dan DeMeyere", "Florian Lorrain", "Morgan Griggs", "Mike Rocco"]
   spec.email         = ["dan@thredup.com", "florian.lorrain@thredup.com", "morgan@thredup.com", "michael.rocco@thredup.com"]
   spec.description   = "A gem to integrate with the Responsys SOAP API"

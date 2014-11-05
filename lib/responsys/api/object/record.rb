@@ -6,7 +6,7 @@ module Responsys
         attr_accessor :field_values
 
         def initialize(field_values)
-          raise ParameterException, I18n.t("api.object.record.incorrect_field_values_type") unless field_values.is_a? Array
+          raise ParameterException, Responsys::Helper.get_message("api.object.record.incorrect_field_values_type") unless field_values.is_a? Array
           @field_values = field_values
         end
 

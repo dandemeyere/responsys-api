@@ -120,7 +120,7 @@ describe Responsys::Member do
       VCR.use_cassette("member/retrieve_profile_extension_fail") do
         response = @member_without_riid.retrieve_profile_extension(@profile_extension, @fields)
 
-        expect(response[:error][:message]).to eq(I18n.t("member.riid_missing"))
+        expect(response[:error][:message]).to eq(Responsys::Helper.get_message("member.riid_missing"))
       end
     end
 

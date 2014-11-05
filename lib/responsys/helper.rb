@@ -77,7 +77,11 @@ module Responsys
     end
 
     def self.format_response_with_message(i18n_key)
-      { status: "failure", error: { http_status_code: "", code: i18n_key.split('.')[-1], message: I18n.t(i18n_key) } }
+      { status: "failure", error: { http_status_code: "", code: i18n_key.split('.')[-1], message: get_message(i18n_key) } }
+    end
+
+    def self.get_message(key)
+      I18n.t(key, locale: :en)
     end
   end
 end

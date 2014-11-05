@@ -81,7 +81,11 @@ module Responsys
     end
 
     def self.get_message(key)
-      I18n.t(key, locale: :en)
+      begin
+        I18n.t(key, scope: :responsys_api, locale: I18n.locale, raise: true)
+      rescue
+        I18n.t(key, scope: :responsys_api, locale: :en)
+      end
     end
   end
 end

@@ -2,6 +2,8 @@ module Responsys
   module Api
     module Session
       def login
+        logout if logged_in?
+
         response = run("login", credentials)
         establish_session_id(response)
         establish_jsession_id(response)
@@ -9,7 +11,14 @@ module Responsys
       end
 
       def logout
-        api_method(:logout)
+        return unless logged_in?
+
+        run_with_credentials(:logout, nil, jsession_id, header)
+        destroy_session_objects
+      end
+
+      def logged_in?
+        !(session_id.nil? || jsession_id.nil? || header.nil?)
       end
 
       private
@@ -24,6 +33,12 @@ module Responsys
 
       def set_session_credentials
         @header = { SessionHeader: { sessionId: session_id } }
+      end
+
+      def destroy_session_objects
+        @session_id = nil
+        @jsession_id = nil
+        @header = nil
       end
     end
   end

@@ -13,6 +13,7 @@ end
 
 DATA = YAML.load_file("#{File.dirname(__FILE__)}/test_data.yml")
 IGNORE_LOGIN_REQUEST = true
+IGNORE_LOGOUT_REQUEST = true
 
 VCR.configure do |c|
   c.cassette_library_dir = "spec/fixtures/vcr_cassettes"
@@ -20,10 +21,18 @@ VCR.configure do |c|
   c.ignore_request do |request|
     if request.to_hash["body"]["string"].empty?
       true
-    elsif IGNORE_LOGIN_REQUEST
-      !Nokogiri::XML(request.to_hash["body"]["string"]).remove_namespaces!.xpath('/Envelope/Body/login', ).empty?
     else
-      false
+      ignoring = false
+      
+      if IGNORE_LOGIN_REQUEST
+        ignoring |= !Nokogiri::XML(request.to_hash["body"]["string"]).remove_namespaces!.xpath('/Envelope/Body/login', ).empty?
+      end
+
+      if IGNORE_LOGOUT_REQUEST
+        ignoring |= !Nokogiri::XML(request.to_hash["body"]["string"]).remove_namespaces!.xpath('/Envelope/Body/logout', ).empty?
+      end
+
+      ignoring
     end
   end
 end

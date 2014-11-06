@@ -60,7 +60,7 @@ describe Responsys::Api::List do
         data = [{ Email_Address_: @user1_email, Mobile_Number_: @user1_mobile }]
         response = Responsys::Api::Client.instance.merge_list_members(@list, Responsys::Api::Object::RecordData.new(data), merge_rule = Responsys::Api::Object::ListMergeRule.new(matchColumnName1: "Mobile_Number_"))
 
-        expect(response[:data][0][:result][:updated_count].to_i).to eq(0)
+        expect(response[:data][0][:result][:rejected_count].to_i).to eq(0)
       end
     end
   end

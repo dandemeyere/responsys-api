@@ -30,7 +30,7 @@ describe Responsys::Api::Client do
 
         Responsys::Api::Client.instance.api_method(:list_folders)
 
-        expect(Responsys::Api::Client.instance.header[:SessionHeader][:sessionId]).to eq("5GXdGHHKOLqsf4ukCpwQYz3B0b")
+        expect(Responsys::Api::Client.instance.header[:SessionHeader][:sessionId]).not_to eq("fake_session_id")
       end
     end
 
@@ -40,7 +40,7 @@ describe Responsys::Api::Client do
     let(:savon_client) { double("savon client") }
 
     before(:context) do
-      @credentials = { username: "your_responsys_username", password: "your_responsys_password" }
+      @credentials = { username: CREDENTIALS["username"], password: CREDENTIALS["password"] }
     end
 
     after(:context) do
@@ -52,7 +52,7 @@ describe Responsys::Api::Client do
 
       responsys = Responsys::Api::Client.instance
 
-      expect(responsys.credentials).to eq({ username: "your_responsys_username", password: "your_responsys_password" })
+      expect(responsys.credentials).to eq({ username: CREDENTIALS["username"], password: CREDENTIALS["password"] })
     end
 
     context "login" do
@@ -71,7 +71,7 @@ describe Responsys::Api::Client do
         allow(response).to receive(:body).and_return(body)
         allow(response).to receive(:http).and_return(double("cookies", cookies: cookies))
 
-        allow(Savon).to receive(:client).with({ wsdl: "https://wsxxxx.responsys.net/webservices/wsdl/ResponsysWS_Level1.wsdl", element_form_default: :qualified, ssl_version: :TLSv1}).and_return(savon_client) #Avoid the verification of the wsdl
+        allow(Savon).to receive(:client).with({ wsdl: CREDENTIALS["wsdl"], element_form_default: :qualified, ssl_version: :TLSv1}).and_return(savon_client) #Avoid the verification of the wsdl
         allow_any_instance_of(Responsys::Api::Client).to receive(:run).with("login", @credentials).and_return(response) #Verification of credentials
         allow(savon_client).to receive(:call).with(:login, @credentials ).and_return(response) #Actual login call
 
@@ -88,7 +88,7 @@ describe Responsys::Api::Client do
 
     context "logout" do
       before(:example) do
-        allow(Savon).to receive(:client).with({ wsdl: "https://wsxxxx.responsys.net/webservices/wsdl/ResponsysWS_Level1.wsdl", element_form_default: :qualified, ssl_version: :TLSv1}).and_return(savon_client) #Avoid the verification of the wsdl
+        allow(Savon).to receive(:client).with({ wsdl: CREDENTIALS["wsdl"], element_form_default: :qualified, ssl_version: :TLSv1}).and_return(savon_client) #Avoid the verification of the wsdl
         allow_any_instance_of(Responsys::Api::Client).to receive(:login).and_return(nil) #Avoid credentials checking
 
         Singleton.__init__(Responsys::Api::Client)

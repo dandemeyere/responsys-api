@@ -4,7 +4,9 @@ require "responsys/api/client"
 describe Responsys::Member do
 
   before(:all) do
-    @email = "user@email.com"
+    @email = DATA[:users][:user1][:EMAIL_ADDRESS]
+    @riid = DATA[:users][:user1][:RIID]
+    @list = Responsys::Api::Object::InteractObject.new(DATA[:folder],DATA[:lists][:list1][:name])
   end
 
   context "New member" do
@@ -16,13 +18,10 @@ describe Responsys::Member do
 
   context "Subscribing" do
 
+    let(:connection) { double "connection" }
     before(:each) do
-      @connection = double "connection"
-
-      allow(Responsys::Api::Client).to receive(:instance).and_return(@connection)
-
+      allow(Responsys::Api::Client).to receive(:instance).and_return(connection)
       @member = Responsys::Member.new(@email)
-      @list = Responsys::Api::Object::InteractObject.new("list_folder","list_object_name")
       @query_column = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")
     end
 
@@ -35,7 +34,7 @@ describe Responsys::Member do
     it "should check the user has subscribed" do
       response_expected = { status: "ok", data: [{ EMAIL_PERMISSION_STATUS_: "I" }] }
 
-      allow(@connection).to receive(:retrieve_list_members).with(@list, kind_of(Responsys::Api::Object::QueryColumn), %w(EMAIL_PERMISSION_STATUS_), %W(#{@member.email})).and_return(response_expected)
+      allow(connection).to receive(:retrieve_list_members).with(@list, kind_of(Responsys::Api::Object::QueryColumn), %w(EMAIL_PERMISSION_STATUS_), %W(#{@member.email})).and_return(response_expected)
 
       expect(@member.subscribed?(@list)).to eq(true)
     end
@@ -43,11 +42,6 @@ describe Responsys::Member do
   end
 
   context "Existing member" do
-
-    before(:all) do
-      @list = Responsys::Api::Object::InteractObject.new("another_test_folder","test_list")
-      @riid = 1225
-    end
 
     it "should be ok, the email is present" do
       VCR.use_cassette("member/present1") do
@@ -98,14 +92,11 @@ describe Responsys::Member do
 
   context "Get profile extension data" do
 
-    before(:each) do
-      VCR.use_cassette("member/login") do
-        @profile_extension = Responsys::Api::Object::InteractObject.new("demo_folder2", "customers_extension")
-        @riid = 1125
-        @member_without_riid = Responsys::Member.new(@email)
-        @member_with_riid = Responsys::Member.new(@email, @riid)
-        @fields = %w(RIID_ EMAIL_ADDRESS)
-      end
+    before(:all) do
+      @profile_extension = Responsys::Api::Object::InteractObject.new(DATA[:folder], DATA[:pets][:pet1][:name])
+      @member_without_riid = Responsys::Member.new(@email)
+      @member_with_riid = Responsys::Member.new(@email, @riid)
+      @fields = %w(RIID_ MONTHLY_PURCH)
     end
 
     it "should set the status to failure if no riid provided" do

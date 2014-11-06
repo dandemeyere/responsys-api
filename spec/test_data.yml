@@ -1,0 +1,38 @@
+:folder: rspec_tests
+
+:users:
+  :user1: &user1
+    :RIID: 48614925
+    :EMAIL_ADDRESS: user1@email.com
+    :EMAIL_PERMISSION_STATUS: I
+    :MOBILE_NUMBER: "0000000001"
+  :user2: &user2
+    :RIID: 48614965
+    :EMAIL_ADDRESS: user2@email.com
+    :EMAIL_PERMISSION_STATUS: I
+  :user3: &user3
+    :RIID: 48615005
+    :EMAIL_ADDRESS: user3@email.com
+    :EMAIL_PERMISSION_STATUS: O
+    :MOBILE_NUMBER: "0000000000"
+
+:lists:
+  :list1:
+    :name: rspec_list1
+    :records:
+      - 
+        <<: *user1
+      - 
+        <<: *user2
+      - 
+        <<: *user3
+
+:pets:
+  :pet1:
+    :name: rspec_pet1
+
+    :records:
+      :user1:
+        :MONTHLY_PURCH: 300
+      :user2:
+        :MONTHLY_PURCH: 1000

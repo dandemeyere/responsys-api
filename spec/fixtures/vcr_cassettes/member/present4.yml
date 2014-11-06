@@ -2,21 +2,21 @@
 http_interactions:
 - request:
     method: post
-    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
     body:
       encoding: US-ASCII
       string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>bBvxPCXScxL40VhQx6JFG6ziO9</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>another_test_folder</tns:folderName><tns:objectName>test_list</tns:objectName></tns:list><tns:queryColumn>RIID</tns:queryColumn><tns:fieldList>EMAIL_PERMISSION_STATUS_</tns:fieldList><tns:idsToRetrieve>000001</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>W1Qlwgd2Ysd7WOrfV45ddioFyh</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>rspec_tests</tns:folderName><tns:objectName>rspec_list1</tns:objectName></tns:list><tns:queryColumn>RIID</tns:queryColumn><tns:fieldList>EMAIL_PERMISSION_STATUS_</tns:fieldList><tns:idsToRetrieve>000001</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
     headers:
       Cookie:
-      - JSESSIONID=EF4D2D3574EA896D10416D6FF9DE184E.ws01-ri5
+      - JSESSIONID=77DC067BAF16CCB4C50C44F50A95AE96.ws02-ri5
       Soapaction:
       - ! '"retrieveListMembers"'
       Content-Type:
       - text/xml;charset=UTF-8
       Content-Length:
-      - '679'
+      - '673'
       Accept:
       - ! '*/*'
       User-Agent:
@@ -33,16 +33,16 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Date:
-      - Fri, 29 Aug 2014 22:31:04 GMT
+      - Thu, 06 Nov 2014 07:37:17 GMT
       Server:
       - Apache
       Set-Cookie:
-      - BIGipServerDC2-APIGEE-I5-9051-SSL=3617446922.23331.0000; path=/
+      - BIGipServerDC2-APIGEE-I5-9051-SSL=3600669706.23331.0000; path=/
     body:
       encoding: US-ASCII
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><soapenv:Fault><faultcode>soapenv:Server</faultcode><faultstring>ListFault</faultstring><detail><ListFault
         xmlns="urn:fault.ws.rsys.com"><exceptionCode>RECORD_NOT_FOUND</exceptionCode><exceptionMessage>No
         records found in the list for given ids</exceptionMessage></ListFault></detail></soapenv:Fault></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Fri, 29 Aug 2014 22:31:04 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Thu, 06 Nov 2014 07:37:19 GMT
+recorded_with: VCR 2.9.3

@@ -20,3 +20,5 @@ lib/.DS_Store
 lib/responsys/.DS_Store
 .rvmrc
 .idea/
+
+spec/api_credentials.yml

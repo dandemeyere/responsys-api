@@ -27,12 +27,14 @@ module Responsys
         else
           @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version)
         end
-
-        login
       end
 
       def api_method(action, message = nil, response_type = :hash)
+        raise I18n.t("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
+
         begin
+          login
+
           response = run_with_credentials(action, message, jsession_id, header)
 
           case response_type
@@ -43,14 +45,9 @@ module Responsys
           end
 
         rescue Exception => e
-          error_response = Responsys::Helper.format_response_with_errors(e)
-
-          if error_response[:error][:code] == "INVALID_SESSION_ID"
-            login
-            api_method(action, message, response_type)
-          else
-            error_response
-          end
+          Responsys::Helper.format_response_with_errors(e)
+        ensure
+          logout
         end
       end
 

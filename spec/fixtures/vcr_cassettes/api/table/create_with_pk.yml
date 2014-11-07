@@ -2,21 +2,21 @@
 http_interactions:
 - request:
     method: post
-    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
     body:
       encoding: US-ASCII
       string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>YnceLODfqtw8PZNx7KofAGcyVT</sessionId></sessionHeader></env:Header><env:Body><tns:createTableWithPK><tns:table><tns:folderName>another_test_folder</tns:folderName><tns:objectName>table_with_pk_1408568062</tns:objectName></tns:table><tns:fields><tns:fieldName>field1</tns:fieldName><tns:fieldType>STR500</tns:fieldType><tns:custom>false</tns:custom><tns:dataExtractionKey>false</tns:dataExtractionKey></tns:fields><tns:fields><tns:fieldName>field2</tns:fieldName><tns:fieldType>NUMBER</tns:fieldType><tns:custom>false</tns:custom><tns:dataExtractionKey>false</tns:dataExtractionKey></tns:fields><tns:fields><tns:fieldName>field3</tns:fieldName><tns:fieldType>TIMESTAMP</tns:fieldType><tns:custom>false</tns:custom><tns:dataExtractionKey>false</tns:dataExtractionKey></tns:fields><tns:primaryKeys>field1</tns:primaryKeys></tns:createTableWithPK></env:Body></env:Envelope>
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>Umup1zvQo5WaiMnjCDYmjVkIB9</sessionId></sessionHeader></env:Header><env:Body><tns:createTableWithPK><tns:table><tns:folderName>rspec_tests</tns:folderName><tns:objectName>table_with_pk_1415258811</tns:objectName></tns:table><tns:fields><tns:fieldName>field1</tns:fieldName><tns:fieldType>STR500</tns:fieldType><tns:custom>false</tns:custom><tns:dataExtractionKey>false</tns:dataExtractionKey></tns:fields><tns:fields><tns:fieldName>field2</tns:fieldName><tns:fieldType>NUMBER</tns:fieldType><tns:custom>false</tns:custom><tns:dataExtractionKey>false</tns:dataExtractionKey></tns:fields><tns:fields><tns:fieldName>field3</tns:fieldName><tns:fieldType>TIMESTAMP</tns:fieldType><tns:custom>false</tns:custom><tns:dataExtractionKey>false</tns:dataExtractionKey></tns:fields><tns:primaryKeys>field1</tns:primaryKeys></tns:createTableWithPK></env:Body></env:Envelope>
     headers:
       Cookie:
-      - JSESSIONID=2305B2D668EB23F2BC55A43DC17EC7BF.ws04-ri2
+      - JSESSIONID=F8A25AFB55405F63A61248977DF25F9F.ws01-ri5
       Soapaction:
       - ! '"createTableWithPK"'
       Content-Type:
       - text/xml;charset=UTF-8
       Content-Length:
-      - '1140'
+      - '1132'
       Accept:
       - ! '*/*'
       User-Agent:
@@ -31,15 +31,15 @@ http_interactions:
       Content-Type:
       - text/xml; charset=UTF-8
       Date:
-      - Wed, 20 Aug 2014 20:54:23 GMT
+      - Thu, 06 Nov 2014 07:26:49 GMT
       Server:
       - Apache
       Set-Cookie:
-      - BIGipServerapigee.responsys.net_9002=3607791370.10787.0000; path=/
+      - BIGipServerDC2-APIGEE-I5-9051-SSL=3600669706.23331.0000; path=/
     body:
       encoding: US-ASCII
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><createTableWithPKResponse
         xmlns="urn:ws.rsys.com"><result>true</result></createTableWithPKResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Wed, 20 Aug 2014 20:54:24 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Thu, 06 Nov 2014 07:26:52 GMT
+recorded_with: VCR 2.9.3

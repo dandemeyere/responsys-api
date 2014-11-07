@@ -13,6 +13,10 @@ en:
         incorrect_email_format: The email format is not supported
       record:
         incorrect_field_values_type: The field_values must be an array
+    client:
+      api_method:
+        wrong_action_login: Please use the dedicated login method
+        wrong_action_logout: Please use the dedicated logout method
     campaign:
       incorrect_recipients_type: Recipients parameter must be an array
   member:

@@ -53,15 +53,24 @@ describe Responsys::Api::Client do
         expect(subject.header).to eq({ SessionHeader: { sessionId: "fake_session_id" } }) #Test the ids are right
         expect(subject.jsession_id).to eq("fake_jsession_id")
       end
+
+      it "should refuse the access to api_method for login" do
+        expect{ subject.api_method(:login) }.to raise_error("Please use the dedicated login method")
+      end
     end
 
     context "logout" do
       subject { Responsys::Api::Client.instance }
 
       it "should logout" do
+        allow(subject).to receive(:logged_in?).and_return(true)
         expect(subject).to receive(:run_with_credentials).with(:logout, anything, anything, anything) #Check the call is actually being done
 
         subject.logout
+      end
+
+      it "should refuse the access to api_method for logout" do
+          expect{ subject.api_method(:logout) }.to raise_error("Please use the dedicated logout method")
       end
     end
   end

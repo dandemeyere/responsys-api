@@ -15,7 +15,8 @@ module Responsys
         end
 
         def to_api
-          { eventName: event_name,
+          {
+            eventName: event_name,
             eventId: event_id,
             eventStringDataMapping: event_string_data_mapping,
             eventDateDataMapping: event_date_data_mapping,

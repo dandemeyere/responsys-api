@@ -16,6 +16,7 @@ en:
           incorrect_field_values_type: The field_values must be an array
         custom_event:
           empty_event: The event_name or event_id must be specified
+          incorrect_event_object: "custom_event must be a CustomEvent instance"
       client:
         api_method:
           wrong_action_login: Please use the dedicated login method

@@ -1,7 +1,7 @@
 require "spec_helper.rb"
 require "responsys/api/client"
 
-describe Responsys::Api::Object::Recipient do 
+describe Responsys::Api::Object::Recipient do
 
 
   context "new recipient" do
@@ -15,19 +15,19 @@ describe Responsys::Api::Object::Recipient do
     end
 
     it "should have recipient_id attribute" do
-      expect(@recipient.recipient_id).to be
+      expect(@recipient.recipient_id).to be_a(String)
     end
 
     it "should have customer_id attribute" do
-      expect(@recipient.customer_id).to be
+      expect(@recipient.customer_id).to be_a(String)
     end
 
     it "should have email_address attribute" do
-      expect(@recipient.email_address).to be
+      expect(@recipient.email_address).to be_a(String)
     end
 
     it "should have mobile_number attribute" do
-      expect(@recipient.mobile_number).to be
+      expect(@recipient.mobile_number).to be_a(String)
     end
 
     it "should have email_format attribute of type EmailFormat" do
@@ -46,19 +46,19 @@ describe Responsys::Api::Object::Recipient do
     end
 
     it "should have recipientId attribute " do
-      expect(@recipient.to_api[:recipientId]).to be
+      expect(@recipient.to_api[:recipientId]).to be_a(Integer)
     end
 
     it "should have customerId attribute " do
-      expect(@recipient.to_api[:customerId]).to be
+      expect(@recipient.to_api[:customerId]).to be_a(String)
     end
 
     it "should have emailAddress attribute " do
-      expect(@recipient.to_api[:emailAddress]).to be
+      expect(@recipient.to_api[:emailAddress]).to be_a(String)
     end
 
     it "should have mobileNumber attribute " do
-      expect(@recipient.to_api[:mobileNumber]).to be
+      expect(@recipient.to_api[:mobileNumber]).to be_a(String)
     end
 
     it "should have EmailFormat attribute of type String" do

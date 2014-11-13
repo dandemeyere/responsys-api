@@ -20,12 +20,19 @@
   :list1:
     :name: rspec_list1
     :records:
-      - 
+      -
         <<: *user1
-      - 
+      -
         <<: *user2
-      - 
+      -
         <<: *user3
+
+:campaigns:
+  :campaign1:
+    :name: rspec_campaign1
+
+:custom_event:
+  :name: rspec_event1
 
 :pets:
   :pet1:

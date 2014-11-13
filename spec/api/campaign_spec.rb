@@ -8,7 +8,7 @@ describe Responsys::Api::Campaign do
   let(:recipient2) { Responsys::Api::Object::Recipient.new(emailAddress: DATA[:users][:user2][:EMAIL_ADDRESS], listName: list) }
   let(:recipientData1) { Responsys::Api::Object::RecipientData.new(recipient1) }
   let(:recipientData2) { Responsys::Api::Object::RecipientData.new(recipient2) }
-  let(:custom_event) { Responsys::Api::Object::CustomEvent.new(DATA[:custom_event][:name]) }
+  let(:custom_event) { Responsys::Api::Object::CustomEvent.new(DATA[:custom_events][:custom_event1][:name]) }
 
   before(:all) do
     @client = Responsys::Api::Client.instance

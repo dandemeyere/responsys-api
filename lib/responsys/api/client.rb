@@ -30,7 +30,7 @@ module Responsys
       end
 
       def api_method(action, message = nil, response_type = :hash)
-        raise I18n.t("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
+        raise Responsys::Helper.get_message("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
 
         begin
           login

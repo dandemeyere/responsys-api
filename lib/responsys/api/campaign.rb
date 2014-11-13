@@ -23,7 +23,7 @@ module Responsys
       end
 
       def merge_trigger_email(campaign, record_data, trigger_data, merge_rule)
-        raise ParameterException, Responsys::Helper.get_message(("api.campaign.incorrect_trigger_data_type") unless trigger_data.is_a? Array
+        raise ParameterException, Responsys::Helper.get_message("api.campaign.incorrect_trigger_data_type") unless trigger_data.is_a? Array
         message = {
           recordData: record_data.to_api,
           mergeRule: merge_rule.to_api,

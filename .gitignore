@@ -20,5 +20,6 @@ lib/.DS_Store
 lib/responsys/.DS_Store
 .rvmrc
 .idea/
+.ruby-version
 
 spec/api_credentials.yml

@@ -21,6 +21,18 @@ module Responsys
           puts "failed:\n" + recipients[:recipient].to_s unless outcome[:success]
         end
       end
+
+      def merge_trigger_email(campaign, record_data, trigger_data, merge_rule)
+        raise ParameterException, Responsys::Helper.get_message("api.campaign.incorrect_trigger_data_type") unless trigger_data.is_a? Array
+        message = {
+          recordData: record_data.to_api,
+          mergeRule: merge_rule.to_api,
+          campaign: campaign.to_api,
+          triggerData: trigger_data.map(&:to_api)
+        }
+
+        api_method(:merge_trigger_email, message)
+      end
     end
   end
 end

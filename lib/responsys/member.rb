@@ -5,12 +5,12 @@ module Responsys
   class Member
     include Responsys::Api
     include Responsys::Api::Object
-    attr_accessor :email, :user_riid
+    attr_accessor :email, :user_riid, :client
 
-    def initialize(email, riid = nil)
+    def initialize(email, riid = nil, client = Client.instance)
       @email = email
       @user_riid = riid
-      @client = Client.instance
+      @client = client
     end
 
     def add_to_list(list, subscribe = false, details = {}, update_record = false)

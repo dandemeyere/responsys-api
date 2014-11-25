@@ -20,13 +20,8 @@ module Responsys
           password: settings[:password]
         }
 
-        ssl_version = settings[:ssl_version] || :TLSv1
-
-        if settings[:debug]
-          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version, log_level: :debug, log: true, pretty_print_xml: true)
-        else
-          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version)
-        end
+        savon_client_settings = client_settings(settings)
+        @client = Savon.client(savon_client_settings)
       end
 
       def api_method(action, message = nil, response_type = :hash)
@@ -53,6 +48,26 @@ module Responsys
 
       def available_operations
         @client.operations
+      end
+
+      def client_settings(settings)
+        available_settings = %w(wsdl endpoint namespace raise_errors proxy headers open_timeout
+          read_timeout ssl_verify_mode ssl_version ssl_cert_file ssl_cert_key_file
+          ssl_ca_cert_file ssl_cert_key_password convert_request_keys_to soap_header element_form_default
+          env_namespace namespace_identifier namespaces encoding soap_version
+          basic_auth digest_auth wsse_auth wsse_timestamp ntlm strip_namespaces convert_response_tags_to
+          logger log_level log filters pretty_print_xml)
+
+        savon_client_settings = {}
+
+        settings.each do |k, v|
+          next if k.to_s == "username" || k.to_s == "password"
+          if available_settings.include? k.to_s
+            savon_client_settings[k] = v
+          end
+        end
+
+        savon_client_settings
       end
 
       private

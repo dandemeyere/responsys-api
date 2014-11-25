@@ -11,22 +11,18 @@ module Responsys
       include Singleton
       include Responsys::Api::All
 
-      attr_accessor :credentials, :client, :session_id, :jsession_id, :header
+      attr_accessor :credentials, :client, :session_id, :jsession_id, :header, :settings
+
+      AVAILABLE_SETTINGS = Responsys::Helper.get_message("api.client.available_methods")
 
       def initialize
-        settings = Responsys.configuration.settings
+        @settings = Responsys.configuration.settings
         @credentials = {
-          username: settings[:username],
-          password: settings[:password]
+          username: @settings[:username],
+          password: @settings[:password]
         }
 
-        ssl_version = settings[:ssl_version] || :TLSv1
-
-        if settings[:debug]
-          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version, log_level: :debug, log: true, pretty_print_xml: true)
-        else
-          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version)
-        end
+        @client = Savon.client(filtered_settings)
       end
 
       def api_method(action, message = nil, response_type = :hash)
@@ -56,6 +52,11 @@ module Responsys
       end
 
       private
+
+      def filtered_settings
+        settings[:ssl_version] = :TLSv1 unless settings[:ssl_version]
+        settings.select { |k,v| k.to_s != "username" && k.to_s != "password" && AVAILABLE_SETTINGS.include?(k.to_s) }
+      end
 
       def run(method, message)
         @client.call(method.to_sym, message: message)

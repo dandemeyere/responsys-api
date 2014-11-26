@@ -58,10 +58,18 @@ describe Responsys::Api::Table do
     it "should delete the previous table with pk" do
       VCR.use_cassette("api/table/delete_with_pk") do
         response = Responsys::Api::Client.instance.delete_table(@table_with_pk)
-
         expect(response[:result]).to be(true)
       end
     end
+  
+    it "should merge table records with pk" do
+      VCR.use_cassette("api/table/merge_table_records_with_pk") do
+       record_data = Responsys::Api::Object::RecordData.new([{EMAIL_ADDRESS_: @user_email, INVITER_ID: "10000", INVITER_NAME: "some name"}])
+       table_with_pk = Responsys::Api::Object::InteractObject.new("Some Test Folder", "some_supplementary_table")
+       response = Responsys::Api::Client.instance.merge_table_records_with_pk(table_with_pk, record_data)
+       expect(response[:status]).to eq("ok")
+      end 
+    end     
   end
 
   context "retrieve_profile_extension_records" do

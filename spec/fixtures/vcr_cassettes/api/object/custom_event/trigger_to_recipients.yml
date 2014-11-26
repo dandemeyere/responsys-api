@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://wsxxxx.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>MvTR5LC8tl3AAiZmVuc9AetJSl</sessionId></sessionHeader></env:Header><env:Body><tns:triggerCustomEvent><tns:customEvent><tns:eventName>DirectoryPatientInvite</tns:eventName><tns:eventId></tns:eventId><tns:eventStringDataMapping></tns:eventStringDataMapping><tns:eventDateDataMapping></tns:eventDateDataMapping><tns:eventNumberDataMapping></tns:eventNumberDataMapping></tns:customEvent><tns:recipientData><tns:recipient><tns:listName><tns:folderName>Directory
+        Outreach</tns:folderName><tns:objectName>CONTACTS_LIST</tns:objectName></tns:listName><tns:recipientId>0</tns:recipientId><tns:customerId></tns:customerId><tns:emailAddress>sahil@healthtap.com</tns:emailAddress><tns:mobileNumber></tns:mobileNumber><tns:emailFormat>NO_FORMAT</tns:emailFormat></tns:recipient><tns:optionalData><tns:name>some_key</tns:name><tns:value>some_value</tns:value></tns:optionalData></tns:recipientData></tns:triggerCustomEvent></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - JSESSIONID=42665156A88EF00589290CBDE616BBF9.ws03-ri5
+      Soapaction:
+      - ! '"triggerCustomEvent"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1206'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '401'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Wed, 26 Nov 2014 12:59:36 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerDC2-APIGEE-I5-9051-SSL=3600669706.23331.0000; path=/
+    body:
+      encoding: US-ASCII
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><triggerCustomEventResponse
+        xmlns="urn:ws.rsys.com"><result><recipientId>251493145</recipientId><success>true</success><errorMessage
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" /></result></triggerCustomEventResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Wed, 26 Nov 2014 12:59:36 GMT
+recorded_with: VCR 2.9.3

@@ -11,6 +11,8 @@ en:
         incorrect_optional_data_type: The name and value need to be Strings
       email_format:
         incorrect_email_format: The email format is not supported
+      custom_event:
+        one_of_event_name_or_event_id_is_required: Either eventName or eventId parameters should be passed  
       record:
         incorrect_field_values_type: The field_values must be an array
     campaign:

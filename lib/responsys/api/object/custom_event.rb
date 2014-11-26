@@ -2,6 +2,7 @@ module Responsys
   module Api
     module Object
       class CustomEvent
+        include Responsys::Exceptions
         attr_accessor :event_name, :event_id, :event_string_data_mapping, :event_date_data_mapping, :event_number_data_mapping, :client
         def initialize(event_name = "",  event_id ="" , event_string_data_mapping = "", event_date_data_mapping = "", event_number_data_mapping = "")
           @event_name = event_name

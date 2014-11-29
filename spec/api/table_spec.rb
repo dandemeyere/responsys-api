@@ -12,8 +12,8 @@ describe Responsys::Api::Table do
 
   context "create table" do
     before(:all) do
-      @table = Responsys::Api::Object::InteractObject.new(DATA[:folder], "table_#{Time.now.to_i}")
-      @table_with_pk = Responsys::Api::Object::InteractObject.new(DATA[:folder], "table_with_pk_#{Time.now.to_i}")
+      @table = Responsys::Api::Object::InteractObject.new(DATA[:folder], "table_temp")
+      @table_with_pk = Responsys::Api::Object::InteractObject.new(DATA[:folder], "table_with_pk_temp")
     end
 
     # it "should create a table" do
@@ -95,7 +95,7 @@ describe Responsys::Api::Table do
     end
 
     it "should delete a profile extension member" do
-      VCR.use_cassette("api/profile_extension/retrieve_profile_extension_records") do
+      VCR.use_cassette("api/profile_extension/delete_profile_extension_records") do
         response = Responsys::Api::Client.instance.delete_profile_extension_members(@profile_extension, @query_column_riid, %W{#{@user_riid}})
 
         expect(response[:status]).to eq("ok")

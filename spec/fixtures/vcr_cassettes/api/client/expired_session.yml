@@ -9,36 +9,11 @@ http_interactions:
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
         xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>fake_session_id</sessionId></sessionHeader></env:Header><env:Body><tns:listFolders></tns:listFolders></env:Body></env:Envelope>
     headers:
-      Cookie:
-      - jsessionid=fakejsessionid
-      Soapaction:
-      - ! '"listFolders"'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Content-Length:
-      - '398'
-      Accept:
-      - ! '*/*'
-      User-Agent:
-      - Ruby
   response:
     status:
       code: 500
       message: Internal Server Error
     headers:
-      Connection:
-      - close
-      Content-Length:
-      - '505'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Date:
-      - Thu, 06 Nov 2014 06:38:21 GMT
-      Server:
-      - Apache
-      Set-Cookie:
-      - BIGipServerDC2-APIGEE-I5-9051-SSL=3617446922.23331.0000; path=/
-      - JSESSIONID=DAEE40319A41DD88961567F02B9CD307.ws03-ri5; Path=/; HttpOnly
     body:
       encoding: US-ASCII
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><soapenv:Fault><faultcode>soapenv:Server</faultcode><faultstring>UnexpectedErrorFault</faultstring><detail><UnexpectedErrorFault
@@ -53,35 +28,13 @@ http_interactions:
       encoding: US-ASCII
       string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>1pPide5TFyjz0FVxB5SKF1f5Np</sessionId></sessionHeader></env:Header><env:Body><tns:listFolders></tns:listFolders></env:Body></env:Envelope>
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>DEAR_SESSION_ID</sessionId></sessionHeader></env:Header><env:Body><tns:listFolders></tns:listFolders></env:Body></env:Envelope>
     headers:
-      Cookie:
-      - JSESSIONID=2371A4588ACF810EC8241AD6DECF70D9.ws02-ri5
-      Soapaction:
-      - ! '"listFolders"'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Content-Length:
-      - '409'
-      Accept:
-      - ! '*/*'
-      User-Agent:
-      - Ruby
   response:
     status:
       code: 200
       message: OK
     headers:
-      Content-Length:
-      - '911'
-      Content-Type:
-      - text/xml; charset=UTF-8
-      Date:
-      - Thu, 06 Nov 2014 06:38:21 GMT
-      Server:
-      - Apache
-      Set-Cookie:
-      - BIGipServerDC2-APIGEE-I5-9051-SSL=3617446922.23331.0000; path=/
     body:
       encoding: US-ASCII
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><listFoldersResponse

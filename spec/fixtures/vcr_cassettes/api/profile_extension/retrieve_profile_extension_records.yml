@@ -4,42 +4,60 @@ http_interactions:
     method: post
     uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>Umup1zvQo5WaiMnjCDYmjVkIB9</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveProfileExtensionRecords><tns:profileExtension><tns:folderName>rspec_tests</tns:folderName><tns:objectName>rspec_pet1</tns:objectName></tns:profileExtension><tns:queryColumn>RIID</tns:queryColumn><tns:fieldList>RIID_</tns:fieldList><tns:fieldList>MONTHLY_PURCH</tns:fieldList><tns:idsToRetrieve>48614925</tns:idsToRetrieve></tns:retrieveProfileExtensionRecords></env:Body></env:Envelope>
-    headers:
-      Cookie:
-      - JSESSIONID=F8A25AFB55405F63A61248977DF25F9F.ws01-ri5
-      Soapaction:
-      - ! '"retrieveProfileExtensionRecords"'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Content-Length:
-      - '747'
-      Accept:
-      - ! '*/*'
-      User-Agent:
-      - Ruby
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><tns:login><tns:username>your_responsys_username</tns:username><tns:password>your_responsys_password</tns:password></tns:login></env:Body></env:Envelope>
+    headers: 
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Content-Length:
-      - '463'
-      Content-Type:
-      - text/xml; charset=UTF-8
-      Date:
-      - Thu, 06 Nov 2014 07:26:50 GMT
-      Server:
-      - Apache
-      Set-Cookie:
-      - BIGipServerDC2-APIGEE-I5-9051-SSL=3600669706.23331.0000; path=/
+    headers: 
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><loginResponse
+        xmlns="urn:ws.rsys.com"><result><sessionId>DEAR_SESSION_ID</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 29 Nov 2014 21:52:03 GMT
+- request:
+    method: post
+    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>DEAR_SESSION_ID</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveProfileExtensionRecords><tns:profileExtension><tns:folderName>rspec_tests</tns:folderName><tns:objectName>rspec_pet1</tns:objectName></tns:profileExtension><tns:queryColumn>RIID</tns:queryColumn><tns:fieldList>RIID_</tns:fieldList><tns:fieldList>MONTHLY_PURCH</tns:fieldList><tns:idsToRetrieve>48614925</tns:idsToRetrieve></tns:retrieveProfileExtensionRecords></env:Body></env:Envelope>
+    headers: 
+  response:
+    status:
+      code: 200
+      message: OK
+    headers: 
+    body:
+      encoding: UTF-8
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><retrieveProfileExtensionRecordsResponse
         xmlns="urn:ws.rsys.com"><result><recordData><fieldNames>RIID_</fieldNames><fieldNames>MONTHLY_PURCH</fieldNames><records><fieldValues>48614925</fieldValues><fieldValues>300</fieldValues></records></recordData></result></retrieveProfileExtensionRecordsResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Thu, 06 Nov 2014 07:26:52 GMT
+  recorded_at: Sat, 29 Nov 2014 21:52:03 GMT
+- request:
+    method: post
+    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>DEAR_SESSION_ID</sessionId></sessionHeader></env:Header><env:Body><tns:logout></tns:logout></env:Body></env:Envelope>
+    headers: 
+  response:
+    status:
+      code: 200
+      message: OK
+    headers: 
+    body:
+      encoding: UTF-8
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><logoutResponse
+        xmlns="urn:ws.rsys.com"><result>true</result></logoutResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 29 Nov 2014 21:52:03 GMT
 recorded_with: VCR 2.9.3

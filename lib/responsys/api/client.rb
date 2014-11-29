@@ -1,68 +1,40 @@
-require "responsys/configuration"
-require "savon"
-require "responsys/helper"
-require "responsys/api/all"
-require "responsys/api/object/all"
-require "singleton"
-
 module Responsys
   module Api
     class Client
-      include Singleton
       include Responsys::Api::All
 
-      attr_accessor :credentials, :client, :session_id, :jsession_id, :header
+      attr_accessor :client
 
-      def initialize
-        settings = Responsys.configuration.settings
-        @credentials = {
-          username: settings[:username],
-          password: settings[:password]
-        }
-
-        ssl_version = settings[:ssl_version] || :TLSv1
-
-        if settings[:debug]
-          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version, log_level: :debug, log: true, pretty_print_xml: true)
-        else
-          @client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version)
-        end
+      #TODO allows to keep the use of .instance. The client is no longer a singleton so it needs to be removed in a newer release.
+      class << self
+        alias :instance :new
       end
 
       def api_method(action, message = nil, response_type = :hash)
         raise Responsys::Helper.get_message("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
 
-        begin
-          login
-
-          response = run_with_credentials(action, message, jsession_id, header)
-
-          case response_type
-          when :result
-            Responsys::Helper.format_response_result(response, action)
-          when :hash
-            Responsys::Helper.format_response_hash(response, action)
+        SessionPool.instance.with do |session|
+          begin
+            session.login
+            response = session.run_with_credentials(action, message)
+            case response_type
+            when :result
+              Responsys::Helper.format_response_result(response, action)
+            when :hash
+              Responsys::Helper.format_response_hash(response, action)
+            end
+          rescue Exception => e
+            Responsys::Helper.format_response_with_errors(e)
+          ensure
+            session.logout
           end
-
-        rescue Exception => e
-          Responsys::Helper.format_response_with_errors(e)
-        ensure
-          logout
         end
       end
 
       def available_operations
-        @client.operations
-      end
-
-      private
-
-      def run(method, message)
-        @client.call(method.to_sym, message: message)
-      end
-
-      def run_with_credentials(method, message, cookie, header)
-        @client.call(method.to_sym, message: message, cookies: cookie, soap_header: header)
+        SessionPool.instance.with do |session|
+          session.operations
+        end
       end
     end
   end

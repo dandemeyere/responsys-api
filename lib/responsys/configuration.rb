@@ -7,7 +7,11 @@ module Responsys
         username: nil,
         password: nil,
         wsdl: "",
-        debug: false
+        debug: false,
+        sessions: {
+          amount: 10,
+          timeout: 30
+        }
       }
     end
   end

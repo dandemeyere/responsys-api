@@ -9,7 +9,7 @@ module Responsys
         wsdl: "",
         debug: false,
         sessions: {
-          amount: 10,
+          size: 80,
           timeout: 30
         }
       }
@@ -26,5 +26,6 @@ module Responsys
 
   def self.configure
     yield(configuration)
+    Responsys::Api::SessionPool.init
   end
 end

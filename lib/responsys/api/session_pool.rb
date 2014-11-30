@@ -4,12 +4,20 @@ module Responsys
   module Api
     class SessionPool
       include Singleton
+      attr_accessor :pool
+      ACCEPTED_SETTINGS = [:timeout, :size]
+
+      class << self
+        alias :init :instance
+      end
 
       def initialize
         settings = Responsys.configuration.settings[:sessions]
-
-        params = {}
-        params.merge(settings) if settings
+        params = if settings
+          settings.select { |option, value| ACCEPTED_SETTINGS.include?(option) }
+        else
+          {}
+        end
 
         @pool = ConnectionPool.new(params) { Responsys::Api::Session.new }
       end

@@ -2,6 +2,11 @@ language: ruby
 rvm:
   - 1.9.3
   - 2.1.2
-
 gemfile:
   - Gemfile
+notifications:
+  email:
+    on_success: never
+    on_failure: never
+  slack:
+    secure: 8b8dwwpHEw7vYd5Vma/BK2dZBrKYpFtu8TN8+NtpW8Xp+boYY3hEaFCeeEySzDvacCBZFKjjvDxverOFd4jqml2MtOukNZ/zlFc7ZVybGsNirfisNucS7auvwoWPwVrzrHoNpB5nTLU4tm0tWdaKkfLa4Yssr/tEO8yBIGwT8ds=

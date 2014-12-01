@@ -33,8 +33,8 @@ module Responsys
     end
 
     def retrieve_profile_extension(profile_extension, fields)
-      return Responsys::Helper.format_response_with_message("member.riid_missing") if @user_riid.nil?
-      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_profile?(profile_extension)
+      return Responsys::Helper.build_custom_error_response("member.riid_missing") if @user_riid.nil?
+      return Responsys::Helper.build_custom_error_response("member.record_not_found") unless present_in_profile?(profile_extension)
 
       @client.retrieve_profile_extension_records(profile_extension, QueryColumn.new("RIID"), fields, [@user_riid])
     end
@@ -48,18 +48,18 @@ module Responsys
     end
 
     def update(list, data)
-      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_list?(list)
+      return Responsys::Helper.build_custom_error_response("member.record_not_found") unless present_in_list?(list)
 
       record = RecordData.new(data)
       @client.merge_list_members(list, record)
     end
 
     def present_in_profile?(list)
-      return Responsys::Helper.format_response_with_message("member.riid_missing") if @user_riid.nil?
+      return Responsys::Helper.build_custom_error_response("member.riid_missing") if @user_riid.nil?
 
       response = lookup_profile_via_key(list, "RIID", @user_riid)
 
-      !(response[:status] == "failure" && response[:error][:code] == "RECORD_NOT_FOUND")
+      !(response.error? && response.error_code == "RECORD_NOT_FOUND")
     end
 
     def present_in_list?(list)
@@ -69,14 +69,15 @@ module Responsys
         response = lookup_list_via_key(list, "EMAIL_ADDRESS", @email)
       end
 
-      !(response[:status] == "failure" && response[:error][:code] == "RECORD_NOT_FOUND")
+puts response.inspect
+      !(response.error? && response.error_code == "RECORD_NOT_FOUND")
     end
 
     def subscribed?(list)
-      return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_list?(list)
+      return Responsys::Helper.build_custom_error_response("member.record_not_found") unless present_in_list?(list)
 
-      response = @client.retrieve_list_members(list, QueryColumn.new("EMAIL_ADDRESS"), %w(EMAIL_PERMISSION_STATUS_), [@email])
-      response[:data][0][:EMAIL_PERMISSION_STATUS_] == "I"
+      object = @client.retrieve_list_members(list, QueryColumn.new("EMAIL_ADDRESS"), %w(EMAIL_PERMISSION_STATUS_), [@email])
+      object.data[0][:EMAIL_PERMISSION_STATUS_] == "I"
     end
 
     private

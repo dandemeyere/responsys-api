@@ -1,6 +1,5 @@
 require "responsys/configuration"
 require "savon"
-require "responsys/helper"
 require "responsys/api/all"
 require "responsys/api/object/all"
 require "singleton"
@@ -29,7 +28,7 @@ module Responsys
         end
       end
 
-      def api_method(action, message = nil, response_type = :hash)
+      def api_method(action, message = nil)
         raise Responsys::Helper.get_message("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
 
         begin
@@ -37,15 +36,10 @@ module Responsys
 
           response = run_with_credentials(action, message, jsession_id, header)
 
-          case response_type
-          when :result
-            Responsys::Helper.format_response_result(response, action)
-          when :hash
-            Responsys::Helper.format_response_hash(response, action)
-          end
+          Responsys::Helper.format(action: action, response: response)
 
         rescue Exception => e
-          Responsys::Helper.format_response_with_errors(e)
+          Responsys::Helper.format(error: e)
         ensure
           logout
         end

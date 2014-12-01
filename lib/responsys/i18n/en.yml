@@ -1,5 +1,12 @@
 en:
   responsys_api:
+    response:
+      status:
+        success: success
+        error: error
+      object:
+        incorrect_param: The parameter is not a hash
+
     api:
       object:
         field_type:

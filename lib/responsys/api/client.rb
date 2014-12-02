@@ -11,17 +11,23 @@ module Responsys
       include Singleton
       include Responsys::Api::All
 
-      attr_accessor :credentials, :client, :session_id, :jsession_id, :header
+      attr_accessor :credentials, :client, :session_id, :jsession_id, :header, :settings
+
+      AVAILABLE_SETTINGS = %w(wsdl endpoint namespace raise_errors proxy headers open_timeout
+        read_timeout ssl_verify_mode ssl_version ssl_cert_file ssl_cert_key_file
+        ssl_ca_cert_file ssl_cert_key_password convert_request_keys_to soap_header element_form_default
+        env_namespace namespace_identifier namespaces encoding soap_version
+        basic_auth digest_auth wsse_auth wsse_timestamp ntlm strip_namespaces convert_response_tags_to
+        logger log_level log filters pretty_print_xml)
 
       def initialize
-        settings = Responsys.configuration.settings
+        @settings = Responsys.configuration.settings
         @credentials = {
-          username: settings[:username],
-          password: settings[:password]
+          username: @settings[:username],
+          password: @settings[:password]
         }
 
-        savon_client_settings = client_settings(settings)
-        @client = Savon.client(savon_client_settings)
+        @client = Savon.client(filtered_settings)
       end
 
       def api_method(action, message = nil, response_type = :hash)
@@ -50,27 +56,12 @@ module Responsys
         @client.operations
       end
 
-      def client_settings(settings)
-        available_settings = %w(wsdl endpoint namespace raise_errors proxy headers open_timeout
-          read_timeout ssl_verify_mode ssl_version ssl_cert_file ssl_cert_key_file
-          ssl_ca_cert_file ssl_cert_key_password convert_request_keys_to soap_header element_form_default
-          env_namespace namespace_identifier namespaces encoding soap_version
-          basic_auth digest_auth wsse_auth wsse_timestamp ntlm strip_namespaces convert_response_tags_to
-          logger log_level log filters pretty_print_xml)
-
-        savon_client_settings = {}
-
-        settings.each do |k, v|
-          next if k.to_s == "username" || k.to_s == "password"
-          if available_settings.include? k.to_s
-            savon_client_settings[k] = v
-          end
-        end
-
-        savon_client_settings
-      end
-
       private
+
+      def filtered_settings
+        settings[:ssl_version] = :TLSv1 unless settings[:ssl_version]
+        settings.select { |k,v| k.to_s != "username" && k.to_s != "password" && AVAILABLE_SETTINGS.include?(k.to_s) }
+      end
 
       def run(method, message)
         @client.call(method.to_sym, message: message)

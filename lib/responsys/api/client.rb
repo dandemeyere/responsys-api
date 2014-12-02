@@ -13,12 +13,7 @@ module Responsys
 
       attr_accessor :credentials, :client, :session_id, :jsession_id, :header, :settings
 
-      AVAILABLE_SETTINGS = %w(wsdl endpoint namespace raise_errors proxy headers open_timeout
-        read_timeout ssl_verify_mode ssl_version ssl_cert_file ssl_cert_key_file
-        ssl_ca_cert_file ssl_cert_key_password convert_request_keys_to soap_header element_form_default
-        env_namespace namespace_identifier namespaces encoding soap_version
-        basic_auth digest_auth wsse_auth wsse_timestamp ntlm strip_namespaces convert_response_tags_to
-        logger log_level log filters pretty_print_xml)
+      AVAILABLE_SETTINGS = Responsys::Helper.get_message("api.client.available_methods")
 
       def initialize
         @settings = Responsys.configuration.settings

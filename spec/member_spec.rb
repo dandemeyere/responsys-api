@@ -32,7 +32,7 @@ describe Responsys::Member do
     end
 
     it "should check the user has subscribed" do
-      response_expected = { status: "success", data: [{ EMAIL_PERMISSION_STATUS_: "I" }] }
+      response_expected = { success: true, data: [{ EMAIL_PERMISSION_STATUS_: "I" }] }
 
       allow(connection).to receive(:retrieve_list_members).with(@list, kind_of(Responsys::Api::Object::QueryColumn), %w(EMAIL_PERMISSION_STATUS_), %W(#{@member.email})).and_return(Responsys::ResponseObject.new(response_expected))
 

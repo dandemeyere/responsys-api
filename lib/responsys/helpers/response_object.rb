@@ -8,11 +8,11 @@ module Responsys
     end
 
     def success?
-      response_hash[:status] == "success"
+      response_hash[:success] == true
     end
 
     def error?
-      response_hash[:status] == "error"
+      response_hash[:success] == false
     end
 
     def error_code

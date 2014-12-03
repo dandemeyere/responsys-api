@@ -69,7 +69,6 @@ module Responsys
         response = lookup_list_via_key(list, "EMAIL_ADDRESS", @email)
       end
 
-puts response.inspect
       !(response.error? && response.error_code == "RECORD_NOT_FOUND")
     end
 

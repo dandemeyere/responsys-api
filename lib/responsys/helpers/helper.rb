@@ -14,7 +14,7 @@ module Responsys
     end
 
     def self.build_custom_error_response(message_key)
-      hash = { status: get_message("response.status.error"), error: { http_status_code: "", code: message_key.split('.')[-1], message: get_message(message_key) } }
+      hash = { success: false, error: { http_status_code: "", code: message_key.split('.')[-1], message: get_message(message_key) } }
       ResponseObject.new(hash)
     end
 

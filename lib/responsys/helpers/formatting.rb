@@ -3,7 +3,7 @@ module Responsys
     module Formatting
 
       def self.format_response_with_errors(error)
-        error_response = { status: Responsys::Helper.get_message("response.status.error") }
+        error_response = { success: false }
 
         if error.to_hash[:fault].has_key?(:detail) and !error.to_hash[:fault][:detail].nil?
           key = error.to_hash[:fault][:detail].keys[0]
@@ -22,7 +22,7 @@ module Responsys
       end
 
       def self.format_response_hash(response, action)
-        formatted_response = { status: Responsys::Helper.get_message("response.status.success") }
+        formatted_response = { success: true }
 
         return formatted_response unless response.body.has_key? "#{action}_response".to_sym
 
@@ -80,7 +80,7 @@ module Responsys
       end
 
       def self.format_response_with_message(i18n_key)
-        { status: Responsys::Helper.get_message("response.status.error"), error: { http_status_code: "", code: i18n_key.split('.')[-1], message: I18n.t(i18n_key) } }
+        { success: false, error: { http_status_code: "", code: i18n_key.split('.')[-1], message: I18n.t(i18n_key) } }
       end
     end
   end

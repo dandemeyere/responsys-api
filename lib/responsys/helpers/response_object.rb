@@ -16,13 +16,13 @@ module Responsys
     end
 
     def error_code
-      nil unless error?
+      return nil unless error?
 
       "#{response_hash[:error][:code]}"
     end
 
     def error_message
-      nil unless error?
+      return nil unless error?
 
       "#{response_hash[:error][:message]}"
     end

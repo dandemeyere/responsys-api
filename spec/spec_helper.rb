@@ -12,15 +12,13 @@ else
 end
 
 DATA = YAML.load_file("#{File.dirname(__FILE__)}/test_data.yml")
-IGNORE_LOGIN_REQUEST = true
-IGNORE_LOGOUT_REQUEST = true
 
 VCR.configure do |c|
   c.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   c.hook_into :webmock
   c.filter_sensitive_data("your_responsys_username") { CREDENTIALS["username"] }
   c.filter_sensitive_data("your_responsys_password") { CREDENTIALS["password"] }
-  c.default_cassette_options = { match_requests_on: [:host, :method, :uri, :body, :path] }
+  c.default_cassette_options = { match_requests_on: [:method, :uri, :body] }
   c.before_record do |c|
     c.request.headers = nil
     c.response.headers = nil

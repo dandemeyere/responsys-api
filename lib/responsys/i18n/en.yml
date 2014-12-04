@@ -1,5 +1,9 @@
 en:
   responsys_api:
+    response:
+      object:
+        incorrect_param: The parameter is not a hash
+
     api:
       object:
         field_type:

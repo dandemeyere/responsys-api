@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    responsys-api (0.1.0)
+    responsys-api (0.2.0)
       connection_pool (= 2.0.0)
       i18n (~> 0.6)
       rubyntlm (~> 0.4)

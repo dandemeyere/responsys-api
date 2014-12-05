@@ -1,6 +1,3 @@
-require "responsys/api/all"
-require "responsys/api/object/all"
-
 module Responsys
   class Member
     include Responsys::Api

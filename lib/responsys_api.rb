@@ -2,12 +2,14 @@ require "i18n"
 
 I18n.load_path.concat Dir.glob( File.dirname(__FILE__) + "/responsys/i18n/*.yml" )
 
-require "responsys/helpers/formatting"
-require "responsys/helpers/response_object"
-require "responsys/helpers/helper"
+require "responsys/configuration"
+
+require "responsys/helpers/all"
 
 require "responsys/exceptions/all"
 
-require "responsys/configuration"
+require "responsys/api/object/all"
+require "responsys/api/all"
+
 require "responsys/api/client"
 require "responsys/member"

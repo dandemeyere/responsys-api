@@ -1,7 +1,4 @@
-require "responsys/configuration"
 require "savon"
-require "responsys/api/all"
-require "responsys/api/object/all"
 require "singleton"
 
 module Responsys

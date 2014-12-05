@@ -7,7 +7,11 @@ module Responsys
         username: nil,
         password: nil,
         wsdl: "",
-        debug: false
+        debug: false,
+        sessions: {
+          size: 80,
+          timeout: 30
+        }
       }
     end
   end
@@ -22,5 +26,6 @@ module Responsys
 
   def self.configure
     yield(configuration)
+    Responsys::Api::SessionPool.init
   end
 end

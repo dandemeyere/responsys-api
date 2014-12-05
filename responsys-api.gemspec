@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "connection_pool", "2.0.0"
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake", "~> 10.3"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rspec", "~> 3.1.0"
   spec.add_development_dependency "vcr", "~> 2.5"
   spec.add_development_dependency "webmock", "~> 1.9"
 end

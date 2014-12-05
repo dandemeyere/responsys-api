@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Dan DeMeyere", "Florian Lorrain", "Morgan Griggs", "Mike Rocco"]
   spec.email         = ["dan@thredup.com", "florian.lorrain@thredup.com", "morgan@thredup.com", "michael.rocco@thredup.com"]
   spec.description   = "A gem to integrate with the Responsys SOAP API"
-  spec.summary       = "Write a proper summary"
+  spec.summary       = "See the github repository for further information about the usage and the needed configuration"
   spec.homepage      = "https://github.com/dandemeyere/responsys-api"
   spec.license       = "MIT"
 
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.required_ruby_version = '>= 1.9.3'
-  
+
   spec.add_dependency "rubyntlm", "~> 0.4"
   spec.add_dependency "savon", "2.6.0"
   spec.add_dependency "wasabi", "3.3.0"

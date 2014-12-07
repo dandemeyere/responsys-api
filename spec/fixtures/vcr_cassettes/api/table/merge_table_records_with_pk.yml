@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><tns:login><tns:username>your_responsys_username</tns:username><tns:password>your_responsys_password</tns:password></tns:login></env:Body></env:Envelope>
+    headers: 
+  response:
+    status:
+      code: 200
+      message: OK
+    headers: 
+    body:
+      encoding: UTF-8
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><loginResponse
+        xmlns="urn:ws.rsys.com"><result><sessionId>DEAR_SESSION_ID</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Sat, 29 Nov 2014 21:52:03 GMT
+- request:
+    method: post
+    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
+    body:
+      encoding: US-ASCII
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>DEAR_SESSION_ID</sessionId></sessionHeader></env:Header><env:Body><tns:mergeTableRecordsWithPK><tns:table><tns:folderName>Some Test Folder</tns:folderName><tns:objectName>some_supplementary_table</tns:objectName></tns:table><tns:recordData><tns:fieldNames>EMAIL_ADDRESS_</tns:fieldNames><tns:fieldNames>INVITER_ID</tns:fieldNames><tns:fieldNames>INVITER_NAME</tns:fieldNames><tns:records><tns:fieldValues xsi:nil="true"/><tns:fieldValues>10000</tns:fieldValues><tns:fieldValues>some name</tns:fieldValues></tns:records></tns:recordData><tns:insertOnNoMatch>true</tns:insertOnNoMatch><tns:updateOnMatch>NO_UPDATE</tns:updateOnMatch></tns:mergeTableRecordsWithPK></env:Body></env:Envelope>
+    headers:
+      Cookie:
+      - JSESSIONID=B3B20578F7533944E88189EBC32C6E7B.ws02-ri5
+      Soapaction:
+      - ! '"mergeTableRecordsWithPK"'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1072'
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '467'
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Wed, 26 Nov 2014 11:34:17 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - BIGipServerDC2-APIGEE-I5-9051-SSL=3617446922.23331.0000; path=/
+    body:
+      encoding: US-ASCII
+      string: ! '<?xml version=''1.0'' encoding=''UTF-8''?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><mergeTableRecordsWithPKResponse
+        xmlns="urn:ws.rsys.com"><result><insertCount>0</insertCount><updateCount>0</updateCount><rejectedCount>1</rejectedCount><totalCount>1</totalCount><errorMessage>Record
+        0 = CANNOT INSERT: RECORD ALREADY EXISTS.&#xd;
+
+        </errorMessage></result></mergeTableRecordsWithPKResponse></soapenv:Body></soapenv:Envelope>'
+    http_version: 
+  recorded_at: Wed, 15 Dec 2014 11:34:17 GMT
+recorded_with: VCR 2.9.3

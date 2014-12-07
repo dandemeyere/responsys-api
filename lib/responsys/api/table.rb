@@ -29,8 +29,8 @@ module Responsys
 
       end
 
-      def merge_table_records_with_pk
-
+      def merge_table_records_with_pk(interact_object, record_data, insert_on_no_match = true, update_on_match = "REPLACE_ALL")
+        api_method(:merge_table_records_with_pk, { table: interact_object.to_api, recordData: record_data.to_api, insertOnNoMatch: insert_on_no_match, updateOnMatch: update_on_match }) 
       end
 
       def delete_table_records

@@ -8,6 +8,7 @@ describe Responsys::Api::Table do
     @fields = %w(RIID_ MONTHLY_PURCH)
     @user_riid = DATA[:users][:user1][:RIID]
     @user_purch = DATA[:pets][:pet1][:records][:user1][:MONTHLY_PURCH]
+    
   end
 
   context "create table" do
@@ -57,6 +58,20 @@ describe Responsys::Api::Table do
         expect(response[:result]).to be(true)
       end
     end
+  
+    it "should merge table records with pk" do
+      VCR.use_cassette("api/table/merge_table_records_with_pk") do
+       @pet_id = DATA[:pets][:pet1][:id]  
+       @pet_name = DATA[:pets][:pet1][:name] 
+       @supplement_table_folder = DATA[:supplement_tables][:supplement_table1][:folder_name]
+       @supplement_table_name = DATA[:supplement_tables][:supplement_table1][:name]
+       @user_email = DATA[:users][:user1][:EMAIL_ADDRESS]
+       record_data = Responsys::Api::Object::RecordData.new([{EMAIL_ADDRESS_: @user_email, PET_ID: @pet_id, PET_NAME: @pet_name}])
+       table_with_pk = Responsys::Api::Object::InteractObject.new(@supplement_table_folder , @supplement_table_name)
+       response = Responsys::Api::Client.instance.merge_table_records_with_pk(table_with_pk, record_data)
+       expect(response[:status]).to eq("ok")
+      end 
+    end     
   end
 
   context "retrieve_profile_extension_records" do

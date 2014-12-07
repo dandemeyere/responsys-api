@@ -37,10 +37,16 @@
 
 :pets:
   :pet1:
+    :id: 111111111 
     :name: rspec_pet1
-
+     
     :records:
       :user1:
         :MONTHLY_PURCH: 300
       :user2:
         :MONTHLY_PURCH: 1000
+:supplement_tables:
+  :supplement_table1:
+    :name: supplement_table1_name
+    :folder_name: supplement_table1_folder  
+              

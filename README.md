@@ -1,4 +1,4 @@
-# ResponsysApi ![Master branch build status](https://travis-ci.org/dandemeyere/responsys-api.svg?branch=master)
+# ResponsysApi ![Master branch build status](https://travis-ci.org/dandemeyere/responsys-api.svg?branch=master) [![Code Climate](https://codeclimate.com/github/dandemeyere/responsys-api/badges/gpa.svg)](https://codeclimate.com/github/dandemeyere/responsys-api)
 
 A gem to help you communicate to the Responsys Interact SOAP API. Currently working of Responsys Interact version 6.20.
 

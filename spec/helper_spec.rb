@@ -16,7 +16,12 @@ describe Responsys::Helper do
     end
 
     it "should get the default locale message if locale is not present" do
-      I18n.locale = :not_available_locale
+      begin
+        I18n.locale = :not_available_locale
+      rescue I18n::InvalidLocale
+      end
+
+      expect(I18n.locale).to eq(:en)
       expect(Responsys::Helper.get_message(message_key))
         .to eq("The member has not been found in the list")
     end

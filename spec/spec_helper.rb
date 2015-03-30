@@ -4,6 +4,7 @@ Bundler.setup
 require "responsys_api.rb"
 require "vcr"
 require "yaml"
+require "pathname"
 
 if File.exist?("#{File.dirname(__FILE__)}/api_credentials.yml")
   CREDENTIALS = YAML.load_file("#{File.dirname(__FILE__)}/api_credentials.yml")
@@ -34,4 +35,25 @@ Responsys.configure do |config|
     wsdl: CREDENTIALS["wsdl"],
     element_form_default: :qualified
   }
+end
+
+def toggle_i18n_test_files(active)
+  folder = active ? "spec/i18n" : "lib/responsys/i18n"
+
+  I18n.load_path = Dir.glob(Pathname.new(__FILE__).parent.parent.to_s + "/#{folder}/*.yml")
+
+  I18n.reload!
+  I18n.locale = I18n.default_locale
+end
+
+RSpec.configure do |config|
+  config.before(:example, i18n_test_files: true) do
+    #Set the use of i18n test files.
+    toggle_i18n_test_files(true)
+  end
+
+  config.after(:example, i18n_test_files: true) do
+    #Reset the use of i18n test files.
+    toggle_i18n_test_files(false)
+  end
 end

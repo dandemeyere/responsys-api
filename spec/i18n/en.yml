@@ -1,0 +1,5 @@
+#This file is only for test purposes
+en:
+  responsys_api:
+    hello: "Hello"
+    thredup: "Think Secondhand First"

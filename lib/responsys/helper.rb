@@ -84,7 +84,7 @@ module Responsys
       begin
         I18n.t(key, scope: :responsys_api, locale: I18n.locale, raise: true)
       rescue I18n::MissingTranslationData
-        I18n.t(key, scope: :responsys_api, locale: :en)
+        I18n.t(key, scope: :responsys_api, locale: :en, default: "Responsys - Unknown message '#{key}'")
       end
     end
   end

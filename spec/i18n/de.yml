@@ -1,0 +1,4 @@
+#This file is only for test purposes
+de:
+  responsys_api:
+    hello: "Guten Tag"

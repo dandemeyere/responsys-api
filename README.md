@@ -1,4 +1,4 @@
-# ResponsysApi ![Master branch build status](https://travis-ci.org/dandemeyere/responsys-api.svg?branch=master) [![Code Climate](https://codeclimate.com/github/dandemeyere/responsys-api/badges/gpa.svg)](https://codeclimate.com/github/dandemeyere/responsys-api)
+# ResponsysApi [![Join the chat at https://gitter.im/dandemeyere/responsys-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dandemeyere/responsys-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![Master branch build status](https://travis-ci.org/dandemeyere/responsys-api.svg?branch=master) [![Code Climate](https://codeclimate.com/github/dandemeyere/responsys-api/badges/gpa.svg)](https://codeclimate.com/github/dandemeyere/responsys-api)
 
 A gem to help you communicate to the Responsys Interact SOAP API. Currently working of Responsys Interact version 6.20.
 

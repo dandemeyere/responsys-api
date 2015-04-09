@@ -7,7 +7,7 @@ module Responsys
         attr_accessor :field_names, :records
 
         def initialize(data)
-          raise ParameterException, Responsys::Helper.get_message("api.object.record_data.incorrect_record_data_type") unless data.is_a? Array
+          raise ParameterException, Responsys::Helpers.get_message("api.object.record_data.incorrect_record_data_type") unless data.is_a? Array
 
           self.field_names = data.map { |record| record.keys }.flatten.uniq
 

@@ -17,27 +17,6 @@ describe Responsys::Api::Table do
       @table_with_pk = Responsys::Api::Object::InteractObject.new(DATA[:folder], "table_with_pk_temp")
     end
 
-    # it "should create a table" do
-    #   VCR.use_cassette("api/table/create") do
-    #     fields = [
-    #       Responsys::Api::Object::Field.new("field1", Responsys::Api::Object::FieldType.new("STR500"), custom = false, data_extraction_key = false),
-    #       Responsys::Api::Object::Field.new("field2", Responsys::Api::Object::FieldType.new("NUMBER"), custom = false, data_extraction_key = false),
-    #       Responsys::Api::Object::Field.new("field3", Responsys::Api::Object::FieldType.new("TIMESTAMP"), custom = false, data_extraction_key = false),
-    #     ]
-    #     response = Responsys::Api::Client.new.create_table(@table, fields)
-
-    #     expect(response[:result]).to be(true)
-    #   end
-    # end
-
-    # it "should delete the previous table" do
-    #   VCR.use_cassette("api/table/delete") do
-    #     response = Responsys::Api::Client.new.delete_table(@table)
-
-    #     expect(response[:result]).to be(true)
-    #   end
-    # end
-
     it "should create a table with pk" do
       VCR.use_cassette("api/table/create_with_pk") do
         fields = [
@@ -47,7 +26,7 @@ describe Responsys::Api::Table do
         ]
         response = Responsys::Api::Client.new.create_table_with_pk(@table_with_pk, fields, %w(field1))
 
-        expect(response[:result]).to be(true)
+        expect(response.success?).to be_truthy
       end
     end
 
@@ -55,7 +34,7 @@ describe Responsys::Api::Table do
       VCR.use_cassette("api/table/delete_with_pk") do
         response = Responsys::Api::Client.new.delete_table(@table_with_pk)
 
-        expect(response[:result]).to be(true)
+        expect(response.success?).to be_truthy
       end
     end
   
@@ -66,10 +45,13 @@ describe Responsys::Api::Table do
        @supplement_table_folder = DATA[:supplement_tables][:supplement_table1][:folder_name]
        @supplement_table_name = DATA[:supplement_tables][:supplement_table1][:name]
        @user_email = DATA[:users][:user1][:EMAIL_ADDRESS]
+       
        record_data = Responsys::Api::Object::RecordData.new([{EMAIL_ADDRESS_: @user_email, PET_ID: @pet_id, PET_NAME: @pet_name}])
        table_with_pk = Responsys::Api::Object::InteractObject.new(@supplement_table_folder , @supplement_table_name)
+       
        response = Responsys::Api::Client.instance.merge_table_records_with_pk(table_with_pk, record_data)
-       expect(response[:status]).to eq("ok")
+       
+       expect(response.success?).to be_truthy
       end 
     end     
   end
@@ -80,7 +62,7 @@ describe Responsys::Api::Table do
       VCR.use_cassette("api/profile_extension/retrieve_profile_extension_records") do
         response = Responsys::Api::Client.new.retrieve_profile_extension_records(@profile_extension, @query_column_riid, @fields, %W(#{@user_riid}))
 
-        expect(response[:status]).to eq("ok")
+        expect(response.success?).to be_truthy
       end
     end
 
@@ -88,7 +70,7 @@ describe Responsys::Api::Table do
       VCR.use_cassette("api/profile_extension/retrieve_profile_extension_records") do
         response = Responsys::Api::Client.new.retrieve_profile_extension_records(@profile_extension, @query_column_riid, @fields, %W(#{@user_riid}))
 
-        expect(response[:data].length).to eq(1)
+        expect(response.data.length).to eq(1)
       end
     end
 
@@ -96,7 +78,7 @@ describe Responsys::Api::Table do
       VCR.use_cassette("api/profile_extension/retrieve_profile_extension_records") do
         response = Responsys::Api::Client.new.retrieve_profile_extension_records(@profile_extension, @query_column_riid, @fields, %W(#{@user_riid}))
 
-        expect(response[:data][0].length).to eq(2)
+        expect(response.data[0].length).to eq(2)
       end
     end
 
@@ -105,7 +87,7 @@ describe Responsys::Api::Table do
         record_data = Responsys::Api::Object::RecordData.new([{RIID_: @user_riid, MONTHLY_PURCH: @user_purch}])
         response = Responsys::Api::Client.new.merge_into_profile_extension(@profile_extension, record_data, "RIID", true)
 
-        expect(response[:status]).to eq("ok")
+        expect(response.success?).to be_truthy
       end
     end
 
@@ -113,7 +95,7 @@ describe Responsys::Api::Table do
       VCR.use_cassette("api/profile_extension/delete_profile_extension_records") do
         response = Responsys::Api::Client.new.delete_profile_extension_members(@profile_extension, @query_column_riid, %W{#{@user_riid}})
 
-        expect(response[:status]).to eq("ok")
+        expect(response.success?).to be_truthy
       end
     end
 

@@ -32,7 +32,7 @@ describe Responsys::Member do
     end
 
     it "should check the user has subscribed" do
-      response_expected = { status: "ok", data: [{ EMAIL_PERMISSION_STATUS_: "I" }] }
+      response_expected = Responsys::ResponseObject.new({ success: true, data: [{ EMAIL_PERMISSION_STATUS_: "I" }] })
 
       allow(connection).to receive(:retrieve_list_members).with(@list, kind_of(Responsys::Api::Object::QueryColumn), %w(EMAIL_PERMISSION_STATUS_), %W(#{@member.email})).and_return(response_expected)
 
@@ -84,7 +84,7 @@ describe Responsys::Member do
         member_with_fake_riid = Responsys::Member.new(@email, "000001")
         response = member_with_fake_riid.subscribed?(@list)
 
-        expect(response[:error][:code]).to eq("record_not_found")
+        expect(response.error_code).to eq("record_not_found")
       end
     end
 
@@ -99,11 +99,11 @@ describe Responsys::Member do
       @fields = %w(RIID_ MONTHLY_PURCH)
     end
 
-    it "should set the status to failure if no riid provided" do
+    it "should set the success status to false if no riid provided" do
       VCR.use_cassette("member/retrieve_profile_extension_fail") do
         response = @member_without_riid.retrieve_profile_extension(@profile_extension, @fields)
 
-        expect(response[:status]).to eq("failure")
+        expect(response.error?).to be_truthy
       end
     end
 
@@ -111,7 +111,7 @@ describe Responsys::Member do
       VCR.use_cassette("member/retrieve_profile_extension_fail") do
         response = @member_without_riid.retrieve_profile_extension(@profile_extension, @fields)
 
-        expect(response[:error][:message]).to eq(Responsys::Helper.get_message("member.riid_missing"))
+        expect(response.error_message).to eq(Responsys::Helpers.get_message("member.riid_missing"))
       end
     end
 
@@ -119,7 +119,7 @@ describe Responsys::Member do
       VCR.use_cassette("member/retrieve_profile_extension") do
         response = @member_with_riid.retrieve_profile_extension(@profile_extension, @fields)
 
-        expect(response[:status]).to eq("ok")
+        expect(response.success?).to be_truthy
       end
     end
 

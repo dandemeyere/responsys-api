@@ -5,19 +5,10 @@ module Responsys
       include Responsys::Api::Authentication
 
       def initialize
-        settings = Responsys.configuration.settings
-        @credentials = {
-          username: settings[:username],
-          password: settings[:password]
-        }
+        global_configuration = Responsys::configuration
 
-        ssl_version = settings[:ssl_version] || :TLSv1
-
-        if settings[:debug]
-          @savon_client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version, log_level: :debug, log: true, pretty_print_xml: true)
-        else
-          @savon_client = Savon.client(wsdl: settings[:wsdl], element_form_default: :qualified, ssl_version: ssl_version)
-        end
+        @credentials = global_configuration.api_credentials
+        @savon_client = Savon.client(global_configuration.savon_settings)
       end
 
       def run(method, message)

@@ -2,6 +2,7 @@ module Responsys
   module Api
     class Client
       include Responsys::Api::All
+      include Responsys::Exceptions
       attr_accessor :client
 
       #TODO allows to keep the use of .instance. The client is no longer a singleton so it needs to be removed in a newer release.
@@ -10,7 +11,7 @@ module Responsys
       end
 
       def api_method(action, message = nil, response_type = :hash)
-        raise Responsys::Helper.get_message("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
+        raise GenericException.new("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
 
         SessionPool.instance.with do |session|
           begin

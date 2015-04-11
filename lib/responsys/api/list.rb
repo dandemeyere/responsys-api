@@ -15,24 +15,19 @@ module Responsys
         api_method(:retrieve_list_members, message)
       end
 
-      def merge_list_members(interact_object, record_data, merge_rule = ListMergeRule.new)
+      def merge_list_members(interact_object, record_data, merge_rule = ListMergeRule.new, riid = false)
         message = {
           list: interact_object.to_api,
           recordData: record_data.to_api,
           mergeRule: merge_rule.to_api
         }
 
-        api_method(:merge_list_members, message)
+        method_name = riid ? "merge_list_members_riid" : "merge_list_members"
+        api_method(method_name.to_sym, message)
       end
 
       def merge_list_members_riid(interact_object, record_data, merge_rule = ListMergeRule.new)
-        message = {
-          list: interact_object.to_api,
-          recordData: record_data.to_api,
-          mergeRule: merge_rule.to_api
-        }
-
-        api_method(:merge_list_members_riid, message)
+        merge_list_members(interact_object, record_data, merge_rule, true)
       end
     end
   end

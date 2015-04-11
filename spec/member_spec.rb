@@ -1,5 +1,4 @@
 require "spec_helper.rb"
-require "responsys/api/client"
 
 describe Responsys::Member do
 
@@ -10,33 +9,35 @@ describe Responsys::Member do
   end
 
   context "New member" do
+    before(:each) do
+      @new_user_email = DATA[:users][:new_user4][:EMAIL_ADDRESS]
+      @member = Responsys::Member.new(@new_user_email, nil)
+    end
 
-    xit "should call mergeListMembers" do
+    it "should call mergeListMembers" do
+      expect_any_instance_of(Responsys::Api::Client).to receive(:merge_list_members_riid).with(@list, kind_of(Responsys::Api::Object::RecordData), kind_of(Responsys::Api::Object::ListMergeRule))
+      @member.add_to_list(@list)
     end
 
   end
 
   context "Subscribing" do
 
-    let(:connection) { double "connection" }
     before(:each) do
-      allow(Responsys::Api::Client).to receive(:instance).and_return(connection)
       @member = Responsys::Member.new(@email)
       @query_column = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")
     end
 
     it "should check the user is present in the list" do
-      expect(@member).to receive(:present_in_list?).with(@list)
+      expect(@member).to receive(:present_in_list?).with(@list, true)
 
       @member.subscribe(@list)
     end
 
     it "should check the user has subscribed" do
-      response_expected = { status: "ok", data: [{ EMAIL_PERMISSION_STATUS_: "I" }] }
-
-      allow(connection).to receive(:retrieve_list_members).with(@list, kind_of(Responsys::Api::Object::QueryColumn), %w(EMAIL_PERMISSION_STATUS_), %W(#{@member.email})).and_return(response_expected)
-
-      expect(@member.subscribed?(@list)).to eq(true)
+      VCR.use_cassette("member/has_subscribed") do
+        expect(@member.subscribed?(@list)).to eq(true)
+      end
     end
 
   end
@@ -123,5 +124,24 @@ describe Responsys::Member do
       end
     end
 
+  end
+
+  context "Disabled GEM" do
+    before(:all) do
+      Responsys.configure { |config| config.settings[:enabled] = false }
+    end
+
+    after(:all) do
+      Responsys.configure { |config| config.settings[:enabled] = true }
+    end
+
+    it "should not make any call" do
+      email = DATA[:users][:user1][:EMAIL_ADDRESS]
+      list = Responsys::Api::Object::InteractObject.new(DATA[:folder],DATA[:lists][:list1][:name])
+      query_column = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")
+
+      expect_any_instance_of(Responsys::Api::SessionPool).to_not receive(:with)
+      expect(Responsys::Member.new(email).subscribe(list)).to eq("disabled")
+    end
   end
 end

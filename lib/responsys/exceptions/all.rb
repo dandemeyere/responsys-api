@@ -1,1 +1,0 @@
-require "responsys/exceptions/parameter_exception"

@@ -1,5 +1,9 @@
 en:
   responsys_api:
+    gem_is_disabled: "The query couldn't be performed because the GEM is disabled."
+    configuration:
+      api_description_not_provided: A WSDL or endpoint+namespace is needed.
+      api_credentials_not_provided: No credentials are provided in the configuration.
     api:
       object:
         field_type:
@@ -18,41 +22,6 @@ en:
           empty_event: The event_name or event_id must be specified
           incorrect_event_object: "custom_event must be a CustomEvent instance"
       client:
-        available_methods:
-          - wsdl
-          - endpoint
-          - namespace
-          - raise_errors
-          - proxy
-          - headers
-          - open_timeout
-          - read_timeout
-          - ssl_verify_mode
-          - ssl_version
-          - ssl_cert_file
-          - ssl_cert_key_file
-          - ssl_ca_cert_file
-          - ssl_cert_key_password
-          - convert_request_keys_to
-          - soap_header
-          - element_form_default
-          - env_namespace
-          - namespace_identifier
-          - namespaces
-          - encoding
-          - soap_version
-          - basic_auth
-          - digest_auth
-          - wsse_auth
-          - wsse_timestamp
-          - ntlm
-          - strip_namespaces
-          - convert_response_tags_to
-          - logger
-          - log_level
-          - log
-          - filters
-          - pretty_print_xml
         api_method:
           wrong_action_login: Please use the dedicated login method
           wrong_action_logout: Please use the dedicated logout method

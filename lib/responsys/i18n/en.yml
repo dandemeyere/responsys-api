@@ -1,5 +1,8 @@
 en:
   responsys_api:
+    configuration:
+      api_description_not_provided: A WSDL or endpoint+namespace is needed.
+      api_credentials_not_provided: No credentials are provided in the configuration.
     api:
       object:
         field_type:

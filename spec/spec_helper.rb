@@ -35,8 +35,7 @@ Responsys.configure do |config|
   config.settings = {
     username: CREDENTIALS["username"],
     password: CREDENTIALS["password"],
-    wsdl: CREDENTIALS["wsdl"],
-    element_form_default: :qualified
+    wsdl: CREDENTIALS["wsdl"]
   }
 end
 

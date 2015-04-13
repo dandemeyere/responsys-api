@@ -1,7 +1,5 @@
 module Responsys
   class Configuration
-    include Responsys::Exceptions
-
     attr_accessor :settings
 
     def initialize
@@ -9,11 +7,16 @@ module Responsys
     end
 
     def savon_settings
-      raise GenericException.new("A WSDL or endpoint is needed.") if absent_api_description?
+      settings_hash = if !@settings[:wsdl].blank?
+        { wsdl: @settings[:wsdl] }
+      else
+        {
+          endpoint: @settings[:endpoint],
+          namespace: @settings[:namespace]
+        }
+      end
 
-      default_savon_settings
-        .merge!(@settings[:savon_settings])
-        .merge!(savon_api_description)
+      @settings[:savon_settings].merge(settings_hash)
     end
 
     def api_credentials
@@ -23,43 +26,12 @@ module Responsys
       }
     end
 
-    def savon_api_description
-      if !@settings[:wsdl].blank?
-        { wsdl: @settings[:wsdl] }
-      else
-        {
-          endpoint: @settings[:endpoint],
-          namespace: @settings[:namespace]
-        }
-      end
+    def session_settings
+      @settings[:sessions]
     end
 
-    private
-
-    def absent_api_description?
-      wsdl = !@settings[:wsdl].blank?
-      endpoint = !@settings[:endpoint].blank?
-      namespace = !@settings[:namespace].blank?
-
-      return false if wsdl
-
-      return !(endpoint && namespace) if endpoint || namespace
-
-      true
-    end
-
-    def default_savon_settings
-      settings = { ssl_version: :TLSv1, element_form_default: :qualified }
-
-      if @settings[:debug]
-        settings.merge!(savon_debug_settings)
-      else
-        settings
-      end
-    end
-
-    def savon_debug_settings
-      { log_level: :debug, log: true, pretty_print_xml: true }
+    def debug?
+      !!(@settings[:debug])
     end
   end
 
@@ -72,14 +44,63 @@ module Responsys
   end
 
   def self.configure
+    @configuration = nil
+
     yield(configuration)
 
-    @configuration.settings.merge!(default_settings_hash)
+    check_configuration
+
+    prepare!
 
     Responsys::Api::SessionPool.init
   end
 
   private
+
+  def self.check_configuration
+    raise Responsys::Exceptions::GenericException.new("configuration.api_description_not_provided") if absent_api_description?
+    raise Responsys::Exceptions::GenericException.new("configuration.api_credentials_not_provided") if absent_api_credentials?
+  end
+
+  def self.prepare!
+    @configuration.settings = default_settings_hash.merge(@configuration.settings)
+    @configuration.settings[:savon_settings] = savon_settings
+    @configuration.settings[:sessions] = sessions
+
+    add_debug_options! if @configuration.debug?
+  end
+
+  def self.savon_settings
+    default_settings_hash[:savon_settings].merge!(@configuration.settings[:savon_settings])
+  end
+
+  def self.sessions
+    default_settings_hash[:sessions].merge!(@configuration.settings[:sessions])
+  end
+
+  def self.add_debug_options!
+    @configuration.settings[:savon_settings] = debug_savon_options.merge!(@configuration.settings[:savon_settings])
+  end
+
+  def self.debug_savon_options
+    { log_level: :debug, log: true, pretty_print_xml: true }
+  end
+
+  def self.absent_api_description?
+    wsdl = !@configuration.settings[:wsdl].blank?
+    endpoint = !@configuration.settings[:endpoint].blank?
+    namespace = !@configuration.settings[:namespace].blank?
+
+    return false if wsdl
+
+    return !(endpoint && namespace) if endpoint || namespace
+
+    true
+  end
+
+  def self.absent_api_credentials?
+    @configuration.settings[:username].blank? || @configuration.settings[:password].blank?
+  end
 
   def self.default_settings_hash
     {
@@ -88,7 +109,10 @@ module Responsys
         size: 80,
         timeout: 30
       },
-      savon_settings: {}
+      savon_settings: {
+        ssl_version: :TLSv1,
+        element_form_default: :qualified
+      }
     }
   end
 end

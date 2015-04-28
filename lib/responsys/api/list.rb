@@ -33,7 +33,7 @@ module Responsys
         }
 
         api_method(:merge_list_members_riid, message)
-      end
+      end      
     end
   end
 end

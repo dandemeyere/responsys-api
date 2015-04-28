@@ -72,6 +72,11 @@ module Responsys
       !(response[:status] == "failure" && (response[:error][:code] == "RECORD_NOT_FOUND" || response[:error][:code] == "LIST_NOT_FOUND"))
     end
 
+    def list_exists?(list)
+      response = lookup_list_via_key(list, "EMAIL_ADDRESS", @email)
+      !(response[:status] == "failure" && (response[:error][:code] == "LIST_NOT_FOUND"))
+    end
+
     def subscribed?(list)
       return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_list?(list)
 

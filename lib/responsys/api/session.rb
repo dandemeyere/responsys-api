@@ -5,7 +5,7 @@ module Responsys
       include Responsys::Api::Authentication
 
       def initialize
-        global_configuration = Responsys::configuration
+        global_configuration = Responsys.configuration
 
         @credentials = global_configuration.api_credentials
         @savon_client = Savon.client(global_configuration.savon_settings)

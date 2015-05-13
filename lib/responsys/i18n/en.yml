@@ -1,5 +1,6 @@
 en:
   responsys_api:
+    gem_is_disabled: "The query couldn't be performed because the GEM is disabled."
     configuration:
       api_description_not_provided: A WSDL or endpoint+namespace is needed.
       api_credentials_not_provided: No credentials are provided in the configuration.

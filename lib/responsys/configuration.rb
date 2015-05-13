@@ -33,6 +33,10 @@ module Responsys
     def debug?
       !!(@settings[:debug])
     end
+
+    def enabled?
+      !!(@settings[:enabled])
+    end
   end
 
   class << self
@@ -44,8 +48,6 @@ module Responsys
   end
 
   def self.configure
-    @configuration = nil
-
     yield(configuration)
 
     check_configuration
@@ -104,6 +106,7 @@ module Responsys
 
   def self.default_settings_hash
     {
+      enabled: true,
       debug: false,
       sessions: {
         size: 80,

@@ -12,4 +12,22 @@ describe Responsys::Api::Client do
     end
   end
 
+  describe "Disabled GEM" do
+    before(:all) do
+      Responsys.configure { |config| config.settings[:enabled] = false }
+    end
+
+    after(:all) do
+      Responsys.configure { |config| config.settings[:enabled] = true }
+    end
+
+    it "should not make any call" do
+      email = DATA[:users][:user1][:EMAIL_ADDRESS]
+      list = Responsys::Api::Object::InteractObject.new(DATA[:folder],DATA[:lists][:list1][:name])
+      query_column = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")
+
+      expect_any_instance_of(Responsys::Api::SessionPool).to_not receive(:with)
+      expect(subject.retrieve_list_members(list, query_column, %w(EMAIL_PERMISSION_STATUS_), [email])).to eq("disabled")
+    end
+  end
 end

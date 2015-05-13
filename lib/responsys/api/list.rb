@@ -4,6 +4,7 @@ module Responsys
   module Api
     module List
       include Responsys::Api::Object
+
       def retrieve_list_members(interact_object, query_column, field_list, ids_to_retrieve)
         message = {
           list: interact_object.to_api,

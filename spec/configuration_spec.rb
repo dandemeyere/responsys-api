@@ -63,6 +63,17 @@ describe Responsys::Configuration do
     end
   end
 
+  def gem_is_disabled
+    Responsys.configure do |config|
+      config.settings = {
+        wsdl: "http://file.wsdl",
+        username: "username",
+        password: "password",
+        enabled: false
+      }
+    end
+  end
+
   describe "#configure" do
     it "should raise an exception if no api description is provided" do
       expect{ no_api_desc_configuration }.to raise_error(Responsys::Exceptions::GenericException, "A WSDL or endpoint+namespace is needed.")
@@ -128,11 +139,12 @@ describe Responsys::Configuration do
     end
   end
 
-  it "should correctly build the savon settings" do
+  it "should correctly build the savon settings with the default settings" do
     valid_configuration_with_savon_settings
 
     expect(Responsys.configuration.settings).to eq(
       {
+        enabled: true,
         wsdl: "http://file.wsdl",
         username: "username",
         password: "password",

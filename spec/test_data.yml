@@ -15,6 +15,10 @@
     :EMAIL_ADDRESS: user3@email.com
     :EMAIL_PERMISSION_STATUS: O
     :MOBILE_NUMBER: "0000000000"
+  :new_user4: &new_user4
+    :EMAIL_ADDRESS: newuser@email.com
+    :EMAIL_PERMISSION_STATUS: O
+    :MOBILE_NUMBER: "0000000000"
 
 :lists:
   :list1:
@@ -39,7 +43,7 @@
   :pet1:
     :id: 111111111 
     :name: rspec_pet1
-     
+
     :records:
       :user1:
         :MONTHLY_PURCH: 300
@@ -48,5 +52,4 @@
 :supplement_tables:
   :supplement_table1:
     :name: supplement_table1_name
-    :folder_name: supplement_table1_folder  
-              
+    :folder_name: supplement_table1_folder

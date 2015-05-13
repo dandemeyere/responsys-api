@@ -13,6 +13,12 @@ module Responsys
     class ParameterException < Responsys::Exceptions::BaseException
     end
 
+    class DisabledException < Responsys::Exceptions::BaseException
+      def initialize
+        super("gem_is_disabled")
+      end
+    end
+
     class GenericException < Responsys::Exceptions::BaseException
     end
   end

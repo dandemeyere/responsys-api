@@ -10,8 +10,17 @@ module Responsys
         alias :instance :new
       end
 
+      def initialize
+        @raise_exceptions = false
+      end
+
       def api_method(action, message = nil, response_type = :hash)
         raise GenericException.new("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
+
+        unless Responsys.configuration.enabled?
+          raise DisabledException.new if @raise_exceptions
+          return "disabled"
+        end
 
         SessionPool.instance.with do |session|
           begin
@@ -28,6 +37,19 @@ module Responsys
           ensure
             session.logout
           end
+        end
+      end
+
+      def run(exception_raising = false)
+        old_raise_exceptions = @raise_exceptions
+        @raise_exceptions = exception_raising
+        begin
+          yield(self)
+        rescue DisabledException => e
+          raise e if exception_raising
+          return "disabled"
+        ensure
+          @raise_exceptions = old_raise_exceptions
         end
       end
 

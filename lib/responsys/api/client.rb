@@ -15,7 +15,7 @@ module Responsys
       end
 
       def api_method(action, message = nil, response_type = :hash)
-        raise GenericException.new("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
+        raise ParameterException.new("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
 
         unless Responsys.configuration.enabled?
           raise DisabledException.new if @raise_exceptions
@@ -47,7 +47,7 @@ module Responsys
         begin
           yield(self)
         rescue DisabledException => e
-          raise e if exception_raising
+          raise e if @raise_exceptions
           return "disabled"
         ensure
           @raise_exceptions = old_raise_exceptions

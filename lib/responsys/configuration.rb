@@ -7,7 +7,7 @@ module Responsys
     end
 
     def savon_settings
-      settings_hash = if !@settings[:wsdl].blank?
+      settings_hash = if @settings[:wsdl].present?
         { wsdl: @settings[:wsdl] }
       else
         {
@@ -89,9 +89,9 @@ module Responsys
   end
 
   def self.absent_api_description?
-    wsdl = !@configuration.settings[:wsdl].blank?
-    endpoint = !@configuration.settings[:endpoint].blank?
-    namespace = !@configuration.settings[:namespace].blank?
+    wsdl = @configuration.settings[:wsdl].present?
+    endpoint = @configuration.settings[:endpoint].present?
+    namespace = @configuration.settings[:namespace].present?
 
     return false if wsdl
 

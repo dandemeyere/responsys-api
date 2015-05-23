@@ -18,14 +18,14 @@ describe Responsys::Api::Campaign do
     it "should return a status of ok when triggering a message for one recipient" do
       VCR.use_cassette("api/campaign/trigger_message_1") do
         response = Responsys::Api::Client.new.trigger_message(campaign, [recipientData1])
-        expect(response[:status]).to eq("ok")
+        expect(response.success?).to be_truthy
       end
     end
 
     it "should return a status of ok when triggering a message for more than one recipient" do
       VCR.use_cassette("api/campaign/trigger_message_2") do
         response = Responsys::Api::Client.new.trigger_message(campaign, [recipientData1,recipientData2])
-        expect(response[:status]).to eq("ok")
+        expect(response.success?).to be_truthy
       end
     end
 
@@ -44,14 +44,14 @@ describe Responsys::Api::Campaign do
     it "should return a status of ok when triggering a custom event for one recipient" do
       VCR.use_cassette("api/campaign/trigger_custom_event_1") do
         response = Responsys::Api::Client.new.trigger_custom_event(custom_event, [recipientData1])
-        expect(response[:status]).to eq("ok")
+        expect(response.success?).to be_truthy
       end
     end
 
     it "should return a status of ok when triggering a custom event for more than one recipient" do
       VCR.use_cassette("api/campaign/trigger_custom_event_2") do
         response = Responsys::Api::Client.new.trigger_custom_event(custom_event, [recipientData1,recipientData2])
-        expect(response[:status]).to eq("ok")
+        expect(response.success?).to be_truthy
       end
     end
 

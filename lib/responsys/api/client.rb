@@ -14,7 +14,7 @@ module Responsys
         @raise_exceptions = false
       end
 
-      def api_method(action, message = nil, response_type = :hash)
+      def api_method(action, message = nil)
         raise ParameterException.new("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
 
         unless Responsys.configuration.enabled?
@@ -25,15 +25,13 @@ module Responsys
         SessionPool.instance.with do |session|
           begin
             session.login
+
             response = session.run_with_credentials(action, message)
-            case response_type
-            when :result
-              Responsys::Helper.format_response_result(response, action)
-            when :hash
-              Responsys::Helper.format_response_hash(response, action)
-            end
+
+            Responsys::Helpers.format(action: action, response: response)
+
           rescue Exception => e
-            Responsys::Helper.format_response_with_errors(e)
+            Responsys::Helpers.format(error: e)
           ensure
             session.logout
           end

@@ -5,7 +5,7 @@ module Responsys
         if message_key.nil?
           super
         else
-          super(Responsys::Helper.get_message(message_key))
+          super(Responsys::Helpers.get_message(message_key))
         end
       end
     end

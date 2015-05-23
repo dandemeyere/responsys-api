@@ -1,5 +1,3 @@
-require "responsys/api/object/all"
-
 module Responsys
   module Api
     module List

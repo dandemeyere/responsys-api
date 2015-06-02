@@ -69,7 +69,12 @@ module Responsys
         response = lookup_list_via_key(list, "EMAIL_ADDRESS", @email)
       end
 
-      !(response[:status] == "failure" && response[:error][:code] == "RECORD_NOT_FOUND")
+      !(response[:status] == "failure" && (response[:error][:code] == "RECORD_NOT_FOUND" || response[:error][:code] == "LIST_NOT_FOUND"))
+    end
+
+    def list_exists?(list)
+      response = lookup_list_via_key(list, "EMAIL_ADDRESS", @email)
+      !(response[:status] == "failure" && (response[:error][:code] == "LIST_NOT_FOUND"))
     end
 
     def subscribed?(list)

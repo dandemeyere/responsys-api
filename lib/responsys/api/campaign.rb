@@ -1,27 +1,53 @@
 module Responsys
   module Api
-    module Campaign
+    class Campaign < Responsys::Api::Resource
       include Responsys::Exceptions
+      include Responsys::Api::Object
 
-      def trigger_custom_event(custom_event, recipients)
-        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless recipients.is_a? Array
-        raise ParameterException.new("api.object.custom_event.incorrect_event_object") unless custom_event.is_a? Responsys::Api::Object::CustomEvent
+      attr_accessor :campaign_name
 
-        message = {
-          customEvent: custom_event.to_api,
-          recipientData: recipients.map(&:to_api)
-        }
-        api_method(:trigger_custom_event, message)
+      def resource_path
+        "/rest/api/v1/campaigns"
       end
 
-      def trigger_message(campaign, recipients)
-        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless recipients.is_a? Array
+      def initialize(campaign_name)
+        @campaign_name = campaign_name
 
-        message = {
-          campaign: campaign.to_api,
+        super()
+      end
+
+      def trigger_email(recipients)
+        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless recipients.is_a?(Array)
+
+        body = {
           recipientData: recipients.map(&:to_api)
         }
-        api_method(:trigger_campaign_message, message)
+
+        self.post("/#{@campaign_name}/email", { body: body })
+      end
+
+      def merge_and_trigger_email(recipients, trigger_data, merge_rule = ListMergeRule.new)
+        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless recipients.is_a?(Array)
+
+        body = {
+          recipientData: recipients.map(&:to_api),
+          mergeRule: merge_rule.to_api,
+          trigger_data: trigger_data
+        }
+
+        self.post("/#{@campaign_name}/email", { body: body })
+      end
+
+      def merge_and_trigger_sms(recipients, trigger_data, merge_rule = ListMergeRule.new)
+        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless recipients.is_a?(Array)
+
+        body = {
+          recipientData: recipients.map(&:to_api),
+          mergeRule: merge_rule.to_api,
+          trigger_data: trigger_data
+        }
+
+        self.post("/#{@campaign_name}/sms", { body: body })
       end
 
     end

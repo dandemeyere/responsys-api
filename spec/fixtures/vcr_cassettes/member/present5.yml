@@ -2,63 +2,59 @@
 http_interactions:
 - request:
     method: post
-    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
+    uri: https://login5.responsys.net/rest/api/v1/auth/token?auth_type=password&password=your_responsys_password&user_name=your_responsys_username
     body:
       encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><tns:login><tns:username>your_responsys_username</tns:username><tns:password>your_responsys_password</tns:password></tns:login></env:Body></env:Envelope>
-    headers: 
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
   response:
     status:
       code: 200
       message: OK
-    headers: 
+    headers:
+      Date:
+      - Sun, 07 Jun 2015 06:35:33 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><loginResponse
-        xmlns="urn:ws.rsys.com"><result><sessionId>DEAR_SESSION_ID</sessionId></result></loginResponse></soapenv:Body></soapenv:Envelope>
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1433658933201,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Sat, 29 Nov 2014 21:40:00 GMT
+  recorded_at: Sun, 07 Jun 2015 06:35:42 GMT
 - request:
-    method: post
-    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
+    method: get
+    uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1?fs=EMAIL_PERMISSION_STATUS_&id=000001&qa=r
     body:
-      encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>DEAR_SESSION_ID</sessionId></sessionHeader></env:Header><env:Body><tns:retrieveListMembers><tns:list><tns:folderName>rspec_tests</tns:folderName><tns:objectName>rspec_list1</tns:objectName></tns:list><tns:queryColumn>RIID</tns:queryColumn><tns:fieldList>EMAIL_PERMISSION_STATUS_</tns:fieldList><tns:idsToRetrieve>000001</tns:idsToRetrieve></tns:retrieveListMembers></env:Body></env:Envelope>
-    headers: 
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - AUTH_TOKEN
   response:
     status:
-      code: 500
-      message: Internal Server Error
-    headers: 
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Sun, 07 Jun 2015 06:35:33 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><soapenv:Fault><faultcode>soapenv:Server</faultcode><faultstring>ListFault</faultstring><detail><ListFault
-        xmlns="urn:fault.ws.rsys.com"><exceptionCode>RECORD_NOT_FOUND</exceptionCode><exceptionMessage>No
-        records found in the list for given ids</exceptionMessage></ListFault></detail></soapenv:Fault></soapenv:Body></soapenv:Envelope>
+      string: '{"type":"","title":"Record not found","errorCode":"RECORD_NOT_FOUND","detail":"No
+        records found in the list for given ids","errorDetails":[]}'
     http_version: 
-  recorded_at: Sat, 29 Nov 2014 21:40:01 GMT
-- request:
-    method: post
-    uri: https://ws5.responsys.net/webservices/services/ResponsysWSService
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="urn:ws.rsys.com"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><sessionHeader><sessionId>DEAR_SESSION_ID</sessionId></sessionHeader></env:Header><env:Body><tns:logout></tns:logout></env:Body></env:Envelope>
-    headers: 
-  response:
-    status:
-      code: 200
-      message: OK
-    headers: 
-    body:
-      encoding: UTF-8
-      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><logoutResponse
-        xmlns="urn:ws.rsys.com"><result>true</result></logoutResponse></soapenv:Body></soapenv:Envelope>
-    http_version: 
-  recorded_at: Sat, 29 Nov 2014 21:40:01 GMT
+  recorded_at: Sun, 07 Jun 2015 06:35:42 GMT
 recorded_with: VCR 2.9.3

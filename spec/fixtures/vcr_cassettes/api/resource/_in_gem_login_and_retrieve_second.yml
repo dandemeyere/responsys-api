@@ -1,0 +1,32 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1?fs=EMAIL_ADDRESS_,MOBILE_NUMBER_&id=user1@email.com&qa=e
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - AUTH_TOKEN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 07 Jun 2015 06:53:22 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"records":[{"fieldValues":["user1@email.com","0000000001"]}],"fieldNames":["EMAIL_ADDRESS_","MOBILE_NUMBER_"],"mapTemplateName":null}'
+    http_version: 
+  recorded_at: Sun, 07 Jun 2015 06:53:32 GMT
+recorded_with: VCR 2.9.3

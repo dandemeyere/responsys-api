@@ -10,7 +10,7 @@ describe Responsys::Api::Object::CustomEvent do
   context "#to_api" do
     it "should correctly transform the object to the api representation" do
       object = Responsys::Api::Object::CustomEvent.new("event_name")
-      expect(object.to_api).to eq({ eventName: "event_name", eventId: "", eventStringDataMapping: "", eventDateDataMapping: "", eventNumberDataMapping: "" })
+      expect(object.to_api).to eq({ eventName: "event_name", eventId: nil, eventStringDataMapping: nil, eventDateDataMapping: nil, eventNumberDataMapping: nil })
     end
   end
 end

@@ -1,8 +1,9 @@
 en:
   responsys_api:
-    gem_is_disabled: "The query couldn't be performed because the GEM is disabled."
+    incorrect_credentials: The credentials provided are incorrect.
+    gem_is_disabled: The query couldn't be performed because the GEM is disabled.
     configuration:
-      api_description_not_provided: A WSDL or endpoint+namespace is needed.
+      api_description_not_provided: A login endpoint is needed.
       api_credentials_not_provided: No credentials are provided in the configuration.
     response:
       object:
@@ -23,13 +24,16 @@ en:
           incorrect_field_values_type: The field_values must be an array
         custom_event:
           empty_event: The event_name or event_id must be specified
-          incorrect_event_object: "custom_event must be a CustomEvent instance"
       client:
-        api_method:
-          wrong_action_login: Please use the dedicated login method
-          wrong_action_logout: Please use the dedicated logout method
+      resource:
+        resource_path_not_implemented: The resource_path method needs to be implemented if a class extending Responsys::Api::Resource
+      response:
+        param_not_httparty: The parameter is not a HTTParty response
       campaign:
-        incorrect_recipients_type: Recipients parameter must be an array
+        incorrect_recipients_type: recipients must be an Array
+      event:
+        incorrect_recipients_type: recipients must be an Array
+        incorrect_event_object: custom_event must be a CustomEvent instance
     member:
       riid_missing: Variable riid is not provided to the member
       record_not_found: The member has not been found in the list

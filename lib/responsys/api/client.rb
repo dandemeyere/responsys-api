@@ -3,57 +3,25 @@ module Responsys
     class Client
       include Responsys::Api::All
       include Responsys::Exceptions
-      attr_accessor :client
 
-      #TODO allows to keep the use of .instance. The client is no longer a singleton so it needs to be removed in a newer release.
       class << self
-        alias :instance :new
+        attr_accessor :raise_exceptions
       end
 
       def initialize
-        @raise_exceptions = false
-      end
-
-      def api_method(action, message = nil)
-        raise ParameterException.new("api.client.api_method.wrong_action_#{action.to_s}") if action.to_sym == :login || action.to_sym == :logout
-
-        unless Responsys.configuration.enabled?
-          raise DisabledException.new if @raise_exceptions
-          return "disabled"
-        end
-
-        SessionPool.instance.with do |session|
-          begin
-            session.login
-
-            response = session.run_with_credentials(action, message)
-
-            Responsys::Helpers.format(action: action, response: response)
-
-          rescue Exception => e
-            Responsys::Helpers.format(error: e)
-          ensure
-            session.logout
-          end
-        end
+        self.class.raise_exceptions ||= false
       end
 
       def run(exception_raising = false)
-        old_raise_exceptions = @raise_exceptions
-        @raise_exceptions = exception_raising
+        old_raise_exceptions = self.class.raise_exceptions
+        self.class.raise_exceptions = exception_raising
         begin
           yield(self)
         rescue DisabledException => e
-          raise e if @raise_exceptions
+          raise e if self.class.raise_exceptions
           return "disabled"
         ensure
-          @raise_exceptions = old_raise_exceptions
-        end
-      end
-
-      def available_operations
-        SessionPool.instance.with do |session|
-          session.operations
+          self.class.raise_exceptions = old_raise_exceptions
         end
       end
     end

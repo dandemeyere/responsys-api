@@ -1,5 +1,4 @@
 require "spec_helper.rb"
-require "responsys/api/client"
 
 describe Responsys::Member do
 
@@ -14,10 +13,13 @@ describe Responsys::Member do
       @new_user_email = DATA[:users][:new_user4][:EMAIL_ADDRESS]
       @client = Responsys::Api::Client.new
       @member = Responsys::Member.new(@new_user_email, nil, @client)
+      @list_double = double("list")
+      allow(Responsys::Api::List).to receive(:new).with(@list).and_return(@list_double)
     end
 
-    it "should call mergeListMembers" do
-      expect(@client).to receive(:merge_list_members_riid).with(@list, kind_of(Responsys::Api::Object::RecordData), kind_of(Responsys::Api::Object::ListMergeRule))
+    it "should call merge records on the list" do
+      expect(@list_double).to receive(:merge_records).with(kind_of(Responsys::Api::Object::RecordData), kind_of(Responsys::Api::Object::ListMergeRule))
+
       @member.add_to_list(@list)
     end
 
@@ -31,7 +33,9 @@ describe Responsys::Member do
     end
 
     it "should check the user is present in the list" do
-      expect(@member).to receive(:present_in_list?).with(@list, true)
+      allow_any_instance_of(Responsys::Api::List).to receive(:merge_records)
+
+      expect(@member).to receive(:present_in_list?).with(@list, true).and_return(true)
 
       @member.subscribe(@list)
     end
@@ -82,12 +86,13 @@ describe Responsys::Member do
       end
     end
 
-    it "should return the record_not_found code message" do
+    it "should raise an exception if the record has not been found" do
       VCR.use_cassette("member/present5") do
         member_with_fake_riid = Responsys::Member.new(@email, "000001")
-        response = member_with_fake_riid.subscribed?(@list)
 
-        expect(response.error_code).to eq("record_not_found")
+        expect{
+          member_with_fake_riid.subscribed?(@list)
+        }.to raise_error(Responsys::Exceptions::MemberNotFound, "The member has not been found in the list")
       end
     end
 
@@ -102,25 +107,17 @@ describe Responsys::Member do
       @fields = %w(RIID_ MONTHLY_PURCH)
     end
 
-    it "should set the success status to false if no riid provided" do
+    it "should raise an exception if no riid provided" do
       VCR.use_cassette("member/retrieve_profile_extension_fail") do
-        response = @member_without_riid.retrieve_profile_extension(@profile_extension, @fields)
-
-        expect(response.error?).to be_truthy
-      end
-    end
-
-    it "should set a i18n message in the response if no riid provided" do
-      VCR.use_cassette("member/retrieve_profile_extension_fail") do
-        response = @member_without_riid.retrieve_profile_extension(@profile_extension, @fields)
-
-        expect(response.error_message).to eq(Responsys::Helpers.get_message("member.riid_missing"))
+        expect{
+          @member_without_riid.retrieve_profile_extension(@list, @profile_extension, @fields)
+        }.to raise_error(Responsys::Exceptions::ParameterException, "Variable riid is not provided to the member")
       end
     end
 
     it "should set the status to ok" do
       VCR.use_cassette("member/retrieve_profile_extension") do
-        response = @member_with_riid.retrieve_profile_extension(@profile_extension, @fields)
+        response = @member_with_riid.retrieve_profile_extension(@list, @profile_extension, @fields)
 
         expect(response.success?).to be_truthy
       end
@@ -130,20 +127,19 @@ describe Responsys::Member do
 
   context "Disabled GEM" do
     before(:all) do
-      Responsys.configure { |config| config.settings[:enabled] = false }
+      Responsys.configuration.disable!(true)
     end
 
     after(:all) do
-      Responsys.configure { |config| config.settings[:enabled] = true }
+      Responsys.configuration.disable!(false)
     end
 
     it "should not make any call" do
-      email = DATA[:users][:user1][:EMAIL_ADDRESS]
-      list = Responsys::Api::Object::InteractObject.new(DATA[:folder],DATA[:lists][:list1][:name])
-      query_column = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")
+      expect(HTTParty).to_not receive(:post)
+    end
 
-      expect_any_instance_of(Responsys::Api::SessionPool).to_not receive(:with)
-      expect(Responsys::Member.new(email).subscribe(list)).to eq("disabled")
+    it "should return disabled" do
+      expect(Responsys::Member.new(@email).subscribe(@list)).to eq("disabled")
     end
   end
 end

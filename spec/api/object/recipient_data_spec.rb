@@ -15,8 +15,8 @@ describe Responsys::Api::Object::RecipientData do
       expect(@recipient_data.recipient).to be_a(Responsys::Api::Object::Recipient)
     end
 
-    it "should have an optional_data attribute of type Array" do
-      expect(@recipient_data.optional_data).to include(Responsys::Api::Object::OptionalData)
+    it "should have a nil optional_data attribute by default" do
+      expect(@recipient_data.optional_data).to be_nil
     end
   end
 
@@ -36,8 +36,8 @@ describe Responsys::Api::Object::RecipientData do
       expect(@recipient_data.to_api[:recipient]).to be_a(Hash)
     end
 
-    it "should have an optionalData attribute of type Array" do
-      expect(@recipient_data.to_api[:optionalData]).to be_a(Array)
+    it "should have a nil optionalData attribute" do
+      expect(@recipient_data.to_api[:optionalData]).to be_nil
     end
   end
 end

@@ -7,10 +7,10 @@ module Responsys
         AVAILABLE_EMAIL_FORMAT = %w(TEXT_FORMAT HTML_FORMAT NO_FORMAT MULTIPART_FORMAT)
 
         def initialize(email_format = "NO_FORMAT")
-          if AVAILABLE_EMAIL_FORMAT.include? email_format
+          if AVAILABLE_EMAIL_FORMAT.include?(email_format)
             @email_format_string = email_format
           else
-            raise ParameterException, Responsys::Helpers.get_message("api.object.email_format.incorrect_email_format")
+            raise ParameterException.new("api.object.email_format.incorrect_email_format")
           end
         end
 

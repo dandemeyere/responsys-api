@@ -1,49 +1,90 @@
 module Responsys
   module Api
-    module Table
-      def create_table(interact_object, fields)
-        api_method(:create_table, { table: interact_object.to_api, fields: fields.map(&:to_api) })
+    class Table < Responsys::Api::Resource
+      attr_accessor :interact_object
+
+      def resource_path
+        "/rest/api/v1/folders/#{@interact_object.folder_name}/suppData"
       end
 
-      def create_table_with_pk(interact_object, fields, primary_keys)
-        api_method(:create_table_with_pk, { table: interact_object.to_api, fields: fields.map(&:to_api), primaryKeys: primary_keys })
+      def initialize(interact_object)
+        @interact_object = interact_object
+
+        super()
       end
 
-      def delete_table(interact_object)
-        api_method(:delete_table, { table: interact_object.to_api })
+      def create_table(fields, primary_keys)
+        #fields is an array of Field
+        body = {
+          table: { objectName: @interact_object.object_name },
+          fields: fields.map(&:to_api),
+          primaryKeys: primary_keys
+        }
+
+        self.post("/", { body: body })
       end
 
-      def merge_into_profile_extension(interact_object, record_data, match_column, insert_on_no_match = false, update_on_match = "REPLACE_ALL")
-        api_method(:merge_into_profile_extension, { profileExtension: interact_object.to_api, recordData: record_data.to_api, matchColumn: match_column, insertOnNoMatch: insert_on_no_match, updateOnMatch: update_on_match })
+      def merge_records(record_data, match_column_names)
+        body = {
+          recordData: record_data.to_api,
+          matchColumnNames: match_column_names
+        }
+
+        self.post("/#{@interact_object.object_name}", { body: body })
       end
 
-      def retrieve_profile_extension_records(interact_object, query_column, field_list, ids_to_retrieve)
-        api_method(:retrieve_profile_extension_records, { profileExtension: interact_object.to_api, queryColumn: query_column.to_api, fieldList: field_list, idsToRetrieve: ids_to_retrieve })
+      def merge_records_with_pk(record_data, insert_on_no_match = true, update_on_match = "REPLACE_ALL")
+        body = {
+          recordData: record_data.to_api,
+          insertOnNoMatch: insert_on_no_match,
+          updateOnMatch: update_on_match
+        }
+
+        self.post("/#{@interact_object.object_name}", { body: body })
       end
 
-      def delete_profile_extension_members(interact_object, query_column, ids_to_delete)
-        api_method(:delete_profile_extension_members, { profileExtension: interact_object.to_api, queryColumn: query_column.to_api, idsToDelete: ids_to_delete })
+      def retrieve_record(query_attribute, field_list, id_to_retrieve)
+        params = {
+          qa: query_attribute,
+          fs: field_list.join(","),
+          id: id_to_retrieve
+        }
+
+        self.get("/#{@interact_object.object_name}", { query: params })
       end
 
-      def merge_table_records
+      def delete_record(query_attribute, id_to_retrieve)
+        params = {
+          qa: query_attribute,
+          id: id_to_retrieve
+        }
 
+        self.delete("/#{@interact_object.object_name}", { query: params })
       end
 
-      def merge_table_records_with_pk(interact_object, record_data, insert_on_no_match = true, update_on_match = "REPLACE_ALL")
-        api_method(:merge_table_records_with_pk, { table: interact_object.to_api, recordData: record_data.to_api, insertOnNoMatch: insert_on_no_match, updateOnMatch: update_on_match }) 
-      end
+      # client = Responsys::Api::Client.new
 
-      def delete_table_records
+      # client.lists(interact_object).get
+      # client.lists(interact_object).merge
 
-      end
+      # client.tables(interact_object).create_table(fields, primary_keys)
+      # client.tables(interact_object).merge_records(record_data, match_column_names)
+      # client.tables(interact_object).retrieve_recod(query_attribute, field_list, id_to_retrieve)
+      # client.tables(interact_object).delete_record(query_attribute, id_to_retrieve)
 
-      def retrieve_table_records
+      # Responsys::Api::List(interact_object).retrieve_record
+      # Responsys::Api::List(interact_object).merge_records
 
-      end
+      # client.tables.create
+      # client.tables.merge
+      # client.tables.merge_pk
+      # client.tables.get
+      # client.tables.delete
 
-      def truncate_table
+      # client.campaigns(name).trigger_email
+      # client.campaigns(name).trigger_sms
 
-      end
+      # client.events(name).trigger
     end
   end
 end

@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://login5.responsys.net/rest/api/v1/auth/token?auth_type=password&password=your_responsys_password&user_name=your_responsys_username
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 03 Jun 2015 06:18:52 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1433312332560,"endPoint":"https://api5-011.responsys.net"}'
+    http_version: 
+  recorded_at: Wed, 03 Jun 2015 06:18:55 GMT
+- request:
+    method: post
+    uri: https://api5-011.responsys.net/rest/api/v1/folders/supplement_table1_folder/suppData/supplement_table1_name
+    body:
+      encoding: UTF-8
+      string: '{"recordData":{"fieldNames":["EMAIL_ADDRESS","PET_ID","PET_NAME"],"records":[{"fieldValues":["user2@email.com",111111111,"rspec_pet1"]}]},"matchColumnNames":["EMAIL_ADDRESS"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - AUTH_TOKEN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 03 Jun 2015 06:18:52 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"updateCount":1,"errorMessage":null,"insertCount":0,"totalCount":1,"rejectedCount":0}'
+    http_version: 
+  recorded_at: Wed, 03 Jun 2015 06:18:55 GMT
+recorded_with: VCR 2.9.3

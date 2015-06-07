@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://login5.responsys.net/rest/api/v1/auth/token?auth_type=password&password=your_responsys_password&user_name=your_responsys_username
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Jun 2015 07:06:21 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"authToken":"EdHyHFKeWgQxL-Y4MH323V_Hk0moJHpkMRl5AqPFmq48tIS4-jWWNCF78OUN","issuedAt":1433142381766,"endPoint":"https://api5-011.responsys.net"}'
+    http_version: 
+  recorded_at: Mon, 01 Jun 2015 07:06:23 GMT
+- request:
+    method: delete
+    uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1/listExtensions/rspec_pet1?id=48614925&qa=r
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - EdHyHFKeWgQxL-Y4MH323V_Hk0moJHpkMRl5AqPFmq48tIS4-jWWNCF78OUN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Jun 2015 07:06:21 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"id":"48614925","errorMessage":null,"success":true,"exceptionCode":null}]'
+    http_version: 
+  recorded_at: Mon, 01 Jun 2015 07:06:23 GMT
+recorded_with: VCR 2.9.3

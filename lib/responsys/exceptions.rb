@@ -1,6 +1,6 @@
 module Responsys
   module Exceptions
-    class BaseException < Exception
+    class InternalException < Exception
       def initialize(message_key = nil)
         if message_key.nil?
           super
@@ -10,16 +10,28 @@ module Responsys
       end
     end
 
-    class ParameterException < Responsys::Exceptions::BaseException
+    class ConfigurationException < Responsys::Exceptions::InternalException
     end
 
-    class DisabledException < Responsys::Exceptions::BaseException
+    class ParameterException < Responsys::Exceptions::InternalException
+    end
+
+    class DisabledException < Responsys::Exceptions::InternalException
       def initialize
         super("gem_is_disabled")
       end
     end
 
-    class GenericException < Responsys::Exceptions::BaseException
+    class MemberNotFound < Responsys::Exceptions::InternalException
+      def initialize
+        super("member.record_not_found")
+      end
+    end
+
+    class ApiException < Exception
+    end
+
+    class FailedAuthentication < ApiException
     end
   end
 end

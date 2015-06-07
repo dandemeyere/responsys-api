@@ -1,3 +1,5 @@
+require "logger"
+
 module Responsys
   class Configuration
     attr_accessor :settings
@@ -6,28 +8,35 @@ module Responsys
       @settings = {}
     end
 
-    def savon_settings
-      settings_hash = if @settings[:wsdl].present?
-        { wsdl: @settings[:wsdl] }
-      else
-        {
-          endpoint: @settings[:endpoint],
-          namespace: @settings[:namespace]
+    def httparty_settings
+      settings_hash = {
+        format: :json,
+        headers: {
+          "Content-Type" => "application/json"
         }
-      end
+      }
 
-      @settings[:savon_settings].merge(settings_hash)
+      @settings[:httparty_settings].merge(settings_hash)
+    end
+
+    def login_endpoint
+      @settings[:login_endpoint]
     end
 
     def api_credentials
       {
-        username: @settings[:username],
-        password: @settings[:password]
+        user_name: @settings[:username],
+        password: @settings[:password],
+        auth_type: "password"
       }
     end
 
-    def session_settings
-      @settings[:sessions]
+    def debug!(to_debug_or_not_to_debug)
+      @settings[:debug] = !!(to_debug_or_not_to_debug)
+    end
+
+    def disable!(to_disable_or_to_not_disable)
+      @settings[:enabled] = !(to_disable_or_to_not_disable)
     end
 
     def debug?
@@ -53,51 +62,48 @@ module Responsys
     check_configuration
 
     prepare!
+  end
 
-    Responsys::Api::SessionPool.init
+  def self.disable!(to_disable_or_to_not_disable)
+    @configuration.disable!(to_disable_or_to_not_disable)
+  end
+
+  def self.debug!(to_debug_or_not_to_debug)
+    @configuration.debug!(to_debug_or_not_to_debug)
   end
 
   private
 
   def self.check_configuration
-    raise Responsys::Exceptions::GenericException.new("configuration.api_description_not_provided") if absent_api_description?
-    raise Responsys::Exceptions::GenericException.new("configuration.api_credentials_not_provided") if absent_api_credentials?
+    raise Responsys::Exceptions::ConfigurationException.new("configuration.api_description_not_provided") if absent_api_description?
+    raise Responsys::Exceptions::ConfigurationException.new("configuration.api_credentials_not_provided") if absent_api_credentials?
   end
 
   def self.prepare!
-    @configuration.settings = default_settings_hash.merge(@configuration.settings)
-    @configuration.settings[:savon_settings] = savon_settings
-    @configuration.settings[:sessions] = sessions
+    @configuration.settings = default_settings_hash.deep_merge!(@configuration.settings)
+    @configuration.settings[:httparty_settings].deep_merge!(httparty_settings)
 
     add_debug_options! if @configuration.debug?
   end
 
-  def self.savon_settings
-    default_settings_hash[:savon_settings].merge!(@configuration.settings[:savon_settings])
-  end
-
-  def self.sessions
-    default_settings_hash[:sessions].merge!(@configuration.settings[:sessions])
+  def self.httparty_settings
+    default_settings_hash[:httparty_settings].deep_merge!(@configuration.settings[:httparty_settings])
   end
 
   def self.add_debug_options!
-    @configuration.settings[:savon_settings] = debug_savon_options.merge!(@configuration.settings[:savon_settings])
+    @configuration.settings[:httparty_settings].deep_merge!(debug_httparty_settings)
   end
 
-  def self.debug_savon_options
-    { log_level: :debug, log: true, pretty_print_xml: true }
+  def self.debug_httparty_settings
+    {
+      logger: @configuration.settings[:httparty_settings][:logger] || ::Logger.new(STDOUT),
+      log_level: :info,
+      log_format: :curl
+    }
   end
 
   def self.absent_api_description?
-    wsdl = @configuration.settings[:wsdl].present?
-    endpoint = @configuration.settings[:endpoint].present?
-    namespace = @configuration.settings[:namespace].present?
-
-    return false if wsdl
-
-    return !(endpoint && namespace) if endpoint || namespace
-
-    true
+    @configuration.settings[:login_endpoint].blank?
   end
 
   def self.absent_api_credentials?
@@ -108,14 +114,8 @@ module Responsys
     {
       enabled: true,
       debug: false,
-      sessions: {
-        size: 80,
-        timeout: 30
-      },
-      savon_settings: {
-        ssl_version: :TLSv1,
-        element_form_default: :qualified
-      }
+      # error_handler: nil,
+      httparty_settings: {}
     }
   end
 end

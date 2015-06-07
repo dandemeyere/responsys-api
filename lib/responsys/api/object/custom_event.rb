@@ -5,14 +5,14 @@ module Responsys
         include Responsys::Exceptions
         attr_accessor :event_name, :event_id, :event_string_data_mapping, :event_number_data_mapping, :event_date_data_mapping
 
-        def initialize(event_name = "", event_id = "", options = {})
+        def initialize(event_name = nil, event_id = nil, options = {})
           raise ParameterException.new("api.object.custom_event.empty_event") if event_name.blank? && event_id.blank?
 
-          @event_name = event_name || ""
-          @event_id = event_id || ""
-          @event_string_data_mapping = options[:event_string_data_mapping] || ""
-          @event_number_data_mapping = options[:event_number_data_mapping] || ""
-          @event_date_data_mapping = options[:event_date_data_mapping] || ""
+          @event_name = event_name || nil
+          @event_id = event_id || nil
+          @event_string_data_mapping = options[:event_string_data_mapping] || nil
+          @event_number_data_mapping = options[:event_number_data_mapping] || nil
+          @event_date_data_mapping = options[:event_date_data_mapping] || nil
         end
 
         def to_api

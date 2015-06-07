@@ -1,10 +1,10 @@
 module Responsys
   class Member
-    include Responsys::Api
+    include Responsys::Exceptions
     include Responsys::Api::Object
     attr_accessor :email, :user_riid, :client
 
-    def initialize(email, riid = nil, client = Client.instance)
+    def initialize(email, riid = nil, client = Responsys::Api::Client.new)
       @email = email
       @user_riid = riid
       @client = client
@@ -23,20 +23,20 @@ module Responsys
         end
       end
 
-      data = data.merge( safe_details )
-      record = RecordData.new([data])
+      data = data.merge(safe_details)
+      record_data = RecordData.new([data])
 
       @client.run do |client|
-        client.merge_list_members_riid(list, record, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: (update_record ? 'REPLACE_ALL' : 'NO_UPDATE')))
+        client.lists(list).merge_records(record_data, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: (update_record ? 'REPLACE_ALL' : 'NO_UPDATE')))
       end
     end
 
-    def retrieve_profile_extension(profile_extension, fields)
+    def retrieve_profile_extension(list, profile_extension, fields)
       @client.run do |client|
-        return Responsys::Helpers.build_custom_error_response("member.riid_missing") if @user_riid.nil?
-        return Responsys::Helpers.build_custom_error_response("member.record_not_found") unless present_in_profile?(profile_extension, true)
+        raise ParameterException.new("member.riid_missing") if @user_riid.nil?
+        raise MemberNotFound unless present_in_profile?(list, profile_extension, true)
 
-        client.retrieve_profile_extension_records(profile_extension, QueryColumn.new("RIID"), fields, [@user_riid])
+        client.lists(list).extensions(profile_extension).retrieve_record(QueryColumn.new("RIID"), fields, @user_riid)
       end
     end
 
@@ -54,18 +54,18 @@ module Responsys
 
     def update(list, data)
       @client.run(true) do |client|
-        return Responsys::Helpers.build_custom_error_response("member.record_not_found") unless present_in_list?(list, true)
+        raise ApiException.new("member.record_not_found") unless present_in_list?(list, true)
 
         record = RecordData.new(data)
-        client.merge_list_members(list, record)
+        client.lists(list).merge_records(record)
       end
     end
 
-    def present_in_profile?(list, raising = false)
+    def present_in_profile?(list, extension, raising = false)
       @client.run(raising) do |client|
-        return Responsys::Helpers.build_custom_error_response("member.riid_missing") if @user_riid.nil?
+        raise ParameterException.new("member.riid_missing") if @user_riid.nil?
 
-        response = lookup_profile_via_key(list, "RIID", @user_riid)
+        response = lookup_profile_via_key(list, extension, "RIID", @user_riid)
 
         !(response.error? && response.error_code == "RECORD_NOT_FOUND")
       end
@@ -85,9 +85,9 @@ module Responsys
 
     def subscribed?(list, raising = false)
       @client.run(raising) do |client|
-        return Responsys::Helpers.build_custom_error_response("member.record_not_found") unless present_in_list?(list, true)
+        raise MemberNotFound unless present_in_list?(list, true)
 
-        response = @client.retrieve_list_members(list, QueryColumn.new("EMAIL_ADDRESS"), %w(EMAIL_PERMISSION_STATUS_), [@email])
+        response = @client.lists(list).retrieve_record(QueryColumn.new("EMAIL_ADDRESS"), %w(EMAIL_PERMISSION_STATUS_), @email)
         response.data[0][:EMAIL_PERMISSION_STATUS_] == "I"
       end
     end
@@ -114,12 +114,12 @@ module Responsys
       ]
     end
 
-    def lookup_profile_via_key(profile_extension, key, value)
-      @client.run(true) { |client| client.retrieve_profile_extension_records(profile_extension, QueryColumn.new(key), %w(RIID_), [value]) }
+    def lookup_profile_via_key(list, profile_extension, key, value)
+      @client.run(true) { |client| client.lists(list).extensions(profile_extension).retrieve_record(QueryColumn.new(key), %w(RIID_), value) }
     end
 
     def lookup_list_via_key(list, key, value)
-      @client.run(true) { |client| client.retrieve_list_members(list, QueryColumn.new(key), %w(EMAIL_PERMISSION_STATUS_), [value]) }
+      @client.run(true) { |client| client.lists(list).retrieve_record(QueryColumn.new(key), %w(EMAIL_PERMISSION_STATUS_), value) }
     end
   end
 end

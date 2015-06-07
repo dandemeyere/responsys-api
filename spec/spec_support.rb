@@ -19,11 +19,13 @@ def configure_gem(credentials = get_credentials)
 end
 
 def get_credentials
-  unless File.exist?("#{File.dirname(__FILE__)}/api_credentials.yml")
-    raise Responsys::Exceptions::InternalException("configuration.api_credentials_not_provided")
+  if File.exist?("#{File.dirname(__FILE__)}/api_credentials.yml")
+    file = "api_credentials.yml"
+  else
+    file = "api_credentials.sample.yml"
   end
 
-  YAML.load_file("#{File.dirname(__FILE__)}/#{"api_credentials.yml"}")
+  YAML.load_file("#{File.dirname(__FILE__)}/#{file}")
 end
 
 def set_incorrect_credentials

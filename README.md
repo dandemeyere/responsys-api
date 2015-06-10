@@ -33,7 +33,7 @@ A gem to help you communicate with the Responsys Interact **REST** APIs.
 ## Introduction
 The gem is based on the official API documentation and tries to be as close as possible to the API's data model.
 
-You'll find prototypes of the different methods below sorted by resource type. If you have any questions related to the usage of the GEM please open an [issue](https://github.com/dandemeyere/responsys-api/issues) or shout a message in our [Gitter chatroom](https://gitter.im/dandemeyere/responsys-api).
+You'll find prototypes of the different methods below grouped by resource type. If you have any questions related to the usage of the GEM please open an [issue](https://github.com/dandemeyere/responsys-api/issues) or shout a message in our [Gitter chatroom](https://gitter.im/dandemeyere/responsys-api).
 
 Another way of getting examples is to have a look at the spec files in `spec/`. All API methods have been tested with a testing scenario, you'll find the recorded calls in VCR cassettes under `spec/fixtures/vcr_cassettes`.
 
@@ -106,7 +106,9 @@ puts member.subscribed?(list) ? "#{member.email} has subscribed to #{list.object
 ```
 
 ## Resources
-For the example, let's take the API definition to merge members to a list:
+Different types of resources are accessible from the API: List, Table, Campaign, ...
+
+For the example, let's take the API definition to merge members to a list:  
 `POST /rest/api/v1/lists/<listName>`
 
 All resources can be called using two ways:
@@ -119,10 +121,10 @@ client.lists(interact_object).retrieve_record(query_column, field_list, id_to_re
 
 2) You can use the direct Resource object. It's the same object you get when doing `client.lists(interact_object)`.
 ```ruby
-Responsys::Api::List(interact_object).retrieve_record(query_column, field_list, id_to_retrieve)
+Responsys::Api::List.new(interact_object).retrieve_record(query_column, field_list, id_to_retrieve)
 ```
 
-Below are the method prototypes accessible. The params are explicitly named according to their object type.
+Below are the method prototypes accessible. The params are explicitly named according to their object type or their purpose.
 
 **Important note:**
 We *tried* to make it easily understandable from somebody reading the source code. If you end up hitting your head against a wall and you think some details here would have saved you time, please write a PR. It will benefit you and probably another person after you.
@@ -191,10 +193,12 @@ client.events(custom_event).trigger(recipient_data_array)
 ```
 
 ## Objects
-An Object is wrapping up the model representation. They're used by API methods to pass the data in a correct format to assure (as possible) that the params (query params or body content) are compliant to the official documentation.
+An Object is wrapping up a model representation. They're used by API methods to pass the data in a correct format to assure (as possible) that the params (query params or body content) are compliant to the official documentation.
 
 We recommend going through the code and the objects used if you need to figure out how a method has been built.
 On each Object you'll find a method called `.to_api` which serializes the object data to the API format.
+
+You'll find below the list of Objects you may need to provide to Resources.
 
 ### CustomEvent
 Presents an event to the API, the name is the most important information here.

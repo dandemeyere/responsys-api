@@ -12,7 +12,7 @@ module Responsys
         def to_api
           {
             recipient: @recipient.to_api,
-            optionalData: @optional_data ? @optional_data.map(&:to_api) : @optional_data
+            optionalData: @optional_data.try(:map, &:to_api)
           }
         end
       end

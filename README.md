@@ -2,6 +2,8 @@
 
 A gem to help you communicate with the Responsys Interact **REST** APIs.
 
+Tested with Ruby 1.9.3 and 2.1.2.
+
 ## Table of Contents
 
   - [Introduction](#introduction)
@@ -33,7 +35,7 @@ A gem to help you communicate with the Responsys Interact **REST** APIs.
 ## Introduction
 The gem is based on the official API documentation and tries to be as close as possible to the API's data model.
 
-You'll find prototypes of the different methods below grouped by resource type. If you have any questions related to the usage of the GEM please open an [issue](https://github.com/dandemeyere/responsys-api/issues) or shout a message in our [Gitter chatroom](https://gitter.im/dandemeyere/responsys-api).
+You'll find prototypes of the different methods below sorted by resource type. If you have any questions related to the usage of the GEM please open an [issue](https://github.com/dandemeyere/responsys-api/issues) or shout a message in our [Gitter chatroom](https://gitter.im/dandemeyere/responsys-api).
 
 Another way of getting examples is to have a look at the spec files in `spec/`. All API methods have been tested with a testing scenario, you'll find the recorded calls in VCR cassettes under `spec/fixtures/vcr_cassettes`.
 
@@ -60,7 +62,9 @@ Responsys.configure do |config|
 end
 ```
 
-### Example
+### Examples
+A first one using the `Member` wrapper.
+
 ```ruby
 #!/usr/bin/env ruby
 
@@ -105,10 +109,92 @@ end
 puts member.subscribed?(list) ? "#{member.email} has subscribed to #{list.object_name}" : "An error ocurred"
 ```
 
-## Resources
-Different types of resources are accessible from the API: List, Table, Campaign, ...
+A second example with Resources.
+```ruby
+#!/usr/bin/env ruby
 
-For the example, let's take the API definition to merge members to a list:  
+## Scenario : a user changed his email address. We want to update his Responsys record and send him an email.
+## Details : we will do the following steps
+### 1. Retrieve the record based on the old email address
+### 2. Merge the updated record to the list with the new address
+### 3. Trigger an email campaign to confirm the change
+## We'll use the Resource objects (List and Campaign).
+
+OLD_EMAIL = "user1@email.com"
+NEW_EMAIL = "user2@email.com"
+
+# Require the gem
+require "responsys_api"
+
+Responsys.configure do |config|
+  config.settings = {
+    username: "user@organization",
+    password: "s3cur3d-p@ssw0rd",
+    login_endpoint: "https://loginX.responsys.net"
+  }
+end
+
+client = Responsys::Api::Client.new
+list = Responsys::Api::Object::InteractObject.new("the_folder_containing_the_list", "my_customers_list")
+
+## 1. Let's retrieve a record given its email.
+query_column = Responsys::Api::Object::QueryColumn.new("EMAIL_ADDRESS")
+field_list = %w(RIID_ EMAIL_ADDRESS_ MOBILE_NUMBER_)
+id_to_retrieve = OLD_EMAIL
+
+retrieve_response = client.lists(list).retrieve_record(query_column, field_list, id_to_retrieve)
+
+### Something went wrong! Find the "response.error_code" in the API doc to get more info.
+return puts retrieve_response.error_title if retrieve_response.error?
+
+## 2. We want to update the member's email address.
+## Notice that we don't need to reformat the record data we retrieved.
+## The data model is the same which makes it easy to reuse in a second call.
+## We base the search on the RIID and not the email since we're passing the new one.
+## For that the default match column is changed to the RIID column.
+member_data = retrieve_response.data[0]
+member_data[:EMAIL_ADDRESS_] = NEW_EMAIL
+record_data = Responsys::Api::Object::RecordData.new([member_data])
+list_merge_rule = Responsys::Api::Object::ListMergeRule.new(matchColumnName1: "RIID_")
+
+merge_response = client.lists(list).merge_records(record_data, list_merge_rule)
+
+### Something went wrong! Find the "merge_response.error_code" in the API doc to get more info.
+return puts merge_response.error_title if merge_response.error?
+
+## 3. Now we can send a text message
+email_campaign = Responsys::Api::Campaign.new("updated-profile")
+recipient = Responsys::Api::Object::Recipient.new(emailAddress: NEW_EMAIL, listName: list)
+recipient_data = Responsys::Api::Object::RecipientData.new(recipient)
+
+campaign_response = email_campaign.trigger_email([recipient_data])
+
+### Something went wrong! Find the "campaign_response.error_code" in the API doc to get more info.
+return puts campaign_response.error_title if campaign_response.error?
+```
+
+### Response object
+Every time you make a call, you get a Response object which is a wrapper of a HTTPARTY response.
+
+The different actions available:
+```ruby
+merge_response = client.lists(list).merge_records(record_data, list_merge_rule)
+
+merge_response.success?
+merge_response.data #JSON body with symbolized keys
+
+merge_response.error?
+merge_response.error_code
+merge_response.error_title
+merge_response.error_desc # error_code - error_title
+merge_response.error_detail
+merge_response.error_details
+
+merge_response.httparty_response
+```
+
+## Resources
+For the example, let's take the API definition to merge members to a list:
 `POST /rest/api/v1/lists/<listName>`
 
 All resources can be called using two ways:
@@ -121,10 +207,10 @@ client.lists(interact_object).retrieve_record(query_column, field_list, id_to_re
 
 2) You can use the direct Resource object. It's the same object you get when doing `client.lists(interact_object)`.
 ```ruby
-Responsys::Api::List.new(interact_object).retrieve_record(query_column, field_list, id_to_retrieve)
+Responsys::Api::List(interact_object).retrieve_record(query_column, field_list, id_to_retrieve)
 ```
 
-Below are the method prototypes accessible. The params are explicitly named according to their object type or their purpose.
+Below are the method prototypes accessible. The params are explicitly named according to their object type.
 
 **Important note:**
 We *tried* to make it easily understandable from somebody reading the source code. If you end up hitting your head against a wall and you think some details here would have saved you time, please write a PR. It will benefit you and probably another person after you.
@@ -193,12 +279,10 @@ client.events(custom_event).trigger(recipient_data_array)
 ```
 
 ## Objects
-An Object is wrapping up a model representation. They're used by API methods to pass the data in a correct format to assure (as possible) that the params (query params or body content) are compliant to the official documentation.
+An Object is wrapping up the model representation. They're used by API methods to pass the data in a correct format to assure (as possible) that the params (query params or body content) are compliant to the official documentation.
 
 We recommend going through the code and the objects used if you need to figure out how a method has been built.
 On each Object you'll find a method called `.to_api` which serializes the object data to the API format.
-
-You'll find below the list of Objects you may need to provide to Resources.
 
 ### CustomEvent
 Presents an event to the API, the name is the most important information here.

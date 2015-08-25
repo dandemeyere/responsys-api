@@ -25,7 +25,7 @@ module Responsys
           rescue Exception => e
             Responsys::Helper.format_response_with_errors(e)
           ensure
-            session.logout
+            session.logout if session.logged_in?
           end
         end
       end

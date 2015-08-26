@@ -13,8 +13,11 @@ module Responsys
       def logout
         return unless logged_in?
 
-        run_with_credentials(:logout, nil)
-        destroy_session_objects
+        begin
+          run_with_credentials(:logout, nil)
+        ensure
+          destroy_session_objects
+        end
       end
 
       def logged_in?

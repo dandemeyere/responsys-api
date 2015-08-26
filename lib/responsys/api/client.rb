@@ -16,16 +16,17 @@ module Responsys
           begin
             session.login
             response = session.run_with_credentials(action, message)
+            session.logout
             case response_type
             when :result
-              Responsys::Helper.format_response_result(response, action)
+             Responsys::Helper.format_response_result(response, action)
             when :hash
-              Responsys::Helper.format_response_hash(response, action)
+             Responsys::Helper.format_response_hash(response, action)
+            else
+             response
             end
           rescue Exception => e
             Responsys::Helper.format_response_with_errors(e)
-          ensure
-            session.logout
           end
         end
       end

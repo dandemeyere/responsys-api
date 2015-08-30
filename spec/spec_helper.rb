@@ -34,9 +34,9 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do |test|
-    #By default, destroy the saved token after each test.
-    #We want to force authentication in each unit test / VCR cassette
-    Responsys::Api::Authentication.destroy unless !!(test.metadata[:stay_logged_in])
+    #By default, destroy the previous session object in the pool after each test.
+    #We want to force a new authentication in each unit test / VCR cassette
+    Responsys::SessionPool.instance.renew! unless !!(test.metadata[:stay_logged_in])
   end
 end
 

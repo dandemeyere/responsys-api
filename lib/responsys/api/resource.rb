@@ -8,8 +8,6 @@ module Responsys
       def initialize
         global_configuration = Responsys.configuration
 
-        @login_endpoint = global_configuration.login_endpoint
-        @credentials = global_configuration.api_credentials
         @httparty_settings = global_configuration.httparty_settings
       end
 
@@ -24,46 +22,34 @@ module Responsys
         run(http_method, "#{resource_path}#{path}", params).format_with(formatter)
       end
 
-      def authenticate!
-        response = make_call(:post, @login_endpoint, "/rest/api/v1/auth/token", { query: @credentials })
-
-        raise Responsys::Exceptions::FailedAuthentication.new(response.error_title) if response.error?
-
-        Authentication.token = response.data[:authToken]
-        Authentication.api_endpoint = response.data[:endPoint]
-      end
-
-      def refresh_token!
-        response = make_call(:post, @login_endpoint, "/rest/api/v1/auth/token", { query: { auth_type: "token" } })
-
-        raise Responsys::Exceptions::FailedAuthentication.new(response.error_title) if response.error?
-
-        Authentication.token = response.data[:authToken]
-        Authentication.api_endpoint = response.data[:endPoint]
-      end
-
       def run(http_method, path, params)
-        authenticate! unless Authentication.authenticated?
+        SessionPool.instance.with do |session|
+          session.authenticate! unless session.authenticated?
 
-        settings = { headers: { "Authorization" => Authentication.token } }
+          settings = { headers: { "Authorization" => session.token } }
 
-        response = make_call(http_method, Authentication.api_endpoint, path, params.deep_merge(settings))
+          response = Resource.make_call(http_method, session.api_endpoint, path, params.deep_merge(settings))
 
-        if response.error? && response.error_code == "TOKEN_EXPIRED"
-          refresh_token!
-          response = run(http_method, path, params)
+          if response.error? && response.error_code == "TOKEN_EXPIRED"
+            refresh_token!
+            response = run(http_method, path, params)
+          end
+
+          response
         end
-
-        response
       end
 
-      def make_call(http_method, endpoint, path, call_options)
-        call_options[:body] = call_options[:body].to_json if call_options[:body]
-        call_options = Responsys.configuration.httparty_settings.deep_merge(call_options)
+      def self.make_call(http_method, endpoint, path, call_options)
+        merged_options = call_options.deep_merge(Responsys.configuration.httparty_settings)
+        merged_options[:body] = merged_options[:body].to_json if merged_options[:body] && json_content_type?(merged_options)
 
-        response = HTTParty.send(http_method.to_sym, "#{endpoint}#{path}", call_options)
+        response = HTTParty.send(http_method.to_sym, "#{endpoint}#{path}", merged_options)
 
         Responsys::Api::Response.new(response)
+      end
+
+      def self.json_content_type?(call_options)
+        call_options[:headers]["Content-Type"] == "application/json"
       end
 
       def resource_path

@@ -5,6 +5,7 @@ en:
     configuration:
       api_description_not_provided: A login endpoint is needed.
       api_credentials_not_provided: No credentials are provided in the configuration.
+      invalid_connection_pool_type: Connection Pool settings are invalid. The type can be :redis or :internal and timeout/size must be integers.
     response:
       object:
         incorrect_param: The parameter is not a hash

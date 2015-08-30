@@ -77,6 +77,7 @@ module Responsys
   def self.check_configuration
     raise Responsys::Exceptions::ConfigurationException.new("configuration.api_description_not_provided") if absent_api_description?
     raise Responsys::Exceptions::ConfigurationException.new("configuration.api_credentials_not_provided") if absent_api_credentials?
+    raise Responsys::Exceptions::ConfigurationException.new("configuration.invalid_connection_pool_type") if incorrect_pool?
   end
 
   def self.prepare!
@@ -110,11 +111,19 @@ module Responsys
     @configuration.settings[:username].blank? || @configuration.settings[:password].blank?
   end
 
+  def self.incorrect_pool?
+    return if @configuration.settings[:connection_pool].blank?
+
+    (!@configuration.settings[:connection_pool][:type].blank? && @configuration.settings[:connection_pool][:type] != :internal && @configuration.settings[:connection_pool][:type] != :redis) ||
+    (!@configuration.settings[:connection_pool][:size].blank? && !@configuration.settings[:connection_pool][:size].is_a?(Integer)) ||
+    (!@configuration.settings[:connection_pool][:timeout].blank? && !@configuration.settings[:connection_pool][:timeout].is_a?(Integer))
+  end
+
   def self.default_settings_hash
     {
       enabled: true,
       debug: false,
-      # error_handler: nil,
+      connection_pool: { type: :internal, size: 80, timeout: 30 },
       httparty_settings: {}
     }
   end

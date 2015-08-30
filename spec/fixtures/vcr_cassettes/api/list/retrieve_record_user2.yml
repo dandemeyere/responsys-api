@@ -2,33 +2,31 @@
 http_interactions:
 - request:
     method: post
-    uri: https://login5.responsys.net/rest/api/v1/auth/token?auth_type=password&password=your_responsys_password&user_name=your_responsys_username
+    uri: https://login5.responsys.net/rest/api/v1/auth/token
     body:
       encoding: UTF-8
-      string: ''
+      string: user_name=florian%40thredup&password=your_responsys_password&auth_type=password
     headers:
       Content-Type:
-      - application/json
-      Authorization:
-      - AUTH_TOKEN
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Sun, 31 May 2015 07:07:30 GMT
+      - Sun, 30 Aug 2015 13:38:29 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"authToken":"AUTH_TOKEN","issuedAt":1433056050635,"endPoint":"https://api5-011.responsys.net"}'
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1440941909229,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Sun, 31 May 2015 07:07:32 GMT
+  recorded_at: Sun, 30 Aug 2015 13:38:29 GMT
 - request:
     method: get
     uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1?fs=EMAIL_ADDRESS_,MOBILE_NUMBER_&id=user2@email.com&qa=e
@@ -36,26 +34,26 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      Content-Type:
-      - application/json
       Authorization:
       - AUTH_TOKEN
+      Content-Type:
+      - application/json
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Sun, 31 May 2015 07:07:30 GMT
+      - Sun, 30 Aug 2015 13:38:30 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"records":[{"fieldValues":["user2@email.com",null]}],"fieldNames":["EMAIL_ADDRESS_","MOBILE_NUMBER_"],"mapTemplateName":null}'
+      string: '{"records":[{"fieldValues":["user2@email.com",null]}],"mapTemplateName":null,"fieldNames":["EMAIL_ADDRESS_","MOBILE_NUMBER_"]}'
     http_version: 
-  recorded_at: Sun, 31 May 2015 07:07:32 GMT
+  recorded_at: Sun, 30 Aug 2015 13:38:30 GMT
 recorded_with: VCR 2.9.3

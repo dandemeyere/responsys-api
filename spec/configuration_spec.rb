@@ -57,6 +57,18 @@ describe Responsys::Configuration do
     end
   end
 
+  def incorrect_pool_configuration
+    Responsys.configure do |config|
+      config.settings = {
+        login_endpoint: "https://login.net",
+        username: "username",
+        password: "password",
+        connection_pool: { timeout: "10", size: 50, type: :redis },
+        debug: false
+      }
+    end
+  end
+
   def no_api_credentials_configuration
     Responsys.configure do |config|
       config.settings = {
@@ -84,7 +96,11 @@ describe Responsys::Configuration do
 
     it "should raise an exception if no api credentials are provided" do
       expect{ no_api_credentials_configuration }.to raise_error(Responsys::Exceptions::ConfigurationException, "No credentials are provided in the configuration.")
-    end    
+    end
+
+    it "should raise an exception if the connection pool has an incorrect configuration" do
+      expect{ incorrect_pool_configuration }.to raise_error(Responsys::Exceptions::ConfigurationException, "Connection Pool settings are invalid. The type can be :redis or :internal and timeout/size must be integers.")
+    end
   end
 
   describe "#savon_settings" do
@@ -147,6 +163,11 @@ describe Responsys::Configuration do
         username: "username",
         password: "password",
         debug: false,
+        connection_pool: {
+          type: :internal,
+          size: 80,
+          timeout: 30
+        },
         httparty_settings: {
           # open_timeout: 420,
           # read_timeout: 420,

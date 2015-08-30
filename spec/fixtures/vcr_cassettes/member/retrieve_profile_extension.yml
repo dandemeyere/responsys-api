@@ -2,31 +2,31 @@
 http_interactions:
 - request:
     method: post
-    uri: https://login5.responsys.net/rest/api/v1/auth/token?auth_type=password&password=your_responsys_password&user_name=your_responsys_username
+    uri: https://login5.responsys.net/rest/api/v1/auth/token
     body:
       encoding: UTF-8
-      string: ''
+      string: user_name=florian%40thredup&password=your_responsys_password&auth_type=password
     headers:
       Content-Type:
-      - application/json
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Sun, 07 Jun 2015 06:35:33 GMT
+      - Sun, 30 Aug 2015 14:46:01 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"authToken":"AUTH_TOKEN","issuedAt":1433658933503,"endPoint":"https://api5-011.responsys.net"}'
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1440945961274,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Sun, 07 Jun 2015 06:35:42 GMT
+  recorded_at: Sun, 30 Aug 2015 14:46:01 GMT
 - request:
     method: get
     uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1/listExtensions/rspec_pet1?fs=RIID_&id=48614925&qa=r
@@ -34,28 +34,28 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      Content-Type:
-      - application/json
       Authorization:
       - AUTH_TOKEN
+      Content-Type:
+      - application/json
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Sun, 07 Jun 2015 06:35:33 GMT
+      - Sun, 30 Aug 2015 14:46:02 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"records":[{"fieldValues":["48614925"]}],"fieldNames":["RIID_"],"mapTemplateName":null}'
+      string: '{"records":[{"fieldValues":["48614925"]}],"mapTemplateName":null,"fieldNames":["RIID_"]}'
     http_version: 
-  recorded_at: Sun, 07 Jun 2015 06:35:43 GMT
+  recorded_at: Sun, 30 Aug 2015 14:46:02 GMT
 - request:
     method: get
     uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1/listExtensions/rspec_pet1?fs=RIID_,MONTHLY_PURCH&id=48614925&qa=r
@@ -63,26 +63,26 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      Content-Type:
-      - application/json
       Authorization:
       - AUTH_TOKEN
+      Content-Type:
+      - application/json
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Sun, 07 Jun 2015 06:35:33 GMT
+      - Sun, 30 Aug 2015 14:46:04 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
       string: '{"records":[{"fieldValues":["48614925","300"]}],"mapTemplateName":null,"fieldNames":["RIID_","MONTHLY_PURCH"]}'
     http_version: 
-  recorded_at: Sun, 07 Jun 2015 06:35:43 GMT
+  recorded_at: Sun, 30 Aug 2015 14:46:04 GMT
 recorded_with: VCR 2.9.3

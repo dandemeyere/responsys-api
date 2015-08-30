@@ -2,58 +2,58 @@
 http_interactions:
 - request:
     method: post
-    uri: https://login5.responsys.net/rest/api/v1/auth/token?auth_type=password&password=your_responsys_password&user_name=your_responsys_username
+    uri: https://login5.responsys.net/rest/api/v1/auth/token
     body:
       encoding: UTF-8
-      string: ''
+      string: user_name=florian%40thredup&password=your_responsys_password&auth_type=password
     headers:
       Content-Type:
-      - application/json
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 04 Jun 2015 04:17:15 GMT
+      - Sun, 30 Aug 2015 14:44:06 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"authToken":"AUTH_TOKEN","issuedAt":1433391435393,"endPoint":"https://api5-011.responsys.net"}'
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1440945846325,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Thu, 04 Jun 2015 04:17:17 GMT
+  recorded_at: Sun, 30 Aug 2015 14:44:06 GMT
 - request:
     method: post
     uri: https://api5-011.responsys.net/rest/api/v1/events/rspec_event1
     body:
       encoding: UTF-8
-      string: '{"customEvent":{"eventName":"rspec_event1","eventId":null,"eventStringDataMapping":null,"eventDateDataMapping":null,"eventNumberDataMapping":null},"recipientData":[{"recipient":{"listName":{"folderName":"rspec_tests","objectName":"rspec_list1"},"recipientId":0,"customerId":"","emailAddress":"user1@email.com","mobileNumber":"","emailFormat":"NO_FORMAT"},"optionalData":null},{"recipient":{"listName":{"folderName":"rspec_tests","objectName":"rspec_list1"},"recipientId":0,"customerId":"","emailAddress":"user2@email.com","mobileNumber":"","emailFormat":"NO_FORMAT"},"optionalData":null}]}'
+      string: '{"customEvent":{"eventName":"rspec_event1","eventId":null,"eventStringDataMapping":null,"eventDateDataMapping":null,"eventNumberDataMapping":null},"recipientData":[{"recipient":{"listName":{"folderName":"rspec_tests","objectName":"rspec_list1"},"recipientId":null,"customerId":null,"emailAddress":"user1@email.com","mobileNumber":null,"emailFormat":null},"optionalData":null},{"recipient":{"listName":{"folderName":"rspec_tests","objectName":"rspec_list1"},"recipientId":null,"customerId":null,"emailAddress":"user2@email.com","mobileNumber":null,"emailFormat":null},"optionalData":null}]}'
     headers:
-      Content-Type:
-      - application/json
       Authorization:
       - AUTH_TOKEN
+      Content-Type:
+      - application/json
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 04 Jun 2015 04:17:15 GMT
+      - Sun, 30 Aug 2015 14:44:10 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
       string: '[{"errorMessage":null,"success":true,"recipientId":48614925},{"errorMessage":null,"success":true,"recipientId":48614965}]'
     http_version: 
-  recorded_at: Thu, 04 Jun 2015 04:17:17 GMT
+  recorded_at: Sun, 30 Aug 2015 14:44:10 GMT
 recorded_with: VCR 2.9.3

@@ -2,58 +2,58 @@
 http_interactions:
 - request:
     method: post
-    uri: https://login5.responsys.net/rest/api/v1/auth/token?auth_type=password&password=your_responsys_password&user_name=your_responsys_username
+    uri: https://login5.responsys.net/rest/api/v1/auth/token
     body:
       encoding: UTF-8
-      string: ''
+      string: user_name=florian%40thredup&password=your_responsys_password&auth_type=password
     headers:
       Content-Type:
-      - application/json
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 03 Jun 2015 06:18:51 GMT
+      - Sun, 30 Aug 2015 14:43:05 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"authToken":"AUTH_TOKEN","issuedAt":1433312331604,"endPoint":"https://api5-011.responsys.net"}'
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1440945785321,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Wed, 03 Jun 2015 06:18:54 GMT
+  recorded_at: Sun, 30 Aug 2015 14:43:05 GMT
 - request:
     method: post
     uri: https://api5-011.responsys.net/rest/api/v1/folders/rspec_tests/suppData/
     body:
       encoding: UTF-8
-      string: '{"table":{"objectName":"table_temp_1433312334"},"fields":[{"fieldName":"field1","fieldType":"STR500","custom":false,"dataExtractionKey":false},{"fieldName":"field2","fieldType":"NUMBER","custom":false,"dataExtractionKey":false},{"fieldName":"field3","fieldType":"TIMESTAMP","custom":false,"dataExtractionKey":false}],"primaryKeys":["field1"]}'
+      string: '{"table":{"objectName":"table_temp_1440945784"},"fields":[{"fieldName":"field1","fieldType":"STR500","custom":false,"dataExtractionKey":false},{"fieldName":"field2","fieldType":"NUMBER","custom":false,"dataExtractionKey":false},{"fieldName":"field3","fieldType":"TIMESTAMP","custom":false,"dataExtractionKey":false}],"primaryKeys":["field1"]}'
     headers:
-      Content-Type:
-      - application/json
       Authorization:
       - AUTH_TOKEN
+      Content-Type:
+      - application/json
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 03 Jun 2015 06:18:51 GMT
+      - Sun, 30 Aug 2015 14:43:06 GMT
       Server:
       - Apache
-      Content-Type:
-      - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
+      Content-Type:
+      - application/json;charset=UTF-8
     body:
       encoding: UTF-8
       string: 'true'
     http_version: 
-  recorded_at: Wed, 03 Jun 2015 06:18:55 GMT
+  recorded_at: Sun, 30 Aug 2015 14:43:07 GMT
 recorded_with: VCR 2.9.3

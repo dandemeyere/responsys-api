@@ -36,14 +36,14 @@ describe Responsys::Api::Resource do
     end
 
     describe "In-GEM session" do
-      it "should make sure the token and api endpoint don't exist" do
-        expect(Responsys::Api::Authentication.token).to be_nil
-        expect(Responsys::Api::Authentication.api_endpoint).to be_nil
+      let(:session_pool) { Responsys::SessionPool.instance }
+      before(:all) do
+        Responsys::SessionPool.instance.renew!
       end
 
       it "should make the first login auth and retrieve a record", stay_logged_in: true do
         VCR.use_cassette("api/resource/_in_gem_login_and_retrieve_first") do
-          expect_any_instance_of(described_class).to receive(:authenticate!).once.and_call_original
+          expect_any_instance_of(Responsys::Session).to receive(:authenticate!).once.and_call_original
 
           response = retrieve_record
 
@@ -52,20 +52,26 @@ describe Responsys::Api::Resource do
       end
       
       it "should have the authentication token set", stay_logged_in: true do
-        expect(Responsys::Api::Authentication.token).to_not be_nil
+        Responsys::SessionPool.instance.with do |session|
+          expect(session.token).to_not be_nil
+        end
       end
 
       it "should have the api endpoint set", stay_logged_in: true do
-        expect(Responsys::Api::Authentication.api_endpoint).to_not be_nil
+        Responsys::SessionPool.instance.with do |session|
+          expect(session.api_endpoint).to_not be_nil
+        end
       end
       
       it "should be in the authenticated status", stay_logged_in: true do
-        expect(Responsys::Api::Authentication.authenticated?).to be_truthy
+        Responsys::SessionPool.instance.with do |session|
+          expect(session.authenticated?).to be_truthy
+        end
       end
 
       it "should retrieve a record without making a login call" do
         VCR.use_cassette("api/resource/_in_gem_login_and_retrieve_second") do
-          expect_any_instance_of(described_class).to_not receive(:authenticate!)
+          expect_any_instance_of(Responsys::Session).to_not receive(:authenticate!)
 
           response = retrieve_record
 

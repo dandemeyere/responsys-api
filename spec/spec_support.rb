@@ -13,7 +13,8 @@ def configure_gem(credentials = get_credentials)
       username: credentials["username"],
       password: credentials["password"],
       login_endpoint: credentials["login_endpoint"],
-      debug: DEBUG
+      debug: DEBUG,
+      connection_pool: { size: 1, timeout: 5, type: :internal }
     }
   end
 end

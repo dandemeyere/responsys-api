@@ -7,14 +7,20 @@ def toggle_i18n_test_files(active)
   I18n.locale = I18n.default_locale
 end
 
-def configure_gem(credentials = get_credentials)
+def configure_gem(type = :internal, credentials = get_credentials)
+  pool_settings = { size: 1, timeout: 5, type: :internal }
+
+  if type == :redis
+    pool_settings.merge!({ type: :redis }.merge!(REDIS))
+  end
+
   Responsys.configure do |config|
     config.settings = {
       username: credentials["username"],
       password: credentials["password"],
       login_endpoint: credentials["login_endpoint"],
       debug: DEBUG,
-      connection_pool: { size: 1, timeout: 5, type: :internal }
+      connection_pool: pool_settings
     }
   end
 end
@@ -31,6 +37,7 @@ end
 
 def set_incorrect_credentials
   configure_gem(
+    :internal,
     {
       "username" => "fake",
       "password" => "fake",

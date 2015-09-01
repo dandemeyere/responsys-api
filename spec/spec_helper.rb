@@ -9,6 +9,7 @@ require "spec_support.rb"
 require "uri"
 
 DATA = YAML.load_file("#{File.dirname(__FILE__)}/test_data.yml")
+REDIS = YAML.load_file("#{File.dirname(__FILE__)}/redis.yml")
 DEBUG = true
 CREDENTIALS = get_credentials
 
@@ -29,6 +30,16 @@ RSpec.configure do |config|
     toggle_i18n_test_files(true)
   end
 
+  config.before(:example, connection_pool: :redis) do
+    #Reconfigure the GEM with a Redis pool
+    configure_gem(:redis)
+  end
+
+  config.after(:example, connection_pool: :redis) do
+    #Reset with internal pool
+    configure_gem
+  end
+
   config.after(:example, i18n_test_files: true) do
     #Reset the use of i18n test files.
     toggle_i18n_test_files(false)
@@ -40,6 +51,8 @@ RSpec.configure do |config|
     Responsys::SessionPool.instance.renew! unless !!(test.metadata[:stay_logged_in])
   end
 end
+
+$redis = Redis.new(REDIS)
 
 ##In spec_support.rb
 ##Use the credentials of your account that must be present in spec/api_credentials.yml (copy of api_credentials.sample.yml)

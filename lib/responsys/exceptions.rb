@@ -16,6 +16,12 @@ module Responsys
     class ParameterException < Responsys::Exceptions::InternalException
     end
 
+    class TimeOutException < Responsys::Exceptions::InternalException
+      def initialize
+        super("timeout")
+      end
+    end
+
     class DisabledException < Responsys::Exceptions::InternalException
       def initialize
         super("gem_is_disabled")

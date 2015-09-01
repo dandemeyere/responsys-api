@@ -2,10 +2,11 @@ en:
   responsys_api:
     incorrect_credentials: The credentials provided are incorrect.
     gem_is_disabled: The query couldn't be performed because the GEM is disabled.
+    timeout: Couldn't find a slot in the pool with the given Timeout time.
     configuration:
       api_description_not_provided: A login endpoint is needed.
       api_credentials_not_provided: No credentials are provided in the configuration.
-      invalid_connection_pool_type: Connection Pool settings are invalid. The type can be :redis or :internal and timeout/size must be integers.
+      invalid_connection_pool_type: Connection Pool settings are invalid.
     response:
       object:
         incorrect_param: The parameter is not a hash

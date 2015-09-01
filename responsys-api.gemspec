@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = "0.2.2"
   spec.authors       = ["Dan DeMeyere", "Florian Lorrain", "Morgan Griggs", "Mike Rocco"]
   spec.email         = ["dan@thredup.com", "florian.lorrain@thredup.com", "morgan@thredup.com", "michael.rocco@thredup.com"]
-  spec.description   = "A gem to integrate with the Responsys SOAP API"
+  spec.description   = "A gem to integrate with the Responsys REST API"
   spec.summary       = "See the github repository for further information about the usage and the needed configuration"
   spec.homepage      = "https://github.com/dandemeyere/responsys-api"
   spec.license       = "MIT"
@@ -21,8 +21,11 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "httparty", "~> 0.13.5"
   spec.add_dependency "connection_pool", "~> 2.2.0"
+  spec.add_dependency "redis", ">= 3.0"
+  spec.add_dependency "redis-namespace", "~> 1.3"
   spec.add_dependency "i18n", "~> 0.7"
   spec.add_dependency "deep_merge", "~> 1.0.1"
+  spec.add_dependency "json"
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake", "~> 10.3"
   spec.add_development_dependency "rspec", "~> 3.2"

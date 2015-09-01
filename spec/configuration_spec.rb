@@ -99,7 +99,7 @@ describe Responsys::Configuration do
     end
 
     it "should raise an exception if the connection pool has an incorrect configuration" do
-      expect{ incorrect_pool_configuration }.to raise_error(Responsys::Exceptions::ConfigurationException, "Connection Pool settings are invalid. The type can be :redis or :internal and timeout/size must be integers.")
+      expect{ incorrect_pool_configuration }.to raise_error(Responsys::Exceptions::ConfigurationException, "Connection Pool settings are invalid.")
     end
   end
 

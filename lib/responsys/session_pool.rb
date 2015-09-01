@@ -3,27 +3,25 @@ require "singleton"
 module Responsys
   class SessionPool
     include Singleton
-    attr_accessor :pool
-    ACCEPTED_SETTINGS = [:timeout, :size]
+    attr_reader :pool, :type
 
     def initialize
-      settings = Responsys.configuration.settings[:sessions]
-      @params = if settings
-        settings.select { |option, value| ACCEPTED_SETTINGS.include?(option) }
-      else
-        {}
-      end
+      type = Responsys.configuration.settings[:connection_pool][:type]
+
+      @type = Responsys::Pools::const_get(type.to_s.capitalize)
 
       renew!
     end
 
     def renew!
-      @pool = ::ConnectionPool.new(@params) { Responsys::Session.new }
+      @pool = @type.new
     end
 
     def with
+      renew! unless @pool
+
       @pool.with do |session|
-        yield session
+        yield(session)
       end
     end
   end

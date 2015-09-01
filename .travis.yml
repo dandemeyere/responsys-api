@@ -4,6 +4,8 @@ sudo: false
 rvm:
   - 1.9.3
   - 2.1.2
+services:
+  - redis-server
 gemfile:
   - Gemfile
 notifications:

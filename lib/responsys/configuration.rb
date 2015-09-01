@@ -114,9 +114,17 @@ module Responsys
   def self.incorrect_pool?
     return if @configuration.settings[:connection_pool].blank?
 
+    #Pool type
     (!@configuration.settings[:connection_pool][:type].blank? && @configuration.settings[:connection_pool][:type] != :internal && @configuration.settings[:connection_pool][:type] != :redis) ||
+
+    #Pool settings
     (!@configuration.settings[:connection_pool][:size].blank? && !@configuration.settings[:connection_pool][:size].is_a?(Integer)) ||
-    (!@configuration.settings[:connection_pool][:timeout].blank? && !@configuration.settings[:connection_pool][:timeout].is_a?(Integer))
+    (!@configuration.settings[:connection_pool][:timeout].blank? && !@configuration.settings[:connection_pool][:timeout].is_a?(Integer)) ||
+
+    #Redis settings
+    (@configuration.settings[:connection_pool][:type] == :redis && (@configuration.settings[:connection_pool][:host].blank? ||
+      @configuration.settings[:connection_pool][:port].blank? || !@configuration.settings[:connection_pool][:port].is_a?(Integer))
+    )
   end
 
   def self.default_settings_hash

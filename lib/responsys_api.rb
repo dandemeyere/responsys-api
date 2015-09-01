@@ -2,6 +2,8 @@ require "i18n"
 require "httparty"
 require "deep_merge"
 require "connection_pool"
+require "redis"
+require "redis-namespace"
 
 I18n.load_path.concat Dir.glob( File.dirname(__FILE__) + "/responsys/i18n/*.yml" )
 
@@ -11,6 +13,8 @@ require "responsys/exceptions"
 require "responsys/configuration"
 require "responsys/api/object/all"
 require "responsys/session"
+require "responsys/pools/internal"
+require "responsys/pools/redis"
 require "responsys/session_pool"
 require "responsys/api/resource"
 require "responsys/api/all"

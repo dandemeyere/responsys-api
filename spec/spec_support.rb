@@ -26,10 +26,18 @@ def configure_gem(type = :internal, credentials = get_credentials)
 end
 
 def get_credentials
-  if File.exist?("#{File.dirname(__FILE__)}/api_credentials.yml")
-    file = "api_credentials.yml"
+  get_sampled_file("api_credentials")
+end
+
+def get_redis_settings
+  get_sampled_file("redis")
+end
+
+def get_sampled_file(name, extension = ".yml")
+  if File.exist?("#{File.dirname(__FILE__)}/#{name}#{extension}")
+    file = "#{name}#{extension}"
   else
-    file = "api_credentials.sample.yml"
+    file = "#{name}.sample#{extension}"
   end
 
   YAML.load_file("#{File.dirname(__FILE__)}/#{file}")

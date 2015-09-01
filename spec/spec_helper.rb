@@ -9,7 +9,7 @@ require "spec_support.rb"
 require "uri"
 
 DATA = YAML.load_file("#{File.dirname(__FILE__)}/test_data.yml")
-REDIS = YAML.load_file("#{File.dirname(__FILE__)}/redis.yml")
+REDIS = get_redis_settings
 DEBUG = true
 CREDENTIALS = get_credentials
 

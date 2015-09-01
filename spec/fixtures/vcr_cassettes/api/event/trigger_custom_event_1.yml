@@ -5,7 +5,7 @@ http_interactions:
     uri: https://login5.responsys.net/rest/api/v1/auth/token
     body:
       encoding: UTF-8
-      string: user_name=florian%40thredup&password=your_responsys_password&auth_type=password
+      string: user_name=your_responsys_username&password=your_responsys_password&auth_type=password
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -15,7 +15,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 14:44:04 GMT
+      - Tue, 01 Sep 2015 12:31:28 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -24,9 +24,9 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"authToken":"AUTH_TOKEN","issuedAt":1440945844075,"endPoint":"https://api5-011.responsys.net"}'
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1441110688545,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 14:44:04 GMT
+  recorded_at: Tue, 01 Sep 2015 12:31:28 GMT
 - request:
     method: post
     uri: https://api5-011.responsys.net/rest/api/v1/events/rspec_event1
@@ -44,7 +44,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 14:44:05 GMT
+      - Tue, 01 Sep 2015 12:31:29 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -55,5 +55,5 @@ http_interactions:
       encoding: UTF-8
       string: '[{"errorMessage":null,"success":true,"recipientId":48614925}]'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 14:44:05 GMT
+  recorded_at: Tue, 01 Sep 2015 12:31:29 GMT
 recorded_with: VCR 2.9.3

@@ -6,6 +6,7 @@ require "vcr"
 require "yaml"
 require "pathname"
 require "spec_support.rb"
+require "uri"
 
 DATA = YAML.load_file("#{File.dirname(__FILE__)}/test_data.yml")
 DEBUG = true
@@ -14,8 +15,8 @@ CREDENTIALS = get_credentials
 VCR.configure do |c|
   c.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   c.hook_into :webmock
-  c.filter_sensitive_data("your_responsys_username") { CREDENTIALS["username"] }
-  c.filter_sensitive_data("your_responsys_password") { CREDENTIALS["password"] }
+  c.filter_sensitive_data("your_responsys_username") { URI.encode_www_form_component(CREDENTIALS["username"]) }
+  c.filter_sensitive_data("your_responsys_password") { URI.encode_www_form_component(CREDENTIALS["password"]) }
   c.before_record do |c|
     c.request.headers["Authorization"] = ["AUTH_TOKEN"] if c.request.headers["Authorization"]
     c.response.body.sub!(/"authToken":".*",/, "\"authToken\":\"AUTH_TOKEN\",")

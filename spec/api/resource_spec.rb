@@ -19,11 +19,13 @@ describe Responsys::Api::Resource do
 
     describe "Failure" do
       before(:all) do
+        Responsys::SessionPool.instance.renew!
         set_incorrect_credentials
       end
 
       after(:all) do
         set_correct_credentials
+        Responsys::SessionPool.instance.renew!
       end
 
       it "should raise an exception if the credentials are incorrect" do

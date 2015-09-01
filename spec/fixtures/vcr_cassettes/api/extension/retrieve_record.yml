@@ -5,7 +5,7 @@ http_interactions:
     uri: https://login5.responsys.net/rest/api/v1/auth/token
     body:
       encoding: UTF-8
-      string: user_name=florian%40thredup&password=your_responsys_password&auth_type=password
+      string: user_name=your_responsys_username&password=your_responsys_password&auth_type=password
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -15,7 +15,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 13:40:00 GMT
+      - Tue, 01 Sep 2015 12:31:15 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -24,9 +24,9 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"authToken":"AUTH_TOKEN","issuedAt":1440942000926,"endPoint":"https://api5-011.responsys.net"}'
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1441110675788,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 13:40:01 GMT
+  recorded_at: Tue, 01 Sep 2015 12:31:15 GMT
 - request:
     method: get
     uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1/listExtensions/rspec_pet1?fs=RIID_,MONTHLY_PURCH&id=48614925&qa=r
@@ -44,7 +44,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 13:40:05 GMT
+      - Tue, 01 Sep 2015 12:31:16 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -55,5 +55,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"records":[{"fieldValues":["48614925","300"]}],"mapTemplateName":null,"fieldNames":["RIID_","MONTHLY_PURCH"]}'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 13:40:05 GMT
+  recorded_at: Tue, 01 Sep 2015 12:31:16 GMT
 recorded_with: VCR 2.9.3

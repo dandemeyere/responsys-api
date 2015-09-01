@@ -5,7 +5,7 @@ http_interactions:
     uri: https://login5.responsys.net/rest/api/v1/auth/token
     body:
       encoding: UTF-8
-      string: user_name=florian%40thredup&password=your_responsys_password&auth_type=password
+      string: user_name=your_responsys_username&password=your_responsys_password&auth_type=password
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -15,7 +15,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 14:46:01 GMT
+      - Tue, 01 Sep 2015 12:36:23 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -24,9 +24,9 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"authToken":"AUTH_TOKEN","issuedAt":1440945961274,"endPoint":"https://api5-011.responsys.net"}'
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1441110983329,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 14:46:01 GMT
+  recorded_at: Tue, 01 Sep 2015 12:36:23 GMT
 - request:
     method: get
     uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1/listExtensions/rspec_pet1?fs=RIID_&id=48614925&qa=r
@@ -44,7 +44,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 14:46:02 GMT
+      - Tue, 01 Sep 2015 12:36:24 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -55,7 +55,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"records":[{"fieldValues":["48614925"]}],"mapTemplateName":null,"fieldNames":["RIID_"]}'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 14:46:02 GMT
+  recorded_at: Tue, 01 Sep 2015 12:36:24 GMT
 - request:
     method: get
     uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1/listExtensions/rspec_pet1?fs=RIID_,MONTHLY_PURCH&id=48614925&qa=r
@@ -73,7 +73,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 14:46:04 GMT
+      - Tue, 01 Sep 2015 12:36:25 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -82,7 +82,7 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"records":[{"fieldValues":["48614925","300"]}],"mapTemplateName":null,"fieldNames":["RIID_","MONTHLY_PURCH"]}'
+      string: '{"fieldNames":["RIID_","MONTHLY_PURCH"],"mapTemplateName":null,"records":[{"fieldValues":["48614925","300"]}]}'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 14:46:04 GMT
+  recorded_at: Tue, 01 Sep 2015 12:36:25 GMT
 recorded_with: VCR 2.9.3

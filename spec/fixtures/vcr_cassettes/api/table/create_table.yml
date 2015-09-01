@@ -5,7 +5,7 @@ http_interactions:
     uri: https://login5.responsys.net/rest/api/v1/auth/token
     body:
       encoding: UTF-8
-      string: user_name=florian%40thredup&password=your_responsys_password&auth_type=password
+      string: user_name=your_responsys_username&password=your_responsys_password&auth_type=password
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -15,7 +15,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 14:43:05 GMT
+      - Tue, 01 Sep 2015 12:35:40 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -24,15 +24,15 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"authToken":"AUTH_TOKEN","issuedAt":1440945785321,"endPoint":"https://api5-011.responsys.net"}'
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1441110940463,"endPoint":"https://api5-011.responsys.net"}'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 14:43:05 GMT
+  recorded_at: Tue, 01 Sep 2015 12:35:40 GMT
 - request:
     method: post
     uri: https://api5-011.responsys.net/rest/api/v1/folders/rspec_tests/suppData/
     body:
       encoding: UTF-8
-      string: '{"table":{"objectName":"table_temp_1440945784"},"fields":[{"fieldName":"field1","fieldType":"STR500","custom":false,"dataExtractionKey":false},{"fieldName":"field2","fieldType":"NUMBER","custom":false,"dataExtractionKey":false},{"fieldName":"field3","fieldType":"TIMESTAMP","custom":false,"dataExtractionKey":false}],"primaryKeys":["field1"]}'
+      string: '{"table":{"objectName":"table_temp_1441110939"},"fields":[{"fieldName":"field1","fieldType":"STR500","custom":false,"dataExtractionKey":false},{"fieldName":"field2","fieldType":"NUMBER","custom":false,"dataExtractionKey":false},{"fieldName":"field3","fieldType":"TIMESTAMP","custom":false,"dataExtractionKey":false}],"primaryKeys":["field1"]}'
     headers:
       Authorization:
       - AUTH_TOKEN
@@ -44,7 +44,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 14:43:06 GMT
+      - Tue, 01 Sep 2015 12:35:42 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -55,5 +55,5 @@ http_interactions:
       encoding: UTF-8
       string: 'true'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 14:43:07 GMT
+  recorded_at: Tue, 01 Sep 2015 12:35:43 GMT
 recorded_with: VCR 2.9.3

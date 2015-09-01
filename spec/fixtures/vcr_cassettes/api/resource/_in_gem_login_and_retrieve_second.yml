@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 30 Aug 2015 14:42:12 GMT
+      - Tue, 01 Sep 2015 12:35:21 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -28,5 +28,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"records":[{"fieldValues":["user1@email.com","0000000001"]}],"mapTemplateName":null,"fieldNames":["EMAIL_ADDRESS_","MOBILE_NUMBER_"]}'
     http_version: 
-  recorded_at: Sun, 30 Aug 2015 14:42:12 GMT
+  recorded_at: Tue, 01 Sep 2015 12:35:21 GMT
 recorded_with: VCR 2.9.3

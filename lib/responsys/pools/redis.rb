@@ -56,7 +56,6 @@ module Responsys
         renew!
       end
 
-      # The Li
       def renew!
         begin
           @connection.multi

@@ -40,12 +40,21 @@ module Responsys
       end
 
       def self.make_call(http_method, endpoint, path, call_options)
-        merged_options = call_options.deep_merge(Responsys.configuration.httparty_settings)
-        merged_options[:body] = merged_options[:body].to_json if merged_options[:body] && json_content_type?(merged_options)
+        final_options = prepare_options(call_options)
 
-        response = HTTParty.send(http_method.to_sym, "#{endpoint}#{path}", merged_options)
+        response = HTTParty.send(http_method.to_sym, "#{endpoint}#{path}", final_options)
 
         Responsys::Api::Response.new(response)
+      end
+
+      def self.prepare_options(call_options)
+        merged_options = Responsys.configuration.httparty_settings.deep_merge!(call_options)
+
+        if merged_options[:body] && json_content_type?(merged_options)
+          merged_options[:body] = merged_options[:body].to_json
+        end
+
+        merged_options
       end
 
       def self.json_content_type?(call_options)

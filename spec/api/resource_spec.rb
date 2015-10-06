@@ -15,6 +15,31 @@ describe Responsys::Api::Resource do
     client.lists(@list).retrieve_record(@query_column_email, %w(EMAIL_ADDRESS_ MOBILE_NUMBER_), @user1_email)
   end
 
+  describe "Pre-call #prepare_options" do
+    let(:call_options) do
+      {
+        body: { whatever: "is_here" },
+        headers: {
+          "Content-Type" => "application/x-www-form-urlencoded"
+        }
+      }
+    end
+
+    it "should correctly merge headers" do
+      options = subject.class.send(:prepare_options, call_options)
+
+      expect(options).to include(
+        {
+          format: :json,
+          headers: {
+            "Content-Type" => "application/x-www-form-urlencoded"
+          },
+          body: { whatever: "is_here" }
+        }
+      )
+    end
+  end
+
   describe "Authentication" do
 
     describe "Failure" do
@@ -52,7 +77,7 @@ describe Responsys::Api::Resource do
           expect(response.success?).to be_truthy
         end
       end
-      
+
       it "should have the authentication token set", stay_logged_in: true do
         Responsys::SessionPool.instance.with do |session|
           expect(session.token).to_not be_nil
@@ -64,7 +89,7 @@ describe Responsys::Api::Resource do
           expect(session.api_endpoint).to_not be_nil
         end
       end
-      
+
       it "should be in the authenticated status", stay_logged_in: true do
         Responsys::SessionPool.instance.with do |session|
           expect(session.authenticated?).to be_truthy

@@ -8,6 +8,24 @@ describe Responsys::Member do
     @list = Responsys::Api::Object::InteractObject.new(DATA[:folder],DATA[:lists][:list1][:name])
   end
 
+  context "Retrieve RIID" do
+    it "should return the RIID" do
+      VCR.use_cassette("member/retrieve_riid") do
+        riid = Responsys::Member.new(@email).retrieve_riid(@list)
+
+        expect(riid).to eq(@riid)
+      end
+    end
+
+    it "should return nil if the user is not known" do
+      VCR.use_cassette("member/retrieve_riid_unknown") do
+        riid = Responsys::Member.new("totally.unknown.user@email.com").retrieve_riid(@list)
+
+        expect(riid).to be_nil
+      end
+    end
+  end
+
   context "New member" do
     before(:each) do
       @new_user_email = DATA[:users][:new_user4][:EMAIL_ADDRESS]

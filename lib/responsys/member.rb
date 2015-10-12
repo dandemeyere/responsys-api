@@ -31,6 +31,16 @@ module Responsys
       end
     end
 
+    def retrieve_riid(list)
+      @client.run do |client|
+        response = @client.lists(list).retrieve_record(QueryColumn.new("EMAIL_ADDRESS"), %w(RIID_), @email)
+
+        return nil if response.error?
+
+        response.data[0][:RIID_].to_i
+      end
+    end
+
     def retrieve_profile_extension(list, profile_extension, fields)
       @client.run do |client|
         raise ParameterException.new("member.riid_missing") if @user_riid.nil?

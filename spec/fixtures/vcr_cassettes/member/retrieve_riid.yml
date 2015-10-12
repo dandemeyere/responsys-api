@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://login5.responsys.net/rest/api/v1/auth/token
+    body:
+      encoding: UTF-8
+      string: user_name=your_responsys_username&password=your_responsys_password&auth_type=password
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Via:
+      - 1.0 oag02-ri5.ri5.dc2.responsys.com (Gateway)
+      Connection:
+      - close
+      X-Correlationid:
+      - Id-6dd71b568b0d11008a200000bedd67fa 0
+      Date:
+      - Mon, 12 Oct 2015 15:53:17 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1444665197742,"endPoint":"https://api5-011.responsys.net"}'
+    http_version: 
+  recorded_at: Mon, 12 Oct 2015 15:53:17 GMT
+- request:
+    method: get
+    uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1?fs=RIID_&id=user1@email.com&qa=e
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - AUTH_TOKEN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Via:
+      - 1.0 oag02-ri5.ri5.dc2.responsys.com (Gateway)
+      Connection:
+      - close
+      X-Correlationid:
+      - Id-6ed71b568c0d11008a200000a2bf10c7 0
+      Date:
+      - Mon, 12 Oct 2015 15:53:18 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"records":[{"fieldValues":["48614925"]}],"mapTemplateName":null,"fieldNames":["RIID_"]}'
+    http_version: 
+  recorded_at: Mon, 12 Oct 2015 15:53:20 GMT
+recorded_with: VCR 2.9.3

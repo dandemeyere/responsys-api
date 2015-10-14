@@ -12,12 +12,12 @@ module Responsys
           self.field_names = data.map { |record| record.keys }.flatten.uniq
 
           new_data = []
-          field_names.each { |field_name|
-            data.each_with_index { |entity, index|
+          field_names.each do |field_name|
+            data.each_with_index do |entity, index|
               new_data[index] ||= Record.new([])
               new_data[index].field_values << (entity.has_key?(field_name) ? entity[field_name.to_sym] : "")
-            }
-          }
+            end
+          end
 
           self.records = new_data
         end

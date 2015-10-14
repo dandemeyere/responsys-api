@@ -19,7 +19,7 @@ module Responsys
           yield(self)
         rescue DisabledException => e
           raise e if self.class.raise_exceptions
-          return "disabled"
+          "disabled"
         ensure
           self.class.raise_exceptions = old_raise_exceptions
         end

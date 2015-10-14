@@ -7,5 +7,9 @@ module Responsys
         I18n.t(key, scope: :responsys_api, locale: :en, default: "Responsys - Unknown message '#{key}'")
       end
     end
+
+    def self.array_of?(fields, type)
+      fields.is_a?(Array) && fields.all? { |field| field.is_a?(type) }
+    end
   end
 end

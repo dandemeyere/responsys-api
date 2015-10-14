@@ -13,6 +13,11 @@ describe Responsys::Api::Extension do
     @table_with_pk = Responsys::Api::Object::InteractObject.new(DATA[:folder], "table_with_pk_temp")
   end
 
+  context "create table" do
+
+    
+  end
+
   context "delete records" do
     it "should delete a profile extension member" do
       VCR.use_cassette("api/extension/delete_record") do

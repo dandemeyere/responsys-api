@@ -1,8 +1,6 @@
 module Responsys
   module Api
     class List < Responsys::Api::Resource
-      include Responsys::Api::Object
-
       attr_accessor :interact_object
 
       def resource_path
@@ -10,20 +8,26 @@ module Responsys
       end
 
       def initialize(interact_object)
-        #TODO param verification
+        raise ParameterException.new("params.incorrect_interact_object") unless interact_object.is_a?(InteractObject)
+
         @interact_object = interact_object
 
         super()
       end
 
       def retrieve_record(query_column, field_list, id_to_retrieve)
-        #TODO check param
+        raise ParameterException.new("params.incorrect_query_column") unless query_column.is_a?(QueryColumn)
+        raise ParameterException.new("params.incorrect_fields") unless field_list.is_a?(Array)
+
         query = { qa: query_column.to_param, fs: field_list.join(","), id: id_to_retrieve }
 
         self.get("/#{@interact_object.object_name}", { query: query }, RecordData::ResponseFormatter)
       end
 
       def merge_records(record_data, list_merge_rule = ListMergeRule.new)
+        raise ParameterException.new("params.incorrect_record_data") unless record_data.is_a?(RecordData)
+        raise ParameterException.new("params.incorrect_list_merge_rule") unless list_merge_rule.is_a?(ListMergeRule)
+
         body = {
           list: {
             folderName: @interact_object.folder_name

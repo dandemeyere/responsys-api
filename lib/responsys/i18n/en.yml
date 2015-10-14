@@ -10,6 +10,14 @@ en:
     response:
       object:
         incorrect_param: The parameter is not a hash
+    params:
+      incorrect_fields: The fields must be an Array of Field
+      incorrect_record_data: The record data must be of type RecordData
+      incorrect_recipients: The record data must be an Array of RecipientData
+      incorrect_query_column: The query column must be of type QueryColumn
+      incorrect_interact_object: The interact object must be of type InteractObject
+      incorrect_list_merge_rule: The list merge rule must be of type ListMergeRule
+      incorrect_event_object: The event must be of type CustomEvent
     api:
       object:
         field_type:
@@ -31,11 +39,9 @@ en:
         resource_path_not_implemented: The resource_path method needs to be implemented if a class extending Responsys::Api::Resource
       response:
         param_not_httparty: The parameter is not a HTTParty response
-      campaign:
-        incorrect_recipients_type: recipients must be an Array of RecipientData
-      event:
-        incorrect_recipients_type: recipients must be an Array of RecipientData
-        incorrect_event_object: custom_event must be a CustomEvent instance
+      extension:
+        incorrect_extension_location: Parameters must be both of type InteractObject
+
     member:
       riid_missing: Variable riid is not provided to the member
       record_not_found: The member has not been found in the list

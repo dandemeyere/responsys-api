@@ -1,9 +1,6 @@
 module Responsys
   module Api
     class Event < Responsys::Api::Resource
-      include Responsys::Api::Object
-      include Responsys::Exceptions
-
       attr_accessor :custom_event
 
       def resource_path
@@ -11,7 +8,7 @@ module Responsys
       end
 
       def initialize(custom_event)
-        raise ParameterException.new("api.event.incorrect_event_object") unless custom_event.is_a?(CustomEvent)
+        raise ParameterException.new("params.incorrect_event_object") unless custom_event.is_a?(CustomEvent)
 
         @custom_event = custom_event
 
@@ -19,7 +16,7 @@ module Responsys
       end
 
       def trigger(recipients)
-        raise ParameterException.new("api.event.incorrect_recipients_type") unless array_of_recipient_data?(recipients)
+        raise ParameterException.new("params.incorrect_recipients") unless Helpers.array_of?(recipients, RecipientData)
 
         body = {
           customEvent: @custom_event.to_api,
@@ -27,12 +24,6 @@ module Responsys
         }
 
         self.post("/#{@custom_event.event_name}", { body: body })
-      end
-
-      private
-
-      def array_of_recipient_data?(recipients)
-        recipients.is_a?(Array) && recipients.all? { |element| element.is_a?(RecipientData) }
       end
     end
   end

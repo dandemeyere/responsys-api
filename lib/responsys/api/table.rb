@@ -8,13 +8,16 @@ module Responsys
       end
 
       def initialize(interact_object)
+        raise ParameterException.new("params.incorrect_interact_object") unless interact_object.is_a?(InteractObject)
+
         @interact_object = interact_object
 
         super()
       end
 
       def create_table(fields, primary_keys)
-        #fields is an array of Field
+        raise ParameterException.new("params.incorrect_fields") unless Helpers.array_of?(fields, Field)
+
         body = {
           table: { objectName: @interact_object.object_name },
           fields: fields.map(&:to_api),
@@ -25,6 +28,8 @@ module Responsys
       end
 
       def merge_records(record_data, match_column_names)
+        raise ParameterException.new("params.incorrect_record_data") unless record_data.is_a?(RecordData)
+
         body = {
           recordData: record_data.to_api,
           matchColumnNames: match_column_names
@@ -34,6 +39,8 @@ module Responsys
       end
 
       def merge_records_with_pk(record_data, insert_on_no_match = true, update_on_match = "REPLACE_ALL")
+        raise ParameterException.new("params.incorrect_record_data") unless record_data.is_a?(RecordData)
+
         body = {
           recordData: record_data.to_api,
           insertOnNoMatch: insert_on_no_match,
@@ -44,6 +51,8 @@ module Responsys
       end
 
       def retrieve_record(query_attribute, field_list, id_to_retrieve)
+        raise ParameterException.new("params.incorrect_fields") unless field_list.is_a?(Array)
+
         params = {
           qa: query_attribute,
           fs: field_list.join(","),

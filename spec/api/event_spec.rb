@@ -32,11 +32,11 @@ describe Responsys::Api::Event do
     end
 
     it "should raise an exception if the init param is not a CustomEvent object" do
-      expect { Responsys::Api::Event.new(campaign) }.to raise_error(Responsys::Exceptions::ParameterException, "custom_event must be a CustomEvent instance")
+      expect { Responsys::Api::Event.new(campaign) }.to raise_error(Responsys::Exceptions::ParameterException, "The event must be of type CustomEvent")
     end
 
     it "should only accept an array of recipients in the message" do
-      expect { client.events(custom_event).trigger(recipientData1) }.to raise_error(Responsys::Exceptions::ParameterException, "recipients must be an Array")
+      expect { client.events(custom_event).trigger(recipientData1) }.to raise_error(Responsys::Exceptions::ParameterException, "The record data must be an Array of RecipientData")
     end
   end
 end

@@ -1,6 +1,9 @@
 module Responsys
   module Api
     class Resource
+      include Responsys::Exceptions
+      include Responsys::Api::Object
+
       %w(get post delete).each do |method|
         define_method(method.to_sym) { |*params| api_method(method.to_sym, *params) }
       end

@@ -21,7 +21,7 @@ module Responsys
 
         body = {
           profileExtension: profile_extension_interact_object.to_api,
-          fields: fields
+          fields: fields.map(&:to_api)
         }
 
         self.post("/", { body: body })

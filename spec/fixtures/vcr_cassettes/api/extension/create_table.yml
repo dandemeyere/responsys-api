@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://login5.responsys.net/rest/api/v1/auth/token
+    body:
+      encoding: UTF-8
+      string: user_name=your_responsys_username&password=your_responsys_password&auth_type=password
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Via:
+      - 1.0 oag02-ri5.ri5.dc2.responsys.com (Gateway)
+      Connection:
+      - close
+      X-Correlationid:
+      - Id-b66b1e560f0219000a2100008ddbfb07 0
+      Date:
+      - Wed, 14 Oct 2015 14:50:30 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"authToken":"AUTH_TOKEN","issuedAt":1444834230589,"endPoint":"https://api5-011.responsys.net"}'
+    http_version: 
+  recorded_at: Wed, 14 Oct 2015 14:50:30 GMT
+- request:
+    method: post
+    uri: https://api5-011.responsys.net/rest/api/v1/lists/rspec_list1/listExtensions/
+    body:
+      encoding: UTF-8
+      string: '{"profileExtension":{"folderName":"rspec_tests","objectName":"pet_temp_1444834229"},"fields":[{"fieldName":"field1","fieldType":"STR500","custom":false,"dataExtractionKey":false},{"fieldName":"field2","fieldType":"NUMBER","custom":false,"dataExtractionKey":false},{"fieldName":"field3","fieldType":"TIMESTAMP","custom":false,"dataExtractionKey":false}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - AUTH_TOKEN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Via:
+      - 1.0 oag02-ri5.ri5.dc2.responsys.com (Gateway)
+      Connection:
+      - close
+      X-Correlationid:
+      - Id-b76b1e56100219000a210000fd3c6efb 0
+      Date:
+      - Wed, 14 Oct 2015 14:50:31 GMT
+      Server:
+      - Apache
+      Content-Type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: 'true'
+    http_version: 
+  recorded_at: Wed, 14 Oct 2015 14:50:33 GMT
+recorded_with: VCR 2.9.3

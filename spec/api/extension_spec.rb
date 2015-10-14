@@ -4,6 +4,7 @@ describe Responsys::Api::Extension do
   before(:example) do
     @profile_list_interact_object = Responsys::Api::Object::InteractObject.new(DATA[:folder], DATA[:lists][:list1][:name])
     @profile_extension_interact_object = Responsys::Api::Object::InteractObject.new(DATA[:folder], DATA[:pets][:pet1][:name])
+    @profile_extension_interact_object_create = Responsys::Api::Object::InteractObject.new(DATA[:folder], "pet_temp_#{Time.now.to_i}")
     @profile_extension_client = Responsys::Api::Extension.new(@profile_list_interact_object, @profile_extension_interact_object)
     @query_column_riid = Responsys::Api::Object::QueryColumn.new("RIID")
     @fields = %w(RIID_ MONTHLY_PURCH)
@@ -14,8 +15,21 @@ describe Responsys::Api::Extension do
   end
 
   context "create table" do
+    it "should create an extension table" do
+      VCR.use_cassette("api/extension/create_table") do
+        extension_client = Responsys::Api::Extension.new(@profile_list_interact_object, @profile_extension_interact_object_create)
 
-    
+        fields = [
+          Responsys::Api::Object::Field.new("field1", Responsys::Api::Object::FieldType.new("STR500"), custom = false, data_extraction_key = false),
+          Responsys::Api::Object::Field.new("field2", Responsys::Api::Object::FieldType.new("NUMBER"), custom = false, data_extraction_key = false),
+          Responsys::Api::Object::Field.new("field3", Responsys::Api::Object::FieldType.new("TIMESTAMP"), custom = false, data_extraction_key = false),
+        ]
+
+        response = extension_client.create_table(fields)
+
+        expect(response.success?).to be_truthy
+      end
+    end
   end
 
   context "delete records" do

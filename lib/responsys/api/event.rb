@@ -18,15 +18,21 @@ module Responsys
         super()
       end
 
-      def trigger(recipient_data_array)
-        raise ParameterException.new("api.event.incorrect_recipients_type") unless recipient_data_array.is_a?(Array)
+      def trigger(recipients)
+        raise ParameterException.new("api.event.incorrect_recipients_type") unless array_of_recipient_data?(recipients)
 
         body = {
           customEvent: @custom_event.to_api,
-          recipientData: recipient_data_array.map(&:to_api)
+          recipientData: recipients.map(&:to_api)
         }
 
         self.post("/#{@custom_event.event_name}", { body: body })
+      end
+
+      private
+
+      def array_of_recipient_data?(recipients)
+        recipients.is_a?(Array) && recipients.all? { |element| element.is_a?(RecipientData) }
       end
     end
   end

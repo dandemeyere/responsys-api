@@ -17,7 +17,7 @@ module Responsys
       end
 
       def trigger_email(recipients)
-        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless recipients.is_a?(Array)
+        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless array_of_recipient_data?(recipients)
 
         body = {
           recipientData: recipients.map(&:to_api)
@@ -27,7 +27,7 @@ module Responsys
       end
 
       def merge_and_trigger_email(recipients, trigger_data, merge_rule = ListMergeRule.new)
-        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless recipients.is_a?(Array)
+        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless array_of_recipient_data?(recipients)
 
         body = {
           recipientData: recipients.map(&:to_api),
@@ -39,7 +39,7 @@ module Responsys
       end
 
       def merge_and_trigger_sms(recipients, trigger_data, merge_rule = ListMergeRule.new)
-        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless recipients.is_a?(Array)
+        raise ParameterException.new("api.campaign.incorrect_recipients_type") unless array_of_recipient_data?(recipients)
 
         body = {
           recipientData: recipients.map(&:to_api),
@@ -50,6 +50,11 @@ module Responsys
         self.post("/#{@campaign_name}/sms", { body: body })
       end
 
+      private
+
+      def array_of_recipient_data?(recipients)
+        recipients.is_a?(Array) && recipients.all? { |element| element.is_a?(RecipientData) }
+      end
     end
   end
 end

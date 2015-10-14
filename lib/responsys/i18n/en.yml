@@ -32,9 +32,9 @@ en:
       response:
         param_not_httparty: The parameter is not a HTTParty response
       campaign:
-        incorrect_recipients_type: recipients must be an Array
+        incorrect_recipients_type: recipients must be an Array of RecipientData
       event:
-        incorrect_recipients_type: recipients must be an Array
+        incorrect_recipients_type: recipients must be an Array of RecipientData
         incorrect_event_object: custom_event must be a CustomEvent instance
     member:
       riid_missing: Variable riid is not provided to the member

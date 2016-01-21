@@ -7,10 +7,9 @@ module Responsys
     include Responsys::Api::Object
     attr_accessor :email, :user_riid, :client
 
-    def initialize(email, riid = nil, client = Client.instance)
+    def initialize(email, riid = nil)
       @email = email
       @user_riid = riid
-      @client = client
     end
 
     def add_to_list(list, subscribe = false, details = {}, update_record = false)
@@ -29,13 +28,13 @@ module Responsys
       data = data.merge( safe_details )
       record = RecordData.new([data])
 
-      @client.run do |client|
+      Client.new.run do |client|
         client.merge_list_members_riid(list, record, ListMergeRule.new(insertOnNoMatch: true, updateOnMatch: (update_record ? 'REPLACE_ALL' : 'NO_UPDATE')))
       end
     end
 
     def retrieve_profile_extension(profile_extension, fields)
-      @client.run do |client|
+      Client.new.run do |client|
         return Responsys::Helper.format_response_with_message("member.riid_missing") if @user_riid.nil?
         return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_profile?(profile_extension, true)
 
@@ -44,19 +43,19 @@ module Responsys
     end
 
     def subscribe(list)
-      @client.run do |client|
+      Client.new.run do |client|
         update(list, [{ EMAIL_ADDRESS_: @email, EMAIL_PERMISSION_STATUS_: "I" }])
       end
     end
 
     def unsubscribe(list)
-      @client.run do |client|
+      Client.new.run do |client|
         update(list, [{ EMAIL_ADDRESS_: @email, EMAIL_PERMISSION_STATUS_: "O" }])
       end
     end
 
     def update(list, data)
-      @client.run(true) do |client|
+      Client.new.run(true) do |client|
         return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_list?(list, true)
 
         record = RecordData.new(data)
@@ -65,7 +64,7 @@ module Responsys
     end
 
     def present_in_profile?(list, raising = false)
-      @client.run(raising) do |client|
+      Client.new.run(raising) do |client|
         return Responsys::Helper.format_response_with_message("member.riid_missing") if @user_riid.nil?
 
         response = lookup_profile_via_key(list, "RIID", @user_riid)
@@ -75,7 +74,7 @@ module Responsys
     end
 
     def present_in_list?(list, raising = false)
-      @client.run(raising) do |client|
+      Client.new.run(raising) do |client|
         if !@user_riid.nil?
           response = lookup_list_via_key(list, "RIID", @user_riid)
         else
@@ -87,7 +86,7 @@ module Responsys
     end
 
     def subscribed?(list, raising = false)
-      @client.run(raising) do |client|
+      Client.new.run(raising) do |client|
         return Responsys::Helper.format_response_with_message("member.record_not_found") unless present_in_list?(list, true)
 
         response = client.retrieve_list_members(list, QueryColumn.new("EMAIL_ADDRESS"), %w(EMAIL_PERMISSION_STATUS_), [@email])
@@ -118,11 +117,11 @@ module Responsys
     end
 
     def lookup_profile_via_key(profile_extension, key, value)
-      @client.run(true) { |client| client.retrieve_profile_extension_records(profile_extension, QueryColumn.new(key), %w(RIID_), [value]) }
+      Client.new.run(true) { |client| client.retrieve_profile_extension_records(profile_extension, QueryColumn.new(key), %w(RIID_), [value]) }
     end
 
     def lookup_list_via_key(list, key, value)
-      @client.run(true) { |client| client.retrieve_list_members(list, QueryColumn.new(key), %w(EMAIL_PERMISSION_STATUS_), [value]) }
+      Client.new.run(true) { |client| client.retrieve_list_members(list, QueryColumn.new(key), %w(EMAIL_PERMISSION_STATUS_), [value]) }
     end
   end
 end

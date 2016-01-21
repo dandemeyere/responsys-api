@@ -41,6 +41,7 @@ module Responsys
         end
       end
 
+      # For internal use ONLY
       def run(exception_raising = false)
         old_raise_exceptions = @raise_exceptions
         @raise_exceptions = exception_raising

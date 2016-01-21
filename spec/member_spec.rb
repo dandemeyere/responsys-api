@@ -1,5 +1,4 @@
 require "spec_helper.rb"
-require "responsys/api/client"
 
 describe Responsys::Member do
 
@@ -12,12 +11,11 @@ describe Responsys::Member do
   context "New member" do
     before(:each) do
       @new_user_email = DATA[:users][:new_user4][:EMAIL_ADDRESS]
-      @client = Responsys::Api::Client.new
-      @member = Responsys::Member.new(@new_user_email, nil, @client)
+      @member = Responsys::Member.new(@new_user_email, nil)
     end
 
     it "should call mergeListMembers" do
-      expect(@client).to receive(:merge_list_members_riid).with(@list, kind_of(Responsys::Api::Object::RecordData), kind_of(Responsys::Api::Object::ListMergeRule))
+      expect_any_instance_of(Responsys::Api::Client).to receive(:merge_list_members_riid).with(@list, kind_of(Responsys::Api::Object::RecordData), kind_of(Responsys::Api::Object::ListMergeRule))
       @member.add_to_list(@list)
     end
 

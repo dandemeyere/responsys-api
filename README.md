@@ -2,6 +2,8 @@
 
 A gem to help you communicate to the Responsys Interact SOAP API. Currently working of Responsys Interact version 6.20.
 
+:warning: The REST version of the GEM is available on a [WIP branch](https://github.com/dandemeyere/responsys-api/tree/migration-to-rest-apis)
+
 ## Documentation
 
 Have a look at our [wiki](https://github.com/dandemeyere/responsys-api/wiki) to understand the functionality this gem offers, how  to use it, and some tips to help you avoid the same mistakes we ran into! If you have any questions or if you want to report a bug please create an [issue](https://github.com/dandemeyere/responsys-api/issues).
@@ -27,12 +29,14 @@ Responsys.configure do |config|
     password: "your_responsys_password",
     wsdl: "https://wsXXXX.responsys.net/webservices/wsdl/ResponsysWS_Level1.wsdl",
     debug: false,
-    ssl_version: :TLSv1
+    enabled: true,
+    savon_settings: { # Any Savon 2 settings, below are the default options
+      ssl_version: :TLSv1,
+      element_form_default: :qualified
+    }
   }
 end
 ```
-
-Note that the debug option is optional and is set to false by default.
 
 ### Example
 ```ruby

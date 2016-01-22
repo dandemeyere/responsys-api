@@ -4,6 +4,8 @@ rvm:
   - 2.1.2
 gemfile:
   - Gemfile
+before_install:
+  - gem install bundler -v 1.11.2
 notifications:
   email:
     on_success: never

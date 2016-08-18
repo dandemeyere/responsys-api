@@ -35,7 +35,7 @@ module Responsys
             else
              response
             end
-          rescue Exception => e
+          rescue Savon::Error => e
             Responsys::Helper.format_response_with_errors(e)
           end
         end

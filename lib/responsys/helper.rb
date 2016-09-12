@@ -88,27 +88,28 @@ module Responsys
       end
     end
 
-    private
-
-    def self.format_soap_fault(error)
-      error_response = {}
-      if error.to_hash[:fault].has_key?(:detail) and !error.to_hash[:fault][:detail].nil?
-        key = error.to_hash[:fault][:detail].keys[0]
-        error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:detail][key][:exception_code], message: error.to_hash[:fault][:detail][key][:exception_message] }
-        error_response[:error][:trace] = error.to_hash[:fault][:detail][:source] if error.to_hash[:fault][:detail][:source]
-      else
-        error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:faultcode], message: error.to_hash[:fault][:faultstring] }
+    class << self
+      private
+      def format_soap_fault(error)
+        error_response = {}
+        if error.to_hash[:fault].has_key?(:detail) and !error.to_hash[:fault][:detail].nil?
+          key = error.to_hash[:fault][:detail].keys[0]
+          error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:detail][key][:exception_code], message: error.to_hash[:fault][:detail][key][:exception_message] }
+          error_response[:error][:trace] = error.to_hash[:fault][:detail][:source] if error.to_hash[:fault][:detail][:source]
+        else
+          error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:faultcode], message: error.to_hash[:fault][:faultstring] }
+        end
+        error_response
       end
-      error_response
-    end
 
-    def self.format_http_error(error)
-      {
-          error: {
-              http_status_code: error.to_hash[:code],
-              message: error.to_hash[:body],
-          }
-      }
+      def format_http_error(error)
+        {
+            error: {
+                http_status_code: error.to_hash[:code],
+                message: error.to_hash[:body],
+            }
+        }
+      end
     end
 
   end

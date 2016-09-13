@@ -104,10 +104,10 @@ module Responsys
 
       def format_http_error(error)
         {
-            error: {
-                http_status_code: error.to_hash[:code],
-                message: error.to_hash[:body],
-            }
+          error: {
+            http_status_code: error.to_hash[:code],
+            message: error.to_hash[:body],
+          }
         }
       end
     end

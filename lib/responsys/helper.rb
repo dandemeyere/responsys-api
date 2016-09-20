@@ -64,13 +64,13 @@ module Responsys
 
     def self.format_response_with_errors(error)
       error_response = { status: "failure" }
-
-      if error.to_hash[:fault].has_key?(:detail) and !error.to_hash[:fault][:detail].nil?
-        key = error.to_hash[:fault][:detail].keys[0]
-        error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:detail][key][:exception_code], message: error.to_hash[:fault][:detail][key][:exception_message] }
-        error_response[:error][:trace] = error.to_hash[:fault][:detail][:source] if error.to_hash[:fault][:detail].has_key?(:source)
-      else
-        error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:faultcode], message: error.to_hash[:fault][:faultstring] }
+      case error
+        when Savon::SOAPFault
+          error_response.merge!(format_soap_fault(error))
+        when Savon::HTTPError
+          error_response.merge!(format_http_error(error))
+        else
+          raise error
       end
 
       error_response
@@ -87,5 +87,30 @@ module Responsys
         I18n.t(key, scope: :responsys_api, locale: :en, default: "Responsys - Unknown message '#{key}'")
       end
     end
+
+    class << self
+      private
+      def format_soap_fault(error)
+        error_response = {}
+        if error.to_hash[:fault].has_key?(:detail) and !error.to_hash[:fault][:detail].nil?
+          key = error.to_hash[:fault][:detail].keys[0]
+          error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:detail][key][:exception_code], message: error.to_hash[:fault][:detail][key][:exception_message] }
+          error_response[:error][:trace] = error.to_hash[:fault][:detail][:source] if error.to_hash[:fault][:detail][:source]
+        else
+          error_response[:error] = { http_status_code: error.http.code, code: error.to_hash[:fault][:faultcode], message: error.to_hash[:fault][:faultstring] }
+        end
+        error_response
+      end
+
+      def format_http_error(error)
+        {
+          error: {
+            http_status_code: error.to_hash[:code],
+            message: error.to_hash[:body],
+          }
+        }
+      end
+    end
+
   end
 end

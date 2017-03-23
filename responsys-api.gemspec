@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "savon", "2.10.1"
   spec.add_dependency "wasabi", "3.4.0"
   spec.add_dependency "i18n", ">= 0.6.9", "<= 0.7.0"
-  spec.add_dependency "connection_pool", "2.1.3"
+  spec.add_dependency "connection_pool", "~> 2.2.1"
 
   # Ruby 1.9 compatibility
   spec.add_development_dependency "rack", "~> 1.6.4"

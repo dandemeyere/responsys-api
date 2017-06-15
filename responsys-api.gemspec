@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = '>= 1.9.3'
+  spec.required_ruby_version = '>= 2.1.0'
 
   spec.add_dependency "rubyntlm", "0.4.0"
   spec.add_dependency "savon", "2.10.1"
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "i18n", ">= 0.6.9", "<= 0.7.0"
   spec.add_dependency "connection_pool", "~> 2.2.1"
   spec.add_dependency "public_suffix", "<= 1.4.6"
-  spec.add_dependency "nokogiri", "<= 1.7.1"
+  spec.add_dependency "nokogiri", "<= 1.8.0"
 
   # Ruby 1.9 compatibility
   spec.add_development_dependency "rack", "~> 1.6.4"

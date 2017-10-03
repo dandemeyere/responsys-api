@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "responsys-api"
-  spec.version       = "0.3.1"
+  spec.version       = "0.3.2"
   spec.authors       = ["Dan DeMeyere", "Florian Lorrain", "Morgan Griggs", "Mike Rocco"]
   spec.email         = ["dan@thredup.com", "florian.lorrain@thredup.com", "morgan@thredup.com", "michael.rocco@thredup.com"]
   spec.description   = "A gem to integrate with the Responsys SOAP API"
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "i18n", ">= 0.6.9", "<= 0.7.0"
   spec.add_dependency "connection_pool", "~> 2.2.1"
   spec.add_dependency "public_suffix", "<= 1.4.6"
-  spec.add_dependency "nokogiri", "<= 1.8.0"
+  spec.add_dependency "nokogiri", "<= 1.8.1"
 
   # Ruby 1.9 compatibility
   spec.add_development_dependency "rack", "~> 1.6.4"
